@@ -1,0 +1,12 @@
+Pràtica de Ampliació a la programació Orientada a Objectes
+----------------------------------------------------------
+
+Consisteix en realitzar un joc en un llenguatge orientat a objectes.
+
+El joc es basarà en tenir un taulell de caselles on hi podrà haver diversos
+objectes que es mouran per la pantalla.
+Tendrem un personatge que es podra moure amb el teclat que tendrà com a objectiu
+arribar a la sortida del mapa.
+
+Hi ha caselles especials que poden contenir objectes com tiritas, pocimes,....
+
