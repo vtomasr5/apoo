@@ -24,8 +24,8 @@ public abstract class Jugador {
     private int habilitat; // experiencia del jugador
 
     public abstract boolean play();
-    //public abstract void disminuirSalut(int val);
-    //public abstract void augmentarSalut(int val);
+//    public abstract void disminuirSalut(int val);
+//    public abstract void augmentarSalut(int val);
 
     public int getSalut() {
         return salut;

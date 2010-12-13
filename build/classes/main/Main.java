@@ -33,8 +33,8 @@ public class Main {
 
     private Casella[][] taulell;
     private int valor;
-    private int filas;
-    private int columnas;
+    private int files;
+    private int columnes;
     private int tamany;
     private int cpocima;
     private int cbomba;
@@ -58,9 +58,9 @@ public class Main {
         }
     }
 
-    public void setFilasxColumnas(int filas, int columnas) {
-        this.filas = filas;
-        this.columnas = columnas;
+    public void setFilasxColumnas(int files, int columnes) {
+        this.files = files;
+        this.columnes = columnes;
     }
 
     public ArrayList<Casella> randomObjectes(ArrayList<Casella> objectes_random) {
@@ -74,7 +74,6 @@ public class Main {
         }
         return array;
     }
-
 
     public void leerArchivo() {
         cbomba = 0;
@@ -162,7 +161,7 @@ public class Main {
         }
     }
 
-//    public boolean validarCasilla(int f, int c) {    /* Una casilla es valida cuando esta dentro del taulell y NO esta visitada */
+//    public boolean validarCasella(int f, int c) {    /* Una casilla es valida cuando esta dentro del taulell y NO esta visitada */
 //        boolean resultado = true;
 //        /* Controla si la posicion esta dentro del taulell */
 //        if (((f >= 0) && (f < filas) && (c >= 0) && (c < columnas))) {
@@ -176,7 +175,7 @@ public class Main {
 //        return resultado;
 //    }
 
-    public void tratar_casella(int f, int c, Jugador jugador) {
+    public void tractar_casella(int f, int c, Jugador jugador) {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
             jugador.setSalut(jugador.getSalut() - 50); // -50 salut
@@ -208,9 +207,9 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         Main joc = new Main();
         joc.leerArchivo();
+        
         Finestra f = new Finestra();
         f.pintarFinestra();
     }

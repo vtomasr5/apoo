@@ -53,7 +53,7 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
     public Finestra() {}
 
     public void pintarFinestra() {
-        new JFrame("Super Mario Bros");
+        new JFrame("Super Joc");
         this.initComponents();
         this.colocarComponents();
         this.afegirListerners();
@@ -78,7 +78,7 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
         this.setJMenuBar(menu);
 
         this.setResizable(false);
-        initLookAndFeel();
+        Finestra.initLookAndFeel();
         SwingUtilities.updateComponentTreeUI(this);
         
         this.pack();
@@ -128,7 +128,8 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
                 panel.add(imgMatriz[f][c]);
             }
         }
-        this.pack();
+        //this.pack();
+        this.repaint();
     }
 
     private ImageIcon scale(Image src, double scale) {
@@ -165,7 +166,7 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
                 fitxer = ExaminarArxius.obrirFixer(this);
                 if (fitxer != null) {
                     JOptionPane.showMessageDialog(this,
-                        "El fitxer s'ha carregat correctament",
+                        "El fitxer s'ha carregat correctament.",
                         "Informació",
                         JOptionPane.INFORMATION_MESSAGE);
                 }

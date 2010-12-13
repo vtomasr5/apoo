@@ -35,9 +35,8 @@ public class ExaminarArxius {
      */
     public static File obrirFixer(JFrame finestra) {
         eleccioFitxer = new JFileChooser();
-        eleccioFitxer.setFileFilter(new FileNameExtensionFilter("Només " +
-                "fitxers de rutes (*.txt)", "txt"));
-        eleccioFitxer.setDialogTitle("Elegeix el fitxer de rutes");
+        eleccioFitxer.setFileFilter(new FileNameExtensionFilter("Només " + "mapes (*.txt)", "txt"));
+        eleccioFitxer.setDialogTitle("Elegeix el mapa");
         int ret = eleccioFitxer.showOpenDialog(finestra);
 
         if (ret == JFileChooser.APPROVE_OPTION){

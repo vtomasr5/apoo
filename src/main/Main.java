@@ -75,7 +75,6 @@ public class Main {
         return array;
     }
 
-
     public void leerArchivo() {
         cbomba = 0;
         cforat = 0;
@@ -162,7 +161,7 @@ public class Main {
         }
     }
 
-//    public boolean validarCasilla(int f, int c) {    /* Una casilla es valida cuando esta dentro del taulell y NO esta visitada */
+//    public boolean validarCasella(int f, int c) {    /* Una casilla es valida cuando esta dentro del taulell y NO esta visitada */
 //        boolean resultado = true;
 //        /* Controla si la posicion esta dentro del taulell */
 //        if (((f >= 0) && (f < filas) && (c >= 0) && (c < columnas))) {
@@ -176,7 +175,7 @@ public class Main {
 //        return resultado;
 //    }
 
-    public void tratar_casella(int f, int c, Jugador jugador) {
+    public void tractar_casella(int f, int c, Jugador jugador) {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
             jugador.setSalut(jugador.getSalut() - 50); // -50 salut
