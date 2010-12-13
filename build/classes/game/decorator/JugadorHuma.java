@@ -20,26 +20,22 @@ package game.decorator;
  */
 public class JugadorHuma extends Jugador {
 
-    private int punts_experiencia;
-
-    public int getPuntsExperiencia() {
-        return punts_experiencia;
-    }
-
-    public void setPuntsExperiencia(int punts_experiencia) {
-        this.punts_experiencia = punts_experiencia;
-    }
-
     @Override
     public boolean play() {
-        System.out.println("Jugador (Amb: "+ getPuntsExperiencia() + " punts d'experiència) està a punt per jugar");
+        System.out.println("Jugador (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
         // Implementació de com juga es JugadorHuma
         return true;
     }
 
-    @Override
-    public void disminuirSalut(int val) {
-        setSalut(getSalut() - val);
-        System.out.println("Salut reduida " + val + " punts");
-    }
+//    @Override
+//    public void disminuirSalut(int val) {
+//        setSalut(getSalut() - val);
+//        System.out.println("Salut reduida " + val + " punts");
+//    }
+//
+//    @Override
+//    public void augmentarSalut(int val) {
+//        setSalut(getSalut() + val);
+//        System.out.println("Salut augmentada " + val + " punts");
+//    }
 }

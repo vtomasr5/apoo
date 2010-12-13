@@ -21,18 +21,11 @@ package game.decorator;
 public abstract class Jugador {
     
     private int salut;
+    private int habilitat; // experiencia del jugador
 
     public abstract boolean play();
-    
-    public void disminuirSalut(int val) {
-        setSalut(getSalut() - val);
-        System.out.println("Salut reduida " + val + " punts");
-    }
-
-    public void augmentarSalut(int val) {
-        setSalut(getSalut() + val);
-        System.out.println("Salut augmentada " + val + " punts");
-    }
+    //public abstract void disminuirSalut(int val);
+    //public abstract void augmentarSalut(int val);
 
     public int getSalut() {
         return salut;
@@ -40,5 +33,19 @@ public abstract class Jugador {
 
     public void setSalut(int salut) {
         this.salut = salut;
+    }
+
+    /**
+     * @return the habilitat
+     */
+    public int getHabilitat() {
+        return habilitat;
+    }
+
+    /**
+     * @param habilitat the habilitat to set
+     */
+    public void setHabilitat(int habilitat) {
+        this.habilitat = habilitat;
     }
 }

@@ -24,27 +24,34 @@ public class Enemic extends Jugador {
 
     @Override
     public boolean play() {
-        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'experiència) està a punt per jugar");
+        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
         // Implementació de com juga s'Enemic
         return true;
     }
 
+    @Override
     public int getHabilitat() {
         return habilitat;
     }
 
+    @Override
     public void setHabilitat(int habilitat) {
         this.habilitat = habilitat;
     }
 
-    @Override
-    public void disminuirSalut(int val) {
-        setSalut(getSalut() - (val - 1));
-        System.out.println("Salut reduida " + val + " punts");
-    }
+//    @Override
+//    public void disminuirSalut(int val) {
+//        setSalut(getSalut() - (val - 1));
+//        System.out.println("Salut reduida " + val + " punts");
+//    }
 
-    public boolean atacarJugador(Jugador p, int salut) {
-        p.disminuirSalut(salut);
-        return true;
-    }
+//    public boolean atacarJugador(Jugador p, int salut) {
+//        p.disminuirSalut(salut);
+//        return true;
+//    }
+
+//    @Override
+//    public void augmentarSalut(int val) {
+//        throw new UnsupportedOperationException("Not supported yet.");
+//    }
 }

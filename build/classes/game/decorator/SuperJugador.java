@@ -33,12 +33,12 @@ public class SuperJugador extends JugadorHuma {
         return true;
     }
 
-    @Override
-    public void disminuirSalut(int val) {
-        int val2 = val/2; // Sa salut d'es super jugador se redueix lentament
-//        System.out.println("Salut reduida " + (val2) + " punts");
-        jugador.disminuirSalut(val2);
-    }
+//    @Override
+//    public void disminuirSalut(int val) {
+//        int val2 = val/2; // Sa salut d'es super jugador se redueix lentament
+////        System.out.println("Salut reduida " + (val2) + " punts");
+//        jugador.disminuirSalut(val2);
+//    }
 
     public Jugador getPlayer() {
         return jugador;

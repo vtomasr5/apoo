@@ -33,12 +33,12 @@ public class MiniJugador extends JugadorHuma {
         return true;
     }
 
-    @Override
-    public void disminuirSalut(int val) {
-        int val2 = 2; // Sa salut d'es mini jugador se redueix rapidament
-//        System.out.println("Salut reduida " + (val+val2) + " punts");
-        jugador.disminuirSalut(val+val2);
-    }
+//    @Override
+//    public void disminuirSalut(int val) {
+//        int val2 = 2; // Sa salut d'es mini jugador se redueix rapidament
+////        System.out.println("Salut reduida " + (val+val2) + " punts");
+//        jugador.disminuirSalut(val+val2);
+//    }
 
     public Jugador getPlayer() {
         return jugador;

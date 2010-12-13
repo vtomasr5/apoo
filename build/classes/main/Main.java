@@ -14,27 +14,16 @@
 
 package main;
 
-import game.decorator.*;
 import game.composite.*;
 import game.composite.Casella;
+import game.decorator.Jugador;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 
 /**
  * Clase que inicia el joc
@@ -187,6 +176,34 @@ public class Main {
 //        return resultado;
 //    }
 
+    public void tratar_casella(int f, int c, Jugador jugador) {
+        //pasos++;
+        if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
+            jugador.setSalut(jugador.getSalut() - 50); // -50 salut
+            taulell[f][c] = new Cami();
+        } else if (taulell[f][c] instanceof Tirita) {
+            jugador.setSalut(jugador.getSalut() + 20); // +20 salut
+            taulell[f][c] = new Cami();
+        } else if (taulell[f][c] instanceof Forat) {
+            jugador.setSalut(0); //Termina el juego
+        } else if (taulell[f][c] instanceof Pocima) {
+            jugador.setHabilitat(jugador.getHabilitat() + 10); // +10 habilitat
+            taulell[f][c] = new Cami();
+        } else if (taulell[f][c] instanceof Sortida) {
+            // joc acabat
+            // missatge "has guanyat"
+        } else if (taulell[f][c] instanceof Entrada) {
+            // no tractam
+        } else if (taulell[f][c] instanceof Casella) { // IMPORTANTE: este caso va el último para diferencias la casilla normal de una compuesta!!
+            // getArray() de sa casella
+            // mostrar la finestra (JDialog)
+            // con mouseEvent coger el elemento que ha pulsado
+            // tratar el objeto (tratar_casella)
+            // quitar el objeto del array
+            // cerrar la ventana
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -194,6 +211,8 @@ public class Main {
 
         Main joc = new Main();
         joc.leerArchivo();
+        Finestra f = new Finestra();
+        f.pintarFinestra();
     }
 
     /**
@@ -205,3 +224,14 @@ public class Main {
     }
 
 }
+
+/* Informe de la ultima vez 8 dic - en 5 hemos hecho:*/
+/*
+ * Creamos todas las clases y conseguimos hacer que lea del fichero los objetos
+ * y los ponga en la matriz.
+ * Tambien los objetos de casilla compuesta.
+ * Cada casilla compuesta puede tener varios objetos y otra casilla compuesta.
+ *
+ * Siguiente paso:
+ * Implementar la parte decorator al composite
+ */  

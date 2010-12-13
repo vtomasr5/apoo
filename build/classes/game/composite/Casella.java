@@ -30,14 +30,14 @@ public class Casella extends Taulell {
 
     public Casella() {}
 
-    public Casella(int x, int y, int valor, Object obj) {
+    public Casella(int x, int y, int valor, Object obj) { // casella composta
         this.x = x;
         this.y = y;
         this.valor = valor;
         this.objectes = (ArrayList<Casella>) obj;
     }
 
-    public Casella(int x, int y, int valor) {
+    public Casella(int x, int y, int valor) { // casella simple
         this.x = x;
         this.y = y;
         this.valor = valor;

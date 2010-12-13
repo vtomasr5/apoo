@@ -16,6 +16,7 @@ package main;
 
 import game.composite.*;
 import game.composite.Casella;
+import game.decorator.Jugador;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,8 +33,8 @@ public class Main {
 
     private Casella[][] taulell;
     private int valor;
-    private int filas;
-    private int columnas;
+    private int files;
+    private int columnes;
     private int tamany;
     private int cpocima;
     private int cbomba;
@@ -57,9 +58,9 @@ public class Main {
         }
     }
 
-    public void setFilasxColumnas(int filas, int columnas) {
-        this.filas = filas;
-        this.columnas = columnas;
+    public void setFilasxColumnas(int files, int columnes) {
+        this.files = files;
+        this.columnes = columnes;
     }
 
     public ArrayList<Casella> randomObjectes(ArrayList<Casella> objectes_random) {
@@ -175,13 +176,43 @@ public class Main {
 //        return resultado;
 //    }
 
+    public void tratar_casella(int f, int c, Jugador jugador) {
+        //pasos++;
+        if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
+            jugador.setSalut(jugador.getSalut() - 50); // -50 salut
+            taulell[f][c] = new Cami();
+        } else if (taulell[f][c] instanceof Tirita) {
+            jugador.setSalut(jugador.getSalut() + 20); // +20 salut
+            taulell[f][c] = new Cami();
+        } else if (taulell[f][c] instanceof Forat) {
+            jugador.setSalut(0); //Termina el juego
+        } else if (taulell[f][c] instanceof Pocima) {
+            jugador.setHabilitat(jugador.getHabilitat() + 10); // +10 habilitat
+            taulell[f][c] = new Cami();
+        } else if (taulell[f][c] instanceof Sortida) {
+            // joc acabat
+            // missatge "has guanyat"
+        } else if (taulell[f][c] instanceof Entrada) {
+            // no tractam
+        } else if (taulell[f][c] instanceof Casella) { // IMPORTANTE: este caso va el último para diferencias la casilla normal de una compuesta!!
+            // getArray() de sa casella
+            // mostrar la finestra (JDialog)
+            // con mouseEvent coger el elemento que ha pulsado
+            // tratar el objeto (tratar_casella)
+            // quitar el objeto del array
+            // cerrar la ventana
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
         Main joc = new Main();
         joc.leerArchivo();
+        
+        Finestra f = new Finestra();
+        f.pintarFinestra();
     }
 
     /**
