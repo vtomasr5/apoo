@@ -11,7 +11,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 package main;
 
 import game.composite.*;
@@ -38,6 +37,7 @@ public class Tablero {
     private int cbomba;
     private int cforat;
     private int ctirita;
+    private int pos_jugador_x, pos_jugador_y;
     private ArrayList<Casella> objectes_random;
 
     public void inicializartaulell(Casella[][] m) {
@@ -47,9 +47,9 @@ public class Tablero {
             }
         }
     }
-    
-    public void comprobar_taulell(Casella[][] taulell){
-    	for (int i = 0; i < taulell.length; i++) {
+
+    public void comprobar_taulell(Casella[][] taulell) {
+        for (int i = 0; i < taulell.length; i++) {
             for (int j = 0; j < taulell.length; j++) {
                 System.out.println("comprovacio taulell: " + taulell[i][j]);
             }
@@ -62,13 +62,13 @@ public class Tablero {
     }
 
     public ArrayList<Casella> randomObjectes(ArrayList<Casella> objectes_random) {
-        int r = (int) Math.floor(Math.random()*3);
+        int r = (int) Math.floor(Math.random() * 3);
         int j;
         ArrayList<Casella> array = new ArrayList<Casella>();
 
         for (int i = 0; i < r; i++) {
-             j = (int) Math.floor(Math.random()*3);
-             array.add(objectes_random.get(j));
+            j = (int) Math.floor(Math.random() * 3);
+            array.add(objectes_random.get(j));
         }
         return array;
     }
@@ -78,12 +78,14 @@ public class Tablero {
         cforat = 0;
         ctirita = 0;
         cpocima = 0;
+
         FileReader elFichero;
         BufferedReader lector = null;
         String unaLinea;
         StringTokenizer str;
 
         objectes_random = new ArrayList<Casella>();
+
         objectes_random.add(new Pocima());
         objectes_random.add(new Tirita());
         objectes_random.add(new Bomba());
@@ -116,7 +118,7 @@ public class Tablero {
         } catch (Exception e) {
             System.out.println("ERROR AL INSERTAR DATOS");
         }
-        
+
         try {
             while ((unaLinea = lector.readLine()) != null) {
                 str = new StringTokenizer(unaLinea, ",");
@@ -126,6 +128,9 @@ public class Tablero {
                     int y = Integer.valueOf(str.nextToken()).intValue();
                     if (palabra.equals("entrada")) {
                         taulell[x][y] = new Entrada(x, y);
+                        //Inicializamos la posicion del jugador en la entrada.
+                        pos_jugador_x = x;
+                        pos_jugador_y = y;
                     } else if (palabra.equals("sortida")) {
                         taulell[x][y] = new Sortida(x, y);
                     } else if (palabra.equals("pocima")) {
@@ -153,40 +158,35 @@ public class Tablero {
                     }
                 }
             }
-            //comprobar_taulell(taulell);
+            comprobar_taulell(taulell);
         } catch (Exception e) {
             System.err.println("Error en la carga de datos");
         }
     }
 
-//    public boolean validarCasella(int f, int c) {    /* Una casilla es valida cuando esta dentro del taulell y NO esta visitada */
-//        boolean resultado = true;
-//        /* Controla si la posicion esta dentro del taulell */
-//        if (((f >= 0) && (f < filas) && (c >= 0) && (c < columnas))) {
-//            /* Controla si la posicion ya fue visitada o es paret */
-//            if (taulell[f][c] instanceof Paret || recorridoAux.casillaVisitada(taulell[f][c])) {
-//                resultado = false;
-//            }
-//        } else {
-//            resultado = false;
-//        }
-//        return resultado;
-//    }
+    public Casella[][] getTaulell() {
+        return taulell;
+    }
 
     public void tractar_casella(int f, int c, Jugador jugador) {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
+            System.out.println("[tractar_casella] Bomba");
             jugador.setSalut(jugador.getSalut() - 50); // -50 salut
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Tirita) {
+            System.out.println("[tractar_casella] Tirita");
             jugador.setSalut(jugador.getSalut() + 20); // +20 salut
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Forat) {
+            System.out.println("[tractar_casella] Forat");
             jugador.setSalut(0); //Termina el juego
         } else if (taulell[f][c] instanceof Pocima) {
+            System.out.println("[tractar_casella] Pocima");
             jugador.setHabilitat(jugador.getHabilitat() + 10); // +10 habilitat
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
+            System.out.println("[tractar_casella] Sortida");
             // joc acabat
             // missatge "has guanyat"
         } else if (taulell[f][c] instanceof Entrada) {
@@ -211,12 +211,11 @@ public class Tablero {
 //        Finestra f = new Finestra();
 //        f.pintarFinestra();
 //    }
-
     /**
      * Genera numeros aleatoris dins un interval
      */
     public static int generarRandom(int m, int n) {
-        int num = (int) Math.floor(Math.random()*(n - m + 1) + m);
+        int num = (int) Math.floor(Math.random() * (n - m + 1) + m);
         return num;
     }
 
@@ -239,6 +238,22 @@ public class Tablero {
      */
     public int getFiles() {
         return files;
+    }
+
+    public int get_pos_x_jugador() {
+        return pos_jugador_x;
+    }
+
+    public int get_pos_y_jugador() {
+        return pos_jugador_y;
+    }
+
+    public void set_pos_x_jugador(int pos_jugador_x) {
+        this.pos_jugador_x = pos_jugador_x;
+    }
+
+    public void set_pos_y_jugador(int pos_jugador_y) {
+        this.pos_jugador_y = pos_jugador_y;
     }
 
     /**
@@ -275,7 +290,6 @@ public class Tablero {
     public void setTamany(int tamany) {
         this.tamany = tamany;
     }
-
 }
 
 /* Informe de la ultima vez 8 dic - en 5 hemos hecho:*/
@@ -287,4 +301,4 @@ public class Tablero {
  *
  * Siguiente paso:
  * Implementar la parte decorator al composite
- */  
+ */
