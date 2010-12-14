@@ -16,31 +16,23 @@ package main;
 
 import game.composite.*;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
  *
  * @author vjuan
  */
-public class Finestra extends JFrame implements KeyListener, ActionListener {
+public class Finestra extends JFrame implements ActionListener {
 
     private int files;
     private int columnes;
     private Casella[][] taulell;
     private JPanel panel;
-    public JLabel[][] imgMatriz;
-    private int tamany;
     
     private JMenuBar menu; // barra de menu
     private static File fitxer;
@@ -52,19 +44,28 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
 
     public Finestra() {}
 
-    public void pintarFinestra() {
-        new JFrame("Super Joc");
-        this.initComponents();
-        this.colocarComponents();
-        this.afegirListerners();
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        Finestra finestra = new Finestra();
+        finestra.setTitle("Ampliació a sa programació orientada a objectes");
+        finestra.initComponents();
+        finestra.colocarComponents();
+        finestra.afegirListerners();
+    }
+
+    public static void initTablero(File fitxer) {
+        Tablero tab = new Tablero();
+        tab.leerArchivo(fitxer);
     }
 
     public void initComponents() {
-        panel = new JPanel();
+        panel = new Panell();
         menu = new JMenuBar();
 
-        itemMenuArxiu = new JMenu("Arxiu");
-        itemMenuObrir = new JMenuItem("Obrir...");
+        itemMenuArxiu = new JMenu("Joc");
+        itemMenuObrir = new JMenuItem("Carregar mapa...");
         itemMenuSeparador1 = new JSeparator();
         itemMenuSortir = new JMenuItem("Sortir");
     }
@@ -76,8 +77,13 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         this.setJMenuBar(menu);
+        menu.add(itemMenuArxiu);
+        itemMenuArxiu.add(itemMenuObrir);
+        itemMenuArxiu.add(itemMenuSortir);
 
-        this.setResizable(false);
+        this.getContentPane().add(panel);
+
+        this.setResizable(true);
         Finestra.initLookAndFeel();
         SwingUtilities.updateComponentTreeUI(this);
         
@@ -87,76 +93,8 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
     }
 
     public void afegirListerners() {
-        itemMenuArxiu.addActionListener(this);
+        itemMenuObrir.addActionListener(this);
         itemMenuSortir.addActionListener(this);
-    }
-
-    public void dibujarElementos(Casella[][] laberinto, int filas, int columnas) {
-
-//        panel = new JPanel(new GridLayout(filas, columnas));
-        panel.removeAll();
-        panel.setLayout(new GridLayout(filas, columnas));
-        panel.setBackground(Color.BLACK);// color del camino del laberinto
-
-        imgMatriz = new JLabel[filas][columnas];
-        for (int f = 0; f < filas; f++) {
-            for (int c = 0; c < columnas; c++) {
-                if (laberinto[f][c] instanceof Entrada) {
-                    ImageIcon img = new ImageIcon("images/entrada.gif");
-                    imgMatriz[f][c] = new JLabel(scale(img.getImage(), tamany));
-                } else if (laberinto[f][c] instanceof Paret) {
-                    ImageIcon img = new ImageIcon("images/paret.gif");
-                    imgMatriz[f][c] = new JLabel(scale(img.getImage(), tamany));
-                } else if (laberinto[f][c] instanceof Cami) {
-                    imgMatriz[f][c] = new JLabel();
-                } else if (laberinto[f][c] instanceof Forat) {
-                    ImageIcon img = new ImageIcon("images/forat.png");
-                    imgMatriz[f][c] = new JLabel(scale(img.getImage(), tamany));
-                } else if (laberinto[f][c] instanceof Bomba) {
-                    ImageIcon img = new ImageIcon("images/Tele.gif");
-                    imgMatriz[f][c] = new JLabel(scale(img.getImage(), tamany));
-                } else if (laberinto[f][c] instanceof Sortida) {
-                    ImageIcon img = new ImageIcon("images/arribada.gif");
-                    imgMatriz[f][c] = new JLabel(scale(img.getImage(), tamany));
-                } else if (laberinto[f][c] instanceof Tirita) {
-                    ImageIcon img = new ImageIcon("images/tresor.png");
-                    imgMatriz[f][c] = new JLabel(scale(img.getImage(), tamany));
-                } else if (laberinto[f][c] instanceof Pocima) {
-                    ImageIcon img = new ImageIcon("images/tunel.gif");
-                    imgMatriz[f][c] = new JLabel(scale(img.getImage(), tamany));
-                }
-                panel.add(imgMatriz[f][c]);
-            }
-        }
-        //this.pack();
-        this.repaint();
-    }
-
-    private ImageIcon scale(Image src, double scale) {
-        int w = (int) (scale * src.getWidth(this));
-        int h = (int) (scale * src.getHeight(this));
-        int type = BufferedImage.TRANSLUCENT;
-        BufferedImage dst = new BufferedImage(w, h, type);
-        Graphics2D g2 = dst.createGraphics();
-        g2.drawImage(src, 0, 0, w, h, this);
-        g2.dispose();
-        g2.setBackground(Color.CYAN);
-        return new ImageIcon(dst);
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -170,6 +108,7 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
                         "Informació",
                         JOptionPane.INFORMATION_MESSAGE);
                 }
+                initTablero(fitxer);
             } catch (Exception ex) {
                 System.out.println(ex.toString());
             }
@@ -177,9 +116,42 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
             System.exit(0);
         }
     }
+    
+    public void inicializartaulell(Casella[][] m) {
+        for (int i = 0; i < m.length; i++) {
+            for (int j = 0; j < m[0].length; j++) {
+                m[i][j] = new Cami(i, j);
+            }
+        }
+    }
+    
+    public void comprobar_taulell(Casella[][] taulell){
+    	for (int i = 0; i < taulell.length; i++) {
+            for (int j = 0; j < taulell.length; j++) {
+                System.out.println("comprovacio taulell: " + taulell[i][j]);
+            }
+        }
+    }
+
+    public void setFilesxColumnes(int files, int columnes) {
+        this.setFiles(files);
+        this.setColumnes(columnes);
+    }
+
+    public ArrayList<Casella> randomObjectes(ArrayList<Casella> objectes_random) {
+        int r = (int) Math.floor(Math.random()*3);
+        int j;
+        ArrayList<Casella> array = new ArrayList<Casella>();
+
+        for (int i = 0; i < r; i++) {
+             j = (int) Math.floor(Math.random()*3);
+             array.add(objectes_random.get(j));
+        }
+        return array;
+    }
 
     /**
-     * Adecua l'aparenca del Java Swing al sistema operatiu
+     *  Adapta l'aparenca del Java Swing al sistema operatiu
      */
     private static void initLookAndFeel() {
         String lookAndFeel = null;
@@ -202,4 +174,48 @@ public class Finestra extends JFrame implements KeyListener, ActionListener {
             e.toString();
         }
     }
+
+    /**
+     * @return the files
+     */
+    public int getFiles() {
+        return files;
+    }
+
+    /**
+     * @param files the files to set
+     */
+    public void setFiles(int files) {
+        this.files = files;
+    }
+
+    /**
+     * @return the columnes
+     */
+    public int getColumnes() {
+        return columnes;
+    }
+
+    /**
+     * @param columnes the columnes to set
+     */
+    public void setColumnes(int columnes) {
+        this.columnes = columnes;
+    }
+
+    /**
+     * @return the taulell
+     */
+    public Casella[][] getTaulell() {
+        return taulell;
+    }
+
+    /**
+     * @param taulell the taulell to set
+     */
+    public void setTaulell(Casella[][] taulell) {
+        this.taulell = taulell;
+    }
+
 }
+

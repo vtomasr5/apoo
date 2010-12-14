@@ -1,5 +1,5 @@
 /*
- * Main.java
+ * Tablero.java
  * 
  * Copyright (C) 2010 Vicenç Juan Tomàs Monserrat
  * 
@@ -24,10 +24,10 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
- * Clase que inicia el joc
+ *
  * @author vjuan
  */
-public class Main {
+public class Tablero {
 
     private Casella[][] taulell;
     private int valor;
@@ -39,7 +39,6 @@ public class Main {
     private int cforat;
     private int ctirita;
     private ArrayList<Casella> objectes_random;
-    private static File file;
 
     public void inicializartaulell(Casella[][] m) {
         for (int i = 0; i < m.length; i++) {
@@ -107,7 +106,7 @@ public class Main {
             int fi = Integer.valueOf(str.nextToken()).intValue();
             int co = Integer.valueOf(str.nextToken()).intValue();
             setFilesxColumnes(fi, co); // insertamos las filas y las columnas
-            setTamany((640 + fi) / fi); // indicamos el tamaño de la ventana;
+            //setTamany((640 + fi) / fi); // indicamos el tamaño de la ventana;
 //            ventana.setTamaño((tamany / 100));
             if ((fi <= 0) || (co <= 0)) {
                 throw new Exception(); // si los indices de la taulell son inferiores a cero, lanzamos excepcion.
@@ -202,16 +201,16 @@ public class Main {
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Main joc = new Main();
-        //joc.leerArchivo(file);
-        
-        Finestra f = new Finestra();
-        f.pintarFinestra();
-    }
+//    /**
+//     * @param args the command line arguments
+//     */
+//    public static void main(String[] args) {
+//        Tablero joc = new Tablero();
+//        //joc.leerArchivo(file);
+//
+//        Finestra f = new Finestra();
+//        f.pintarFinestra();
+//    }
 
     /**
      * Genera numeros aleatoris dins un interval
