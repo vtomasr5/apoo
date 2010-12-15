@@ -37,7 +37,11 @@ public class Tablero {
     private int cbomba;
     private int cforat;
     private int ctirita;
+<<<<<<< HEAD
     private int pos_jugador_f, pos_jugador_c;
+=======
+    private int pos_jugador_x, pos_jugador_y;
+>>>>>>> d521ff3af397c4592ec093a4623f0ed5933e00a6
     private ArrayList<Casella> objectes_random;
     private String rutamapa;
 
@@ -131,8 +135,13 @@ public class Tablero {
                     if (palabra.equals("entrada")) {
                         taulell[x][y] = new Entrada(x, y);
                         //Inicializamos la posicion del jugador en la entrada.
+<<<<<<< HEAD
                         pos_jugador_f = y;
                         pos_jugador_c = x;
+=======
+                        pos_jugador_x = x;
+                        pos_jugador_y = y;
+>>>>>>> d521ff3af397c4592ec093a4623f0ed5933e00a6
                     } else if (palabra.equals("sortida")) {
                         taulell[x][y] = new Sortida(x, y);
                     } else if (palabra.equals("pocima")) {
@@ -161,7 +170,10 @@ public class Tablero {
                     }
                 }
             }
+<<<<<<< HEAD
             System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+cforat);
+=======
+>>>>>>> d521ff3af397c4592ec093a4623f0ed5933e00a6
             comprobar_taulell(taulell);
         } catch (Exception e) {
             System.err.println("Error en la carga de datos");
@@ -244,6 +256,7 @@ public class Tablero {
         return files;
     }
 
+<<<<<<< HEAD
     public int get_pos_f_jugador() {
         return pos_jugador_f;
     }
@@ -258,6 +271,22 @@ public class Tablero {
 
     public void set_pos_y_jugador(int pos_jugador_y) {
         this.pos_jugador_c = pos_jugador_y;
+=======
+    public int get_pos_x_jugador() {
+        return pos_jugador_x;
+    }
+
+    public int get_pos_y_jugador() {
+        return pos_jugador_y;
+    }
+
+    public void set_pos_x_jugador(int pos_jugador_x) {
+        this.pos_jugador_x = pos_jugador_x;
+    }
+
+    public void set_pos_y_jugador(int pos_jugador_y) {
+        this.pos_jugador_y = pos_jugador_y;
+>>>>>>> d521ff3af397c4592ec093a4623f0ed5933e00a6
     }
 
     /**
@@ -294,6 +323,7 @@ public class Tablero {
     public void setTamany(int tamany) {
         this.tamany = tamany;
     }
+<<<<<<< HEAD
 
     /**
      * @return the rutamapa
@@ -308,6 +338,8 @@ public class Tablero {
     public void setRutamapa(String rutamapa) {
         this.rutamapa = rutamapa;
     }
+=======
+>>>>>>> d521ff3af397c4592ec093a4623f0ed5933e00a6
 }
 
 /* Informe de la ultima vez 8 dic - en 5 hemos hecho:*/
