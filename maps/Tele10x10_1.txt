@@ -3,11 +3,7 @@ entrada,0,0
 paret,0,1
 paret,0,2
 tirita,0,3,7
-<<<<<<< HEAD
 forat,0,4,10
-=======
-paret,0,4
->>>>>>> d521ff3af397c4592ec093a4623f0ed5933e00a6
 paret,0,5
 paret,0,6
 paret,0,7
@@ -20,11 +16,7 @@ paret,2,4
 paret,2,6
 paret,2,7
 paret,2,9
-<<<<<<< HEAD
 forat,3,1,20
-=======
-paret,3,1
->>>>>>> d521ff3af397c4592ec093a4623f0ed5933e00a6
 paret,3,2
 paret,3,4
 paret,3,6
