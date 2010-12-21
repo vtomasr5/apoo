@@ -14,7 +14,7 @@
 package main;
 
 import game.composite.*;
-import game.decorator.JugadorHuma;
+import game.decorator.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -39,6 +39,34 @@ import javax.swing.ImageIcon;
  */
 public class Finestra extends JFrame implements ActionListener, KeyListener {
 
+    /**
+     * @return the salut
+     */
+    public static JLabel getSalut() {
+        return salut;
+    }
+
+    /**
+     * @param aSalut the salut to set
+     */
+    public static void setSalut(JLabel aSalut) {
+        salut = aSalut;
+    }
+
+    /**
+     * @return the hab
+     */
+    public static JLabel getHab() {
+        return hab;
+    }
+
+    /**
+     * @param aHab the hab to set
+     */
+    public static void setHab(JLabel aHab) {
+        hab = aHab;
+    }
+
     private int files;
     private int columnes;
     private Casella[][] taulell;
@@ -51,12 +79,15 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     private JMenuItem itemMenuSortir;
     private JMenuItem itemMenuReset;
     private JLabel[][] imgMatriz;
+    private static JLabel info_salut, salut, info_hab, hab;
     private double tamany = 0.65;
     private int pos_jugador_f, pos_temp_f;
     private int pos_jugador_c, pos_temp_c;
     private Tablero tab;
+    private JPanel panelinfo;
 
-    public Finestra() {}
+    public Finestra() {
+    }
 
     /**
      * @param args the command line arguments
@@ -75,8 +106,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         taulell = tab.getTaulell(); //cogemos la variable taulell
 
         //inicializamos las variables de posicion del jugador, y del tablero
-        pos_jugador_f = tab.get_pos_f_jugador();
-        pos_jugador_c = tab.get_pos_c_jugador();
+        pos_jugador_f = tab.getJh().getX();
+        pos_jugador_c = tab.getJh().getY();
         //System.out.println(pos_jugador_x+" "+pos_jugador_y);
         files = tab.getFiles();
         columnes = tab.getColumnes();
@@ -84,6 +115,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
     public void initComponents() {
         panel = new JPanel();
+        panelinfo = new JPanel();
+
         menu = new JMenuBar();
 
         itemMenuArxiu = new JMenu("Joc");
@@ -161,7 +194,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 //    private Icon scale(String string, int i) { //creo que no hace falta
 //        throw new UnsupportedOperationException("Not yet implemented");
 //    }
-
     public void colocarComponents() {
         this.setLayout(new BorderLayout());
         this.setLocation(200, 100);
@@ -182,7 +214,20 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         SwingUtilities.updateComponentTreeUI(this);
 
 //        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        panelinfo.setPreferredSize(new Dimension(this.getHeight(), 20)); //Panel horizontal de arriba para informacion
 
+        info_salut = new JLabel("Salut:");
+        info_hab = new JLabel("Habilitat:");
+        setSalut(new JLabel("100"));
+        setHab(new JLabel("0"));
+
+        panelinfo.add(info_salut);
+        panelinfo.add(getSalut());
+        panelinfo.add(info_hab);
+
+        panelinfo.add(getHab());
+        this.add(panelinfo, BorderLayout.NORTH);
+        
         this.pack();
         setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -216,27 +261,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         } else if (e.getSource() == itemMenuSortir) {
             System.exit(0);
         }
-    }
-
-    public void inicializartaulell(Casella[][] m) {
-        for (int i = 0; i < m.length; i++) {
-            for (int j = 0; j < m[0].length; j++) {
-                m[i][j] = new Cami(i, j);
-            }
-        }
-    }
-
-    public void comprobar_taulell(Casella[][] taulell) {
-        for (int i = 0; i < taulell.length; i++) {
-            for (int j = 0; j < taulell.length; j++) {
-                System.out.println("comprovacio taulell: " + taulell[i][j]);
-            }
-        }
-    }
-
-    public void setFilesxColumnes(int files, int columnes) {
-        this.setFiles(files);
-        this.setColumnes(columnes);
     }
 
     public ArrayList<Casella> randomObjectes(ArrayList<Casella> objectes_random) {
@@ -350,16 +374,22 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                 }
                 System.out.print("DOWN" + e.getKeyChar());
                 break;
+            default:
+                break;
         }
         //cada vez que cambiamos la posicion del jugador,
         //llamamos a la funcion Tractar_element()
 
         System.out.println("pos_jugador: " + pos_jugador_f + " " + pos_jugador_c);
 
-        JugadorHuma jugador = new JugadorHuma(); //esto deberia ir en otro lado
+        //JugadorHuma jugador = new JugadorHuma(); //esto deberia ir en otro lado
 
-        tab.tractar_casella(pos_jugador_f, pos_jugador_c, jugador);
+        tab.tractar_casella(pos_jugador_f, pos_jugador_c);
 
+        System.out.print(Integer.toString(tab.getJh().getSalut()));
+        salut.setText(Integer.toString(tab.getJh().getSalut()));
+//        getSalut().setText("asdf");
+//        this.pack();
         if (taulell[pos_jugador_f][pos_jugador_c] instanceof Paret) {
             //si es pared, volvemos a la posicion anterior
             pos_jugador_c = pos_temp_c;
@@ -376,19 +406,28 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
     public void pintarCasilla(int x, int y) throws InterruptedException {
         Thread.sleep(1);
-        if (taulell[pos_temp_f][pos_temp_c] instanceof Forat) {
-            ImageIcon img = new ImageIcon("images/forat.png");
-            imgMatriz[pos_temp_f][pos_temp_c] = new JLabel(scale(img.getImage(), tamany));
-        } else {
-            taulell[pos_temp_f][pos_temp_c] = new Cami();
-//            imgMatriz[pos_temp_f][pos_temp_c].setOpaque(true);
-//            imgMatriz[pos_temp_f][pos_temp_c].setBackground(Color.BLACK);
-            ImageIcon img = new ImageIcon("images/arribada.gif");
-            imgMatriz[pos_temp_f][pos_temp_c] = new JLabel(scale(img.getImage(), tamany));
+        if (!(taulell[pos_temp_f][pos_temp_c] instanceof Entrada) && !(taulell[pos_temp_f][pos_temp_c] instanceof Sortida)) {
+            if (!(taulell[pos_temp_f][pos_temp_c] instanceof Forat)) {
+                ImageIcon img = new ImageIcon("images/fondo.png");
+                imgMatriz[pos_temp_f][pos_temp_c].setIcon(scale(img.getImage(), tamany));
+                imgMatriz[pos_temp_f][pos_temp_c].repaint();
+                this.pack();
+                taulell[pos_temp_f][pos_temp_c] = new Cami(); //reseteamos la casilla Tirita, Pocima o Bomba
+            }
+        } else if ((taulell[pos_temp_f][pos_temp_c] instanceof Entrada)) {
+            ImageIcon img = new ImageIcon("images/entrada.gif");
+            imgMatriz[pos_temp_f][pos_temp_c].setIcon(scale(img.getImage(), tamany));
             imgMatriz[pos_temp_f][pos_temp_c].repaint();
-        } 
-        imgMatriz[x][y].setOpaque(true);
-        imgMatriz[x][y].setBackground(Color.ORANGE);
+        } else if ((taulell[pos_temp_f][pos_temp_c] instanceof Sortida)) {
+            ImageIcon img = new ImageIcon("images/arribada.gif");
+            imgMatriz[pos_temp_f][pos_temp_c].setIcon(scale(img.getImage(), tamany));
+            imgMatriz[pos_temp_f][pos_temp_c].repaint();
+        }
+        ImageIcon img = new ImageIcon("images/mario1.png");
+        imgMatriz[x][y].setIcon(scale(img.getImage(), tamany));
+        imgMatriz[x][y].repaint();
+        salut.setText("110");
+        this.pack();
     }
 
     @Override

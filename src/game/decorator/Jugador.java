@@ -20,8 +20,9 @@ package game.decorator;
  */
 public abstract class Jugador {
     
-    private int salut;
-    private int habilitat; // experiencia del jugador
+    protected int salut;
+    protected int habilitat; // experiencia del jugador
+    protected int x, y;
 
     public abstract boolean play();
 //    public abstract void disminuirSalut(int val);
@@ -47,5 +48,33 @@ public abstract class Jugador {
      */
     public void setHabilitat(int habilitat) {
         this.habilitat = habilitat;
+    }
+
+    /**
+     * @return the y
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * @param y the y to set
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * @return the x
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * @param x the x to set
+     */
+    public void setX(int x) {
+        this.x = x;
     }
 }

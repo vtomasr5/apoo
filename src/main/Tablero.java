@@ -37,9 +37,10 @@ public class Tablero {
     private int cbomba;
     private int cforat;
     private int ctirita;
-    private int pos_jugador_f, pos_jugador_c;
+    //private int pos_jugador_f, pos_jugador_c;
     private ArrayList<Casella> objectes_random;
     private String rutamapa;
+    private JugadorHuma jh;
 
     public void inicializartaulell(Casella[][] m) {
         for (int i = 0; i < m.length; i++) {
@@ -91,6 +92,7 @@ public class Tablero {
         objectes_random.add(new Tirita());
         objectes_random.add(new Bomba());
         objectes_random.add(new Casella());
+        jh = new JugadorHuma();
 
         try {
 //            JFileChooser chooser = new JFileChooser();
@@ -118,7 +120,7 @@ public class Tablero {
             taulell = new Casella[fi][co];
             inicializartaulell(taulell); // inicializamos el taulell poniendo que todo sea Camino
         } catch (Exception e) {
-            System.out.println("ERROR AL INSERTAR DATOS");
+            System.out.println("ERROR AL INSERTAR DATOS " + e.toString());
         }
 
         try {
@@ -131,8 +133,8 @@ public class Tablero {
                     if (palabra.equals("entrada")) {
                         taulell[x][y] = new Entrada(x, y);
                         //Inicializamos la posicion del jugador en la entrada.
-                        pos_jugador_f = y;
-                        pos_jugador_c = x;
+                        getJh().setY(y);
+                        getJh().setY(x);
                     } else if (palabra.equals("sortida")) {
                         taulell[x][y] = new Sortida(x, y);
                     } else if (palabra.equals("pocima")) {
@@ -161,10 +163,10 @@ public class Tablero {
                     }
                 }
             }
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+cforat);
+            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+cforat);
             comprobar_taulell(taulell);
         } catch (Exception e) {
-            System.err.println("Error en la carga de datos");
+            System.err.println("Error en la carga de datos " + e.toString());
         }
     }
 
@@ -172,22 +174,22 @@ public class Tablero {
         return taulell;
     }
 
-    public void tractar_casella(int f, int c, Jugador jugador) {
+    public void tractar_casella(int f, int c) {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
             System.out.println("[tractar_casella] Bomba");
-            jugador.setSalut(jugador.getSalut() - 50); // -50 salut
+            getJh().setSalut(getJh().getSalut() - 50); // -50 salut
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Tirita) {
             System.out.println("[tractar_casella] Tirita");
-            jugador.setSalut(jugador.getSalut() + 20); // +20 salut
+            getJh().setSalut(getJh().getSalut() + 20); // +20 salut
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Forat) {
             System.out.println("[tractar_casella] Forat");
-            jugador.setSalut(0); //Termina el juego
+            getJh().setSalut(0); //Termina el juego
         } else if (taulell[f][c] instanceof Pocima) {
             System.out.println("[tractar_casella] Pocima");
-            jugador.setHabilitat(jugador.getHabilitat() + 10); // +10 habilitat
+            getJh().setHabilitat(getJh().getHabilitat() + 10); // +10 habilitat
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
             System.out.println("[tractar_casella] Sortida");
@@ -244,22 +246,6 @@ public class Tablero {
         return files;
     }
 
-    public int get_pos_f_jugador() {
-        return pos_jugador_f;
-    }
-
-    public int get_pos_c_jugador() {
-        return pos_jugador_c;
-    }
-
-    public void set_pos_x_jugador(int pos_jugador_x) {
-        this.pos_jugador_f = pos_jugador_x;
-    }
-
-    public void set_pos_y_jugador(int pos_jugador_y) {
-        this.pos_jugador_c = pos_jugador_y;
-    }
-
     /**
      * @param files the files to set
      */
@@ -308,15 +294,18 @@ public class Tablero {
     public void setRutamapa(String rutamapa) {
         this.rutamapa = rutamapa;
     }
-}
 
-/* Informe de la ultima vez 8 dic - en 5 hemos hecho:*/
-/*
- * Creamos todas las clases y conseguimos hacer que lea del fichero los objetos
- * y los ponga en la matriz.
- * Tambien los objetos de casilla compuesta.
- * Cada casilla compuesta puede tener varios objetos y otra casilla compuesta.
- *
- * Siguiente paso:
- * Implementar la parte decorator al composite
- */
+    /**
+     * @return the jh
+     */
+    public JugadorHuma getJh() {
+        return jh;
+    }
+
+    /**
+     * @param jh the jh to set
+     */
+    public void setJh(JugadorHuma jh) {
+        this.jh = jh;
+    }
+}

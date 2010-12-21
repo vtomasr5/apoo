@@ -33,6 +33,48 @@ public class SuperJugador extends JugadorHuma {
         return true;
     }
 
+    @Override
+    public int getSalut() {
+        return salut;
+    }
+
+    @Override
+    public void setSalut(int salut) {
+        this.salut = salut;
+    }
+
+    /**
+     * @return the y
+     */
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * @param y the y to set
+     */
+    @Override
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * @return the x
+     */
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * @param x the x to set
+     */
+    @Override
+    public void setX(int x) {
+        this.x = x;
+    }
+
 //    @Override
 //    public void disminuirSalut(int val) {
 //        int val2 = val/2; // Sa salut d'es super jugador se redueix lentament

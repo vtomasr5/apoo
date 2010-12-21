@@ -20,8 +20,6 @@ package game.decorator;
  */
 public class Enemic extends Jugador {
 
-    private int habilitat;
-
     @Override
     public boolean play() {
         System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
@@ -37,6 +35,48 @@ public class Enemic extends Jugador {
     @Override
     public void setHabilitat(int habilitat) {
         this.habilitat = habilitat;
+    }
+
+    @Override
+    public int getSalut() {
+        return salut;
+    }
+
+    @Override
+    public void setSalut(int salut) {
+        this.salut = salut;
+    }
+
+    /**
+     * @return the y
+     */
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * @param y the y to set
+     */
+    @Override
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * @return the x
+     */
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * @param x the x to set
+     */
+    @Override
+    public void setX(int x) {
+        this.x = x;
     }
 
 //    @Override
