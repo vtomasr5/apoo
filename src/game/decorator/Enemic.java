@@ -21,10 +21,9 @@ package game.decorator;
 public class Enemic extends Jugador {
 
     @Override
-    public boolean play() {
+    public void play() {
         System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
         // Implementació de com juga s'Enemic
-        return true;
     }
 
     @Override
@@ -47,51 +46,49 @@ public class Enemic extends Jugador {
         this.salut = salut;
     }
 
-    /**
-     * @return the y
-     */
     @Override
     public int getY() {
         return y;
     }
 
-    /**
-     * @param y the y to set
-     */
     @Override
     public void setY(int y) {
         this.y = y;
     }
 
-    /**
-     * @return the x
-     */
     @Override
     public int getX() {
         return x;
     }
 
-    /**
-     * @param x the x to set
-     */
     @Override
     public void setX(int x) {
         this.x = x;
     }
 
-//    @Override
-//    public void disminuirSalut(int val) {
-//        setSalut(getSalut() - (val - 1));
-//        System.out.println("Salut reduida " + val + " punts");
-//    }
+    @Override
+    public void disminuirSalut(int val) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-//    public boolean atacarJugador(Jugador p, int salut) {
-//        p.disminuirSalut(salut);
-//        return true;
-//    }
+    @Override
+    public void augmentarSalut(int val) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-//    @Override
-//    public void augmentarSalut(int val) {
-//        throw new UnsupportedOperationException("Not supported yet.");
-//    }
+    @Override
+    public void augmentarHabilitat(int val) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void disminuirHabilitat(int val) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getClasseJugador(Jugador jug) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 }

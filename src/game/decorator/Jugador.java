@@ -24,57 +24,19 @@ public abstract class Jugador {
     protected int habilitat; // experiencia del jugador
     protected int x, y;
 
-    public abstract boolean play();
-//    public abstract void disminuirSalut(int val);
-//    public abstract void augmentarSalut(int val);
+    public abstract void play(); // tal vegada no faci falta
+    public abstract void disminuirSalut(int val);
+    public abstract void augmentarSalut(int val);
+    public abstract void augmentarHabilitat(int val);
+    public abstract void disminuirHabilitat(int val);
+    public abstract String getClasseJugador(Jugador jug);
+    public abstract int getSalut();
+    public abstract void setSalut(int sal);
+    public abstract int getHabilitat();
+    public abstract void setHabilitat(int hab);
+    public abstract int getX();
+    public abstract void setX(int x);
+    public abstract int getY();
+    public abstract void setY(int y);
 
-    public int getSalut() {
-        return salut;
-    }
-
-    public void setSalut(int salut) {
-        this.salut = salut;
-    }
-
-    /**
-     * @return the habilitat
-     */
-    public int getHabilitat() {
-        return habilitat;
-    }
-
-    /**
-     * @param habilitat the habilitat to set
-     */
-    public void setHabilitat(int habilitat) {
-        this.habilitat = habilitat;
-    }
-
-    /**
-     * @return the y
-     */
-    public int getY() {
-        return y;
-    }
-
-    /**
-     * @param y the y to set
-     */
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    /**
-     * @return the x
-     */
-    public int getX() {
-        return x;
-    }
-
-    /**
-     * @param x the x to set
-     */
-    public void setX(int x) {
-        this.x = x;
-    }
 }

@@ -39,34 +39,6 @@ import javax.swing.ImageIcon;
  */
 public class Finestra extends JFrame implements ActionListener, KeyListener {
 
-    /**
-     * @return the salut
-     */
-    public static JLabel getSalut() {
-        return salut;
-    }
-
-    /**
-     * @param aSalut the salut to set
-     */
-    public static void setSalut(JLabel aSalut) {
-        salut = aSalut;
-    }
-
-    /**
-     * @return the hab
-     */
-    public static JLabel getHab() {
-        return hab;
-    }
-
-    /**
-     * @param aHab the hab to set
-     */
-    public static void setHab(JLabel aHab) {
-        hab = aHab;
-    }
-
     private int files;
     private int columnes;
     private Casella[][] taulell;
@@ -79,7 +51,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     private JMenuItem itemMenuSortir;
     private JMenuItem itemMenuReset;
     private JLabel[][] imgMatriz;
-    private static JLabel info_salut, salut, info_hab, hab;
+    private static JLabel info_salut, label_salut, info_hab, label_hab, info_estat, estatJugador;
     private double tamany = 0.65;
     private int pos_jugador_f, pos_temp_f;
     private int pos_jugador_c, pos_temp_c;
@@ -124,6 +96,13 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         itemMenuReset = new JMenuItem("Recarregar mapa actual");
         itemMenuSeparador1 = new JSeparator();
         itemMenuSortir = new JMenuItem("Sortir");
+
+        info_salut = new JLabel("Salut: ");
+        info_hab = new JLabel("Habilitat: ");
+        info_estat = new JLabel("Estat:" );
+        setLabelSalut(new JLabel("100 "));
+        setLabelHab(new JLabel("0 "));
+        setLabelEstatJugador(new JLabel(" "));
 
         addKeyListener(this); //control eventos de teclado
     }
@@ -191,9 +170,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         return new ImageIcon(dst);
     }
 
-//    private Icon scale(String string, int i) { //creo que no hace falta
-//        throw new UnsupportedOperationException("Not yet implemented");
-//    }
     public void colocarComponents() {
         this.setLayout(new BorderLayout());
         this.setLocation(200, 100);
@@ -207,7 +183,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         itemMenuArxiu.add(itemMenuSortir);
 
         this.setJMenuBar(menu);
-        //this.getContentPane().add(panel);
+        this.getContentPane().add(panel);
 
         this.setResizable(true);
         Finestra.initLookAndFeel();
@@ -216,16 +192,13 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 //        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         panelinfo.setPreferredSize(new Dimension(this.getHeight(), 20)); //Panel horizontal de arriba para informacion
 
-        info_salut = new JLabel("Salut:");
-        info_hab = new JLabel("Habilitat:");
-        setSalut(new JLabel("100"));
-        setHab(new JLabel("0"));
-
         panelinfo.add(info_salut);
-        panelinfo.add(getSalut());
+        panelinfo.add(getLabelSalut());
         panelinfo.add(info_hab);
-
-        panelinfo.add(getHab());
+        panelinfo.add(getLabelHab());
+        panelinfo.add(info_estat);
+        panelinfo.add(getLabelEstatJugador());
+        
         this.add(panelinfo, BorderLayout.NORTH);
         
         this.pack();
@@ -382,13 +355,13 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
         System.out.println("pos_jugador: " + pos_jugador_f + " " + pos_jugador_c);
 
-        //JugadorHuma jugador = new JugadorHuma(); //esto deberia ir en otro lado
+        //Decorador jugador = new Decorador(); //esto deberia ir en otro lado
 
         tab.tractar_casella(pos_jugador_f, pos_jugador_c);
 
         System.out.print(Integer.toString(tab.getJh().getSalut()));
-        salut.setText(Integer.toString(tab.getJh().getSalut()));
-//        getSalut().setText("asdf");
+        label_salut.setText(Integer.toString(tab.getJh().getSalut()));
+//        getLabelSalut().setText("asdf");
 //        this.pack();
         if (taulell[pos_jugador_f][pos_jugador_c] instanceof Paret) {
             //si es pared, volvemos a la posicion anterior
@@ -426,7 +399,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         ImageIcon img = new ImageIcon("images/mario1.png");
         imgMatriz[x][y].setIcon(scale(img.getImage(), tamany));
         imgMatriz[x][y].repaint();
-        salut.setText("110");
+        //label_salut.setText("110");
         this.pack();
     }
 
@@ -439,4 +412,47 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    /**
+     * @return the salut
+     */
+    public static JLabel getLabelSalut() {
+        return label_salut;
+    }
+
+    /**
+     * @param aSalut the salut to set
+     */
+    public static void setLabelSalut(JLabel aSalut) {
+        label_salut = aSalut;
+    }
+
+    /**
+     * @return the hab
+     */
+    public static JLabel getLabelHab() {
+        return label_hab;
+    }
+
+    /**
+     * @param aHab the hab to set
+     */
+    public static void setLabelHab(JLabel aHab) {
+        label_hab = aHab;
+    }
+
+    /**
+     * @return the estatJugador
+     */
+    public static JLabel getLabelEstatJugador() {
+        return estatJugador;
+    }
+
+    /**
+     * @param aEstatJugador the estatJugador to set
+     */
+    public static void setLabelEstatJugador(JLabel aEstatJugador) {
+        estatJugador = aEstatJugador;
+    }
+
 }

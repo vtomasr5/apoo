@@ -15,18 +15,50 @@
 package game.decorator;
 
 /**
- * Clase que implementa el Jugador Humà
+ *
  * @author vjuan
  */
 public class JugadorHuma extends Jugador {
 
-//    public int x, y;
+    @Override
+    public void disminuirSalut(int val) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
-    public boolean play() {
-        System.out.println("Jugador (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
-        // Implementació de com juga es JugadorHuma
-        return true;
+    public void augmentarSalut(int val) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void augmentarHabilitat(int val) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void disminuirHabilitat(int val) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public String getClasseJugador(Jugador jug) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void play() {
+        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
+        // Implementació de com juga s'Enemic
+    }
+
+    @Override
+    public int getHabilitat() {
+        return habilitat;
+    }
+
+    @Override
+    public void setHabilitat(int habilitat) {
+        this.habilitat = habilitat;
     }
 
     @Override
@@ -39,47 +71,24 @@ public class JugadorHuma extends Jugador {
         this.salut = salut;
     }
 
-    /**
-     * @return the y
-     */
     @Override
     public int getY() {
         return y;
     }
 
-    /**
-     * @param y the y to set
-     */
     @Override
     public void setY(int y) {
         this.y = y;
     }
 
-    /**
-     * @return the x
-     */
     @Override
     public int getX() {
         return x;
     }
 
-    /**
-     * @param x the x to set
-     */
     @Override
     public void setX(int x) {
         this.x = x;
     }
 
-//    @Override
-//    public void disminuirSalut(int val) {
-//        setSalut(getSalut() - val);
-//        System.out.println("Salut reduida " + val + " punts");
-//    }
-//
-//    @Override
-//    public void augmentarSalut(int val) {
-//        setSalut(getSalut() + val);
-//        System.out.println("Salut augmentada " + val + " punts");
-//    }
 }

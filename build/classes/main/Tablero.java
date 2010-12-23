@@ -92,7 +92,7 @@ public class Tablero {
         objectes_random.add(new Tirita());
         objectes_random.add(new Bomba());
         objectes_random.add(new Casella());
-        jh = new JugadorHuma();
+        setJh(new JugadorHuma());
 
         try {
 //            JFileChooser chooser = new JFileChooser();
@@ -150,7 +150,6 @@ public class Tablero {
                         taulell[x][y] = new Tirita(x, y, getValor());
                         ctirita++;
                     } else if (palabra.equals("forat")) {
-                        
                         setValor(Integer.valueOf(str.nextToken()).intValue());
                         taulell[x][y] = new Forat(x, y, getValor());
                         cforat++;
