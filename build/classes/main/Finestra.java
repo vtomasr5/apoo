@@ -58,8 +58,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     private Tablero tab;
     private JPanel panelinfo;
 
-    public Finestra() {
-    }
+    public Finestra() {}
 
     /**
      * @param args the command line arguments
@@ -74,6 +73,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
     public void initTablero(File fitxer) {
         tab = new Tablero();
+        tab.initObjectes();
         tab.leerArchivo(fitxer); //leemos el archivo y guardamos el mapa en la variable taulell
         taulell = tab.getTaulell(); //cogemos la variable taulell
 
@@ -100,21 +100,21 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         info_salut = new JLabel("Salut: ");
         info_hab = new JLabel("Habilitat: ");
         info_estat = new JLabel("Estat:" );
-        setLabelSalut(new JLabel("100 "));
+        setLabelSalut(new JLabel("100"));
         setLabelHab(new JLabel("0 "));
-        setLabelEstatJugador(new JLabel(" "));
+        setLabelEstatJugador(new JLabel(""));
 
         addKeyListener(this); //control eventos de teclado
     }
 
     public void dibujarElementos(Casella[][] taulell, int filas, int columnas) {
-
         //panel = new JPanel(new GridLayout(filas, columnas));
         panel.removeAll();
         panel.setLayout(new GridLayout(filas, columnas));
         panel.setBackground(Color.BLACK);// color del camino del laberinto
 
-
+        tamany = tab.getTamany()/100;
+//        System.out.println("tamany: "+tamany);
         imgMatriz = new JLabel[filas][columnas];
         for (int f = 0; f < filas; f++) {
             for (int c = 0; c < columnas; c++) {
@@ -150,10 +150,26 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                     ImageIcon img = new ImageIcon("images/pocima.png");
                     imgMatriz[f][c] = new JLabel(scale(img.getImage(), tamany));
 
+                } else if (taulell[f][c] instanceof Casella) {
+                    ImageIcon img = new ImageIcon("images/composta2.png");
+                    imgMatriz[f][c] = new JLabel(scale(img.getImage(), tamany));
+
                 }
                 panel.add(imgMatriz[f][c]);
             }
         }
+        // Inici moviments dels enemics (threads)
+        moureEnemics0 me0 = new moureEnemics0();
+        me0.start();
+        moureEnemics1 me1 = new moureEnemics1();
+        me1.start();
+        moureEnemics2 me2 = new moureEnemics2();
+        me2.start();
+        moureEnemics3 me3 = new moureEnemics3();
+        me3.start();
+        moureEnemics4 me4 = new moureEnemics4();
+        me4.start();
+
         this.add(panel, BorderLayout.CENTER);
         this.pack();
     }
@@ -173,7 +189,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     public void colocarComponents() {
         this.setLayout(new BorderLayout());
         this.setLocation(200, 100);
-        this.setMinimumSize(new Dimension(800, 600));
+        this.setPreferredSize(new Dimension(700, 700));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         menu.add(itemMenuArxiu);
@@ -185,7 +201,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         this.setJMenuBar(menu);
         this.getContentPane().add(panel);
 
-        this.setResizable(true);
+        this.setResizable(false);
         Finestra.initLookAndFeel();
         SwingUtilities.updateComponentTreeUI(this);
 
@@ -327,57 +343,53 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                 if (pos_jugador_c > 0) {
                     pos_jugador_c -= 1;
                 }
-                System.out.print("LEFT" + e.getKeyChar());
+//                System.out.println("LEFT" + e.getKeyChar());
                 break;
             case KeyEvent.VK_RIGHT:
                 if (pos_jugador_c < columnes - 1) {
                     pos_jugador_c += 1;
                 }
-                System.out.print("RIGHT" + e.getKeyChar());
+//                System.out.println("RIGHT" + e.getKeyChar());
                 break;
             case KeyEvent.VK_UP:
                 if (pos_jugador_f > 0) {
                     pos_jugador_f -= 1;
                 }
-                System.out.print("UP" + e.getKeyChar());
+//                System.out.println("UP" + e.getKeyChar());
                 break;
             case KeyEvent.VK_DOWN:
                 if (pos_jugador_f < files - 1) {
                     pos_jugador_f += 1;
                 }
-                System.out.print("DOWN" + e.getKeyChar());
+//                System.out.println("DOWN" + e.getKeyChar());
                 break;
             default:
                 break;
         }
-        //cada vez que cambiamos la posicion del jugador,
-        //llamamos a la funcion Tractar_element()
-
-        System.out.println("pos_jugador: " + pos_jugador_f + " " + pos_jugador_c);
-
-        //Decorador jugador = new Decorador(); //esto deberia ir en otro lado
-
+        // cada vez que cambiamos la posicion del jugador,llamamos a la funcion Tractar_element()
         tab.tractar_casella(pos_jugador_f, pos_jugador_c);
 
-        System.out.print(Integer.toString(tab.getJh().getSalut()));
+        // actualizamos la info de los labels
         label_salut.setText(Integer.toString(tab.getJh().getSalut()));
-//        getLabelSalut().setText("asdf");
-//        this.pack();
+        label_hab.setText(Integer.toString(tab.getJh().getHabilitat()));
+
+        System.out.println("pos_jugador f:" + pos_jugador_f + " c:" + pos_jugador_c);
+
+        // si es pared, volvemos a la posicion anterior
         if (taulell[pos_jugador_f][pos_jugador_c] instanceof Paret) {
-            //si es pared, volvemos a la posicion anterior
             pos_jugador_c = pos_temp_c;
             pos_jugador_f = pos_temp_f;
         }
 
+        // pintamos la casilla actual donde se encuentra el jugador
         try {
-            pintarCasilla(pos_jugador_f, pos_jugador_c);
+            pintarCasilla(pos_jugador_f, pos_jugador_c, e);
         } catch (InterruptedException ex) {
             Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
-    public void pintarCasilla(int x, int y) throws InterruptedException {
+    public void pintarCasilla(int x, int y, KeyEvent e) throws InterruptedException {
         Thread.sleep(1);
         if (!(taulell[pos_temp_f][pos_temp_c] instanceof Entrada) && !(taulell[pos_temp_f][pos_temp_c] instanceof Sortida)) {
             if (!(taulell[pos_temp_f][pos_temp_c] instanceof Forat)) {
@@ -396,10 +408,20 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
             imgMatriz[pos_temp_f][pos_temp_c].setIcon(scale(img.getImage(), tamany));
             imgMatriz[pos_temp_f][pos_temp_c].repaint();
         }
-        ImageIcon img = new ImageIcon("images/mario1.png");
-        imgMatriz[x][y].setIcon(scale(img.getImage(), tamany));
-        imgMatriz[x][y].repaint();
-        //label_salut.setText("110");
+
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            ImageIcon img = new ImageIcon("images/marioD.png"); // dreta
+            imgMatriz[x][y].setIcon(scale(img.getImage(), tamany));
+            imgMatriz[x][y].repaint();
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            ImageIcon img = new ImageIcon("images/marioE.png"); // esquerra
+            imgMatriz[x][y].setIcon(scale(img.getImage(), tamany));
+            imgMatriz[x][y].repaint();
+        } else {
+            ImageIcon img = new ImageIcon("images/mario1.png"); // amunt i avall
+            imgMatriz[x][y].setIcon(scale(img.getImage(), tamany));
+            imgMatriz[x][y].repaint();
+        }
         this.pack();
     }
 
@@ -454,5 +476,143 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     public static void setLabelEstatJugador(JLabel aEstatJugador) {
         estatJugador = aEstatJugador;
     }
+    
+    private class moureEnemics0 extends Thread {
+
+        private ArrayList<Enemic> enemics;
+
+        public moureEnemics0() {
+            super();
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                enemics = tab.getEnemics();
+                try {
+                    pintarRecorrido(getEnemic(enemics, 0).getRecorregut());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    private class moureEnemics1 extends Thread {
+
+        private ArrayList<Enemic> enemics;
+
+        public moureEnemics1() {
+            super();
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                enemics = tab.getEnemics();
+                try {
+                    pintarRecorrido(getEnemic(enemics, 1).getRecorregut());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    private class moureEnemics2 extends Thread {
+
+        private ArrayList<Enemic> enemics;
+
+        public moureEnemics2() {
+            super();
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                enemics = tab.getEnemics();
+                try {
+                    pintarRecorrido(getEnemic(enemics, 2).getRecorregut());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    private class moureEnemics3 extends Thread {
+
+        private ArrayList<Enemic> enemics;
+
+        public moureEnemics3() {
+            super();
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                enemics = tab.getEnemics();
+                try {
+                    pintarRecorrido(getEnemic(enemics, 3).getRecorregut());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    private class moureEnemics4 extends Thread {
+
+        private ArrayList<Enemic> enemics;
+
+        public moureEnemics4() {
+            super();
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                enemics = tab.getEnemics();
+                try {
+                    pintarRecorrido(getEnemic(enemics, 4).getRecorregut());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }    
+
+    public Enemic getEnemic(ArrayList<Enemic> enemics, int i) {
+        return enemics.get(i);
+    }
+
+    public void pintarRecorrido(ArrayList<Casella> r) throws InterruptedException {
+        for (int i = 2; i < r.size(); i++) {
+//            System.out.println("1size " + r.size() + " i: " + i);
+            ImageIcon img = new ImageIcon("images/enemic.png");
+            imgMatriz[r.get(i).getX()][r.get(i).getY()].setIcon(scale(img.getImage(), tamany));
+            imgMatriz[r.get(i).getX()][r.get(i).getY()].repaint();
+
+            ImageIcon img2 = new ImageIcon("images/fondo.png");
+            imgMatriz[r.get(i-1).getX()][r.get(i-1).getY()].setIcon(scale(img2.getImage(), tamany));
+            imgMatriz[r.get(i-1).getX()][r.get(i-1).getY()].repaint();
+
+            Thread.sleep(500);
+        }
+
+        for (int i = r.size()-2; i > 0; i--) {
+//            System.out.println("size " + r.size() + " i: " + i);
+            ImageIcon img = new ImageIcon("images/enemic.png");
+            imgMatriz[r.get(i).getX()][r.get(i).getY()].setIcon(scale(img.getImage(), tamany));
+            imgMatriz[r.get(i).getX()][r.get(i).getY()].repaint();
+
+            ImageIcon img2 = new ImageIcon("images/fondo.png");
+            imgMatriz[r.get(i+1).getX()][r.get(i+1).getY()].setIcon(scale(img2.getImage(), tamany));
+            imgMatriz[r.get(i+1).getX()][r.get(i+1).getY()].repaint();
+
+            Thread.sleep(500);
+        }
+    }
+
 
 }

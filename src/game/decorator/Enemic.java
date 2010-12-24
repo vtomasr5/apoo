@@ -14,36 +14,44 @@
 
 package game.decorator;
 
+import game.composite.Casella;
+import java.util.ArrayList;
+
 /**
  * Clase que implementa l'Enemic del Jugador
  * @author vjuan
  */
 public class Enemic extends Jugador {
 
+    private ArrayList<Casella> recorregut;
+
+    public Enemic(ArrayList<Casella> recorregut) {
+        setRecorregut(recorregut);
+    }
+
     @Override
     public void play() {
-        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
-        // Implementació de com juga s'Enemic
+        System.out.println("Enemic està a punt per jugar");
     }
 
     @Override
     public int getHabilitat() {
-        return habilitat;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setHabilitat(int habilitat) {
-        this.habilitat = habilitat;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public int getSalut() {
-        return salut;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
     public void setSalut(int salut) {
-        this.salut = salut;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -86,9 +94,18 @@ public class Enemic extends Jugador {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Override
-    public String getClasseJugador(Jugador jug) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    /**
+     * @return the recorregut
+     */
+    public ArrayList<Casella> getRecorregut() {
+        return recorregut;
+    }
+
+    /**
+     * @param recorregut the recorregut to set
+     */
+    public void setRecorregut(ArrayList<Casella> recorregut) {
+        this.recorregut = recorregut;
     }
     
 }

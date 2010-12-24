@@ -32,7 +32,7 @@ public class Tablero {
     private int valor;
     private int files;
     private int columnes;
-    private int tamany;
+    private double tamany;
     private int cpocima;
     private int cbomba;
     private int cforat;
@@ -40,7 +40,71 @@ public class Tablero {
     //private int pos_jugador_f, pos_jugador_c;
     private ArrayList<Casella> objectes_random;
     private String rutamapa;
+    private Enemic enemic1, enemic2, enemic3, enemic4, enemic5;
     private JugadorHuma jh;
+    private ArrayList<Enemic> enemics;
+    private ArrayList<Casella> recorrido_enemic1, recorrido_enemic2, recorrido_enemic3, recorrido_enemic4, recorrido_enemic5;
+
+    public Tablero() {
+        enemics = new ArrayList<Enemic>();
+        recorrido_enemic1 = new ArrayList<Casella>();
+        recorrido_enemic2 = new ArrayList<Casella>();
+        recorrido_enemic3 = new ArrayList<Casella>();
+        recorrido_enemic4 = new ArrayList<Casella>();
+        recorrido_enemic5 = new ArrayList<Casella>();
+        initRecorridoEnemics();
+    }
+
+    public void initRecorridoEnemics() {
+        // enemic del moviment en forma de N
+        recorrido_enemic1.add(new Casella(6,5)); // no se veu el moviment
+        recorrido_enemic1.add(new Casella(7,5));
+        recorrido_enemic1.add(new Casella(8,5));
+        recorrido_enemic1.add(new Casella(9,5));
+        recorrido_enemic1.add(new Casella(9,4));
+        recorrido_enemic1.add(new Casella(9,3));
+        recorrido_enemic1.add(new Casella(10,3));
+        recorrido_enemic1.add(new Casella(11,3));
+        recorrido_enemic1.add(new Casella(12,3));
+
+        recorrido_enemic2.add(new Casella(8,9)); // no se veu el moviment
+        recorrido_enemic2.add(new Casella(9,9));
+        recorrido_enemic2.add(new Casella(9,10));
+        recorrido_enemic2.add(new Casella(9,11));
+        recorrido_enemic2.add(new Casella(8,11));
+
+        recorrido_enemic3.add(new Casella(4,11)); // no se veu el moviment
+        recorrido_enemic3.add(new Casella(5,11));
+        recorrido_enemic3.add(new Casella(6,12));
+        recorrido_enemic3.add(new Casella(6,13));
+        recorrido_enemic3.add(new Casella(6,14));
+
+        // enemic d'adalt a l'esquerra
+        recorrido_enemic4.add(new Casella(3,7)); // no se veu el moviment
+        recorrido_enemic4.add(new Casella(4,5));
+        recorrido_enemic4.add(new Casella(3,5));
+        recorrido_enemic4.add(new Casella(2,5));
+        recorrido_enemic4.add(new Casella(1,5));
+        recorrido_enemic4.add(new Casella(1,4)); // afegit
+
+        // enemic de sa sortida
+        recorrido_enemic5.add(new Casella(12,14)); // no se veu el moviment
+        recorrido_enemic5.add(new Casella(13,19));
+        recorrido_enemic5.add(new Casella(14,19));
+        recorrido_enemic5.add(new Casella(14,18));
+    }
+
+    public ArrayList<Enemic> getEnemics() {
+        return enemics;
+    }
+
+    public void setEnemics(ArrayList<Enemic> enemics) {
+        this.enemics = enemics;
+    }
+
+    public void afegirEnemic(Enemic bot) {
+        enemics.add(bot);
+    }
 
     public void inicializartaulell(Casella[][] m) {
         for (int i = 0; i < m.length; i++) {
@@ -75,24 +139,40 @@ public class Tablero {
         return array;
     }
 
-    public void leerArchivo(File f) {
+     public void initObjectes() {
         cbomba = 0;
         cforat = 0;
         ctirita = 0;
         cpocima = 0;
-
-        FileReader elFichero;
-        BufferedReader lector = null;
-        String unaLinea;
-        StringTokenizer str;
-
+        
         objectes_random = new ArrayList<Casella>();
 
         objectes_random.add(new Pocima());
         objectes_random.add(new Tirita());
         objectes_random.add(new Bomba());
         objectes_random.add(new Casella());
+
         setJh(new JugadorHuma());
+        getJh().setSalut(100);
+
+        enemic1 = new Enemic(recorrido_enemic1);
+        enemic2 = new Enemic(recorrido_enemic2);
+        enemic3 = new Enemic(recorrido_enemic3);
+        enemic4 = new Enemic(recorrido_enemic4);
+        enemic5 = new Enemic(recorrido_enemic5);
+
+        afegirEnemic(enemic1);
+        afegirEnemic(enemic2);
+        afegirEnemic(enemic3);
+        afegirEnemic(enemic4);
+        afegirEnemic(enemic5);
+     }
+
+    public void leerArchivo(File f) {
+        FileReader elFichero;
+        BufferedReader lector = null;
+        String unaLinea;
+        StringTokenizer str;
 
         try {
 //            JFileChooser chooser = new JFileChooser();
@@ -100,8 +180,7 @@ public class Tablero {
 //            chooser.showOpenDialog(null);
 //            File archivo = chooser.getSelectedFile();
             elFichero = new FileReader(f);
-            System.out.print("\nfitxer: \n" + elFichero.toString());
-//            elFichero = new FileReader("tele5x5_2.txt");
+            System.out.println("\nfitxer: " + f.getCanonicalPath());
             lector = new BufferedReader(elFichero);
             unaLinea = lector.readLine();
             str = new StringTokenizer(unaLinea, ",");
@@ -112,8 +191,8 @@ public class Tablero {
             int fi = Integer.valueOf(str.nextToken()).intValue();
             int co = Integer.valueOf(str.nextToken()).intValue();
             setFilesxColumnes(fi, co); // insertamos las filas y las columnas
-            //setTamany((640 + fi) / fi); // indicamos el tamaño de la ventana;
-//            ventana.setTamaño((tamany / 100));
+            setTamany((700 + fi) / fi); // indicamos el tamaño de la ventana;
+
             if ((fi <= 0) || (co <= 0)) {
                 throw new Exception(); // si los indices de la taulell son inferiores a cero, lanzamos excepcion.
             }
@@ -162,8 +241,7 @@ public class Tablero {
                     }
                 }
             }
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+cforat);
-            comprobar_taulell(taulell);
+
         } catch (Exception e) {
             System.err.println("Error en la carga de datos " + e.toString());
         }
@@ -177,7 +255,7 @@ public class Tablero {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
             System.out.println("[tractar_casella] Bomba");
-            getJh().setSalut(getJh().getSalut() - 50); // -50 salut
+            getJh().setSalut(getJh().getSalut() - 30); // -50 salut
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Tirita) {
             System.out.println("[tractar_casella] Tirita");
@@ -206,16 +284,6 @@ public class Tablero {
         }
     }
 
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String[] args) {
-//        Tablero joc = new Tablero();
-//        //joc.leerArchivo(file);
-//
-//        Finestra f = new Finestra();
-//        f.pintarFinestra();
-//    }
     /**
      * Genera numeros aleatoris dins un interval
      */
@@ -269,7 +337,7 @@ public class Tablero {
     /**
      * @return the tamany
      */
-    public int getTamany() {
+    public double getTamany() {
         return tamany;
     }
 

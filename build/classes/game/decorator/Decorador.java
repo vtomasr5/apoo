@@ -20,20 +20,12 @@ package game.decorator;
  */
 public abstract class Decorador extends Jugador {
 
-    private Jugador jugador;
+    protected Jugador jugador;
+    protected int factor_salut; // increment o decrement de la salut del jugador
+    protected int factor_habilitat; // increment o decrement de la habilitat del jugador
 
-    /**
-     * @return the jugador
-     */
-    public Jugador getJugador() {
-        return jugador;
-    }
-
-    /**
-     * @param jugador the jugador to set
-     */
-    public void setJugador(Jugador jugador) {
-        this.jugador = jugador;
-    }
-
+    public abstract void canviarComportament(int factor_salut, int factor_habilitat);
+    public abstract Jugador getJugador();
+    public abstract void setJugador(Jugador jug);
+    public abstract String getClasseJugador(Jugador jug);
 }

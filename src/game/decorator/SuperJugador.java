@@ -22,27 +22,27 @@ public class SuperJugador extends Decorador {
 
     @Override
     public void disminuirSalut(int val) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        setSalut(getSalut() - (val - getFactor_salut()));
     }
 
     @Override
     public void augmentarSalut(int val) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        setSalut(getSalut() + (val + getFactor_salut()));
     }
 
     @Override
     public void augmentarHabilitat(int val) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        setHabilitat(getHabilitat() + (val + getFactor_habilitat()));
     }
 
     @Override
     public void disminuirHabilitat(int val) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        setHabilitat(getHabilitat() - (val - getFactor_habilitat()));
     }
 
     @Override
     public String getClasseJugador(Jugador jug) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return jug.getClass().getCanonicalName();
     }
 
     @Override
@@ -120,8 +120,9 @@ public class SuperJugador extends Decorador {
     }
 
     @Override
-    public void canviarComportament(Jugador jug, int factor_salut, int factor_habilitat) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void canviarComportament(int factor_salut, int factor_habilitat) {
+        this.setFactor_salut(factor_salut);
+        this.setFactor_habilitat(factor_habilitat);
     }
 
     @Override

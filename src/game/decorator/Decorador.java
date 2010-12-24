@@ -24,8 +24,8 @@ public abstract class Decorador extends Jugador {
     protected int factor_salut; // increment o decrement de la salut del jugador
     protected int factor_habilitat; // increment o decrement de la habilitat del jugador
 
-    public abstract void canviarComportament(Jugador jug, int factor_salut, int factor_habilitat);
+    public abstract void canviarComportament(int factor_salut, int factor_habilitat);
     public abstract Jugador getJugador();
     public abstract void setJugador(Jugador jug);
-
+    public abstract String getClasseJugador(Jugador jug);
 }

@@ -22,27 +22,22 @@ public class JugadorHuma extends Jugador {
 
     @Override
     public void disminuirSalut(int val) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        setSalut(getSalut() - val);
     }
 
     @Override
     public void augmentarSalut(int val) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        setSalut(getSalut() + val);
     }
 
     @Override
     public void augmentarHabilitat(int val) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        setHabilitat(getHabilitat() + 5);
     }
 
     @Override
     public void disminuirHabilitat(int val) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public String getClasseJugador(Jugador jug) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        setHabilitat(getHabilitat() - val);
     }
 
     @Override

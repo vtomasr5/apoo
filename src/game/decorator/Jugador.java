@@ -29,7 +29,6 @@ public abstract class Jugador {
     public abstract void augmentarSalut(int val);
     public abstract void augmentarHabilitat(int val);
     public abstract void disminuirHabilitat(int val);
-    public abstract String getClasseJugador(Jugador jug);
     public abstract int getSalut();
     public abstract void setSalut(int sal);
     public abstract int getHabilitat();
