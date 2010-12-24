@@ -32,7 +32,7 @@ public class JugadorHuma extends Jugador {
 
     @Override
     public void augmentarHabilitat(int val) {
-        setHabilitat(getHabilitat() + 5);
+        setHabilitat(getHabilitat() + val);
     }
 
     @Override
@@ -85,5 +85,20 @@ public class JugadorHuma extends Jugador {
     public void setX(int x) {
         this.x = x;
     }
+
+    @Override
+    public String getClasseJugador() {
+        return this.getClass().getSimpleName();
+    }
+
+//    @Override
+//    public void setJugador(Jugador jug) {
+//        this.jugador = jug;
+//    }
+//
+//    @Override
+//    public Jugador getJugador() {
+//        return this.jugador;
+//    }
 
 }

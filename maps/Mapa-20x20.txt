@@ -163,7 +163,6 @@ paret,15,1
 paret,15,3
 paret,15,5
 paret,15,7
-paret,15,9
 paret,15,13
 tirita,15,14,12
 pocima,16,14,12

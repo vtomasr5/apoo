@@ -20,6 +20,19 @@ package game.decorator;
  */
 public class MiniJugador extends Decorador {
 
+    public MiniJugador() {}
+
+    public MiniJugador(int factor_salut, int factor_habilitat) {
+        this.factor_salut = factor_salut;
+        this.factor_habilitat = factor_habilitat;
+    }
+
+    public MiniJugador(Jugador jug, int factor_salut, int factor_habilitat) {
+        this.jugador = jug;
+        this.factor_salut = factor_salut;
+        this.factor_habilitat = factor_habilitat;
+    }
+    
     @Override
     public void disminuirSalut(int val) {
         setSalut(getSalut() - (val + getFactor_salut()));
@@ -41,8 +54,8 @@ public class MiniJugador extends Decorador {
     }
 
     @Override
-    public String getClasseJugador(Jugador jug) {
-        return jug.getClass().getCanonicalName();
+    public String getClasseJugador() {
+        return this.getClass().getSimpleName();
     }
 
     @Override
@@ -126,13 +139,13 @@ public class MiniJugador extends Decorador {
     }
 
     @Override
-    public Jugador getJugador() {
-        return this.jugador;
+    public void setJugador(Jugador jug) {
+        this.jugador = jug;
     }
 
     @Override
-    public void setJugador(Jugador jug) {
-        this.jugador = jug;
+    public Jugador getJugador() {
+        return this.jugador;
     }
 
 }

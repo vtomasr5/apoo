@@ -107,5 +107,10 @@ public class Enemic extends Jugador {
     public void setRecorregut(ArrayList<Casella> recorregut) {
         this.recorregut = recorregut;
     }
+
+    @Override
+    public String getClasseJugador() {
+        return this.getClass().getSimpleName();
+    }
     
 }

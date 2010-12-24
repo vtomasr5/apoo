@@ -19,7 +19,8 @@ package game.decorator;
  * @author vjuan
  */
 public abstract class Jugador {
-    
+
+//    protected Jugador jugador;
     protected int salut;
     protected int habilitat; // experiencia del jugador
     protected int x, y;
@@ -37,5 +38,8 @@ public abstract class Jugador {
     public abstract void setX(int x);
     public abstract int getY();
     public abstract void setY(int y);
+    public abstract String getClasseJugador();
+//    public abstract void setJugador(Jugador jug);
+//    public abstract Jugador getJugador();
 
 }

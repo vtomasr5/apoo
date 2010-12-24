@@ -18,6 +18,7 @@ import game.decorator.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -34,7 +35,7 @@ import javax.swing.*;
 import javax.swing.ImageIcon;
 
 /**
- *
+ * Classe que implementa sa finestra amb el taulell de joc
  * @author vjuan
  */
 public class Finestra extends JFrame implements ActionListener, KeyListener {
@@ -51,7 +52,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     private JMenuItem itemMenuSortir;
     private JMenuItem itemMenuReset;
     private JLabel[][] imgMatriz;
-    private static JLabel info_salut, label_salut, info_hab, label_hab, info_estat, estatJugador;
+    private static JLabel info_salut, label_salut, info_hab, label_hab, info_estat, label_estat;
+    private JProgressBar prog_salut, prog_hab;
     private double tamany = 0.65;
     private int pos_jugador_f, pos_temp_f;
     private int pos_jugador_c, pos_temp_c;
@@ -97,12 +99,20 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         itemMenuSeparador1 = new JSeparator();
         itemMenuSortir = new JMenuItem("Sortir");
 
-        info_salut = new JLabel("Salut: ");
-        info_hab = new JLabel("Habilitat: ");
-        info_estat = new JLabel("Estat:" );
-        setLabelSalut(new JLabel("100"));
-        setLabelHab(new JLabel("0 "));
+        info_salut = new JLabel(" Salut: ");
+        info_hab = new JLabel(" Habilitat: ");
+        info_estat = new JLabel(" Estat: " );
+//        setLabelSalut(new JLabel("100"));
+//        setLabelHab(new JLabel("0 "));
         setLabelEstatJugador(new JLabel(""));
+
+        prog_salut = new JProgressBar(0, 100);
+        prog_hab = new JProgressBar(0, 100);
+
+        prog_salut.setValue(100);
+        prog_salut.setStringPainted(true);
+        prog_hab.setValue(0);
+        prog_hab.setStringPainted(true);
 
         addKeyListener(this); //control eventos de teclado
     }
@@ -169,6 +179,13 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         me3.start();
         moureEnemics4 me4 = new moureEnemics4();
         me4.start();
+        moureEnemics5 me5 = new moureEnemics5();
+        me5.start();
+        moureEnemics6 me6 = new moureEnemics6();
+        me6.start();
+
+        comprovar_valors cv = new comprovar_valors();
+        cv.start();
 
         this.add(panel, BorderLayout.CENTER);
         this.pack();
@@ -202,24 +219,27 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         this.getContentPane().add(panel);
 
         this.setResizable(false);
+
+//        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        panelinfo.setPreferredSize(new Dimension(this.getHeight(), 25)); //Panel horizontal de arriba para informacion
+
+        panelinfo.add(info_salut);
+        panelinfo.add(prog_salut);
+//        panelinfo.add(getLabelSalut());
+        panelinfo.add(info_hab);
+        panelinfo.add(prog_hab);
+//        panelinfo.add(getLabelHab());
+        panelinfo.add(info_estat);
+        panelinfo.add(label_estat);
+        
+        this.add(panelinfo, BorderLayout.NORTH);
+
         Finestra.initLookAndFeel();
         SwingUtilities.updateComponentTreeUI(this);
 
-//        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        panelinfo.setPreferredSize(new Dimension(this.getHeight(), 20)); //Panel horizontal de arriba para informacion
-
-        panelinfo.add(info_salut);
-        panelinfo.add(getLabelSalut());
-        panelinfo.add(info_hab);
-        panelinfo.add(getLabelHab());
-        panelinfo.add(info_estat);
-        panelinfo.add(getLabelEstatJugador());
-        
-        this.add(panelinfo, BorderLayout.NORTH);
-        
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         setVisible(true);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void afegirListerners() {
@@ -370,8 +390,11 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         tab.tractar_casella(pos_jugador_f, pos_jugador_c);
 
         // actualizamos la info de los labels
-        label_salut.setText(Integer.toString(tab.getJh().getSalut()));
-        label_hab.setText(Integer.toString(tab.getJh().getHabilitat()));
+//        label_salut.setText(Integer.toString(tab.getJh().getSalut()));
+//        label_hab.setText(Integer.toString(tab.getJh().getHabilitat()));
+        prog_salut.setValue(tab.getJh().getSalut());
+        prog_hab.setValue(tab.getJh().getHabilitat());
+//        label_estat.setText("Normal");
 
         System.out.println("pos_jugador f:" + pos_jugador_f + " c:" + pos_jugador_c);
 
@@ -390,15 +413,17 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     }
 
     public void pintarCasilla(int x, int y, KeyEvent e) throws InterruptedException {
-        Thread.sleep(1);
-        if (!(taulell[pos_temp_f][pos_temp_c] instanceof Entrada) && !(taulell[pos_temp_f][pos_temp_c] instanceof Sortida)) {
-            if (!(taulell[pos_temp_f][pos_temp_c] instanceof Forat)) {
-                ImageIcon img = new ImageIcon("images/fondo.png");
-                imgMatriz[pos_temp_f][pos_temp_c].setIcon(scale(img.getImage(), tamany));
-                imgMatriz[pos_temp_f][pos_temp_c].repaint();
-                this.pack();
-                taulell[pos_temp_f][pos_temp_c] = new Cami(); //reseteamos la casilla Tirita, Pocima o Bomba
-            }
+//        Thread.sleep(1);
+        if (!(taulell[pos_temp_f][pos_temp_c] instanceof Forat) && !(taulell[pos_temp_f][pos_temp_c] instanceof Sortida) && !(taulell[pos_temp_f][pos_temp_c] instanceof Entrada)) {
+            ImageIcon img = new ImageIcon("images/fondo.png");
+            imgMatriz[pos_temp_f][pos_temp_c].setIcon(scale(img.getImage(), tamany));
+            imgMatriz[pos_temp_f][pos_temp_c].repaint();
+            this.pack();
+            taulell[pos_temp_f][pos_temp_c] = new Cami(); //reseteamos la casilla Tirita, Pocima o Bomba
+        } else if ((taulell[pos_temp_f][pos_temp_c] instanceof Forat)) {
+            ImageIcon img = new ImageIcon("images/forat.png");
+            imgMatriz[pos_temp_f][pos_temp_c].setIcon(scale(img.getImage(), tamany));
+            imgMatriz[pos_temp_f][pos_temp_c].repaint();
         } else if ((taulell[pos_temp_f][pos_temp_c] instanceof Entrada)) {
             ImageIcon img = new ImageIcon("images/entrada.gif");
             imgMatriz[pos_temp_f][pos_temp_c].setIcon(scale(img.getImage(), tamany));
@@ -467,14 +492,28 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
      * @return the estatJugador
      */
     public static JLabel getLabelEstatJugador() {
-        return estatJugador;
+        return label_estat;
     }
 
     /**
      * @param aEstatJugador the estatJugador to set
      */
     public static void setLabelEstatJugador(JLabel aEstatJugador) {
-        estatJugador = aEstatJugador;
+        label_estat = aEstatJugador;
+    }
+
+    /**
+     * @return the prog_salut
+     */
+    public JProgressBar getProg_salut() {
+        return prog_salut;
+    }
+
+    /**
+     * @return the prog_hab
+     */
+    public JProgressBar getProg_hab() {
+        return prog_hab;
     }
     
     private class moureEnemics0 extends Thread {
@@ -580,35 +619,140 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                 }
             }
         }
-    }    
+    }
+
+    private class moureEnemics5 extends Thread {
+
+        private ArrayList<Enemic> enemics;
+
+        public moureEnemics5() {
+            super();
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                enemics = tab.getEnemics();
+                try {
+                    pintarRecorrido(getEnemic(enemics, 5).getRecorregut());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    private class moureEnemics6 extends Thread {
+
+        private ArrayList<Enemic> enemics;
+
+        public moureEnemics6() {
+            super();
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                enemics = tab.getEnemics();
+                try {
+                    pintarRecorrido(getEnemic(enemics, 6).getRecorregut());
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void hasGuanyat() {
+        String msg = "<html><b>G A M E   O V E R !!! xDDDDDD</b></html>";
+        JLabel label = new JLabel(msg);
+        label.setFont(new Font("serif", Font.PLAIN, 14));
+        JOptionPane.showMessageDialog(null, label, "Fi de partida", JOptionPane.PLAIN_MESSAGE);
+        System.exit(0);
+    }
+
+    private class comprovar_valors extends Thread {
+
+        public comprovar_valors() {
+            super();
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+//                label_salut.setText(Integer.toString(tab.getJh().getSalut()));
+//                label_hab.setText(Integer.toString(tab.getJh().getHabilitat()));
+//                label_estat.setText(tab.getJh().getClasseJugador());
+                prog_salut.setValue(tab.getJh().getSalut());
+                prog_hab.setValue(tab.getJh().getHabilitat());
+                if (tab.getJh().getSalut() < 1) {
+//                    label_salut.setText("0");
+//                    label_salut.repaint();
+                    prog_salut.setValue(0);
+
+                    hasGuanyat();
+                }
+                if (tab.getJh().getSalut() >= 100) {
+                    tab.getJh().setSalut(100);
+                    prog_salut.setValue(100);
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 
     public Enemic getEnemic(ArrayList<Enemic> enemics, int i) {
         return enemics.get(i);
     }
 
+    public boolean comprobar_choque(int pos_jugador_f, int pos_jugador_c, int i, int j) {
+        if (pos_jugador_f == i && pos_jugador_c == j) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public void pintarRecorrido(ArrayList<Casella> r) throws InterruptedException {
+        // per anar endavant
         for (int i = 2; i < r.size(); i++) {
-//            System.out.println("1size " + r.size() + " i: " + i);
+            // Comprobamos si el jugador se topa con el enemigo
+            if (comprobar_choque(pos_jugador_f,pos_jugador_c,r.get(i).getX(),r.get(i).getY())){
+                tab.getJh().disminuirSalut(25);
+                System.out.println("colision");
+
+//                tab.getMj().setJugador(tab.getJh());
+//                tab.getMj().canviarComportament(5, 5);
+//                label_estat.setText(tab.getMj().getClasseJugador());
+            }
             ImageIcon img = new ImageIcon("images/enemic.png");
             imgMatriz[r.get(i).getX()][r.get(i).getY()].setIcon(scale(img.getImage(), tamany));
             imgMatriz[r.get(i).getX()][r.get(i).getY()].repaint();
 
             ImageIcon img2 = new ImageIcon("images/fondo.png");
-            imgMatriz[r.get(i-1).getX()][r.get(i-1).getY()].setIcon(scale(img2.getImage(), tamany));
-            imgMatriz[r.get(i-1).getX()][r.get(i-1).getY()].repaint();
+            imgMatriz[r.get(i - 1).getX()][r.get(i - 1).getY()].setIcon(scale(img2.getImage(), tamany));
+            imgMatriz[r.get(i - 1).getX()][r.get(i - 1).getY()].repaint();
 
             Thread.sleep(500);
         }
-
-        for (int i = r.size()-2; i > 0; i--) {
+        // per tornar enrrera
+        for (int i = r.size() - 2; i > 0; i--) {
 //            System.out.println("size " + r.size() + " i: " + i);
+            if (comprobar_choque(pos_jugador_f,pos_jugador_c,r.get(i).getX(),r.get(i).getY())){
+                tab.getJh().disminuirSalut(25);
+                System.out.println("colision");
+            }
             ImageIcon img = new ImageIcon("images/enemic.png");
             imgMatriz[r.get(i).getX()][r.get(i).getY()].setIcon(scale(img.getImage(), tamany));
             imgMatriz[r.get(i).getX()][r.get(i).getY()].repaint();
 
             ImageIcon img2 = new ImageIcon("images/fondo.png");
-            imgMatriz[r.get(i+1).getX()][r.get(i+1).getY()].setIcon(scale(img2.getImage(), tamany));
-            imgMatriz[r.get(i+1).getX()][r.get(i+1).getY()].repaint();
+            imgMatriz[r.get(i + 1).getX()][r.get(i + 1).getY()].setIcon(scale(img2.getImage(), tamany));
+            imgMatriz[r.get(i + 1).getX()][r.get(i + 1).getY()].repaint();
 
             Thread.sleep(500);
         }

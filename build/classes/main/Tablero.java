@@ -15,7 +15,9 @@ package main;
 
 import game.composite.*;
 import game.decorator.*;
-
+import java.awt.*;
+import java.awt.image.*;
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
- *
+ * Classe que implementa la lectura del fitxer i crea els objectes del taulell
  * @author vjuan
  */
 public class Tablero {
@@ -40,10 +42,12 @@ public class Tablero {
     //private int pos_jugador_f, pos_jugador_c;
     private ArrayList<Casella> objectes_random;
     private String rutamapa;
-    private Enemic enemic1, enemic2, enemic3, enemic4, enemic5;
+    private Enemic enemic1, enemic2, enemic3, enemic4, enemic5, enemic6, enemic7;
     private JugadorHuma jh;
+    private MiniJugador mj;
+    private SuperJugador sj;
     private ArrayList<Enemic> enemics;
-    private ArrayList<Casella> recorrido_enemic1, recorrido_enemic2, recorrido_enemic3, recorrido_enemic4, recorrido_enemic5;
+    private ArrayList<Casella> recorrido_enemic1, recorrido_enemic2, recorrido_enemic3, recorrido_enemic4, recorrido_enemic5, recorrido_enemic6, recorrido_enemic7;
 
     public Tablero() {
         enemics = new ArrayList<Enemic>();
@@ -52,6 +56,8 @@ public class Tablero {
         recorrido_enemic3 = new ArrayList<Casella>();
         recorrido_enemic4 = new ArrayList<Casella>();
         recorrido_enemic5 = new ArrayList<Casella>();
+        recorrido_enemic6 = new ArrayList<Casella>();
+        recorrido_enemic7 = new ArrayList<Casella>();        
         initRecorridoEnemics();
     }
 
@@ -75,6 +81,7 @@ public class Tablero {
 
         recorrido_enemic3.add(new Casella(4,11)); // no se veu el moviment
         recorrido_enemic3.add(new Casella(5,11));
+        recorrido_enemic3.add(new Casella(6,11));
         recorrido_enemic3.add(new Casella(6,12));
         recorrido_enemic3.add(new Casella(6,13));
         recorrido_enemic3.add(new Casella(6,14));
@@ -92,6 +99,20 @@ public class Tablero {
         recorrido_enemic5.add(new Casella(13,19));
         recorrido_enemic5.add(new Casella(14,19));
         recorrido_enemic5.add(new Casella(14,18));
+
+        recorrido_enemic6.add(new Casella(19,4)); //
+        recorrido_enemic6.add(new Casella(19,5));
+        recorrido_enemic6.add(new Casella(19,6));
+        recorrido_enemic6.add(new Casella(18,6));
+        recorrido_enemic6.add(new Casella(17,6));
+        recorrido_enemic6.add(new Casella(16,6));
+        recorrido_enemic6.add(new Casella(16,7));
+
+        recorrido_enemic7.add(new Casella(15,7)); //
+        recorrido_enemic7.add(new Casella(15,8));
+        recorrido_enemic7.add(new Casella(15,9));
+        recorrido_enemic7.add(new Casella(15,10));
+        recorrido_enemic7.add(new Casella(15,11));
     }
 
     public ArrayList<Enemic> getEnemics() {
@@ -160,46 +181,23 @@ public class Tablero {
         enemic3 = new Enemic(recorrido_enemic3);
         enemic4 = new Enemic(recorrido_enemic4);
         enemic5 = new Enemic(recorrido_enemic5);
+        enemic6 = new Enemic(recorrido_enemic6);
+        enemic7 = new Enemic(recorrido_enemic7);
 
         afegirEnemic(enemic1);
         afegirEnemic(enemic2);
         afegirEnemic(enemic3);
         afegirEnemic(enemic4);
         afegirEnemic(enemic5);
+        afegirEnemic(enemic6);
+        afegirEnemic(enemic7);
      }
 
     public void leerArchivo(File f) {
-//        cbomba = 0;
-//        cforat = 0;
-//        ctirita = 0;
-//        cpocima = 0;
-
         FileReader elFichero;
         BufferedReader lector = null;
         String unaLinea;
         StringTokenizer str;
-
-//        objectes_random = new ArrayList<Casella>();
-//
-//        objectes_random.add(new Pocima());
-//        objectes_random.add(new Tirita());
-//        objectes_random.add(new Bomba());
-//        objectes_random.add(new Casella());
-//
-//        setJh(new JugadorHuma());
-//        getJh().setSalut(100);
-//
-//        enemic1 = new Enemic(recorrido_enemic1);
-//        enemic2 = new Enemic(recorrido_enemic2);
-//        enemic3 = new Enemic(recorrido_enemic3);
-//        enemic4 = new Enemic(recorrido_enemic4);
-//        enemic5 = new Enemic(recorrido_enemic5);
-//
-//        afegirEnemic(enemic1);
-//        afegirEnemic(enemic2);
-//        afegirEnemic(enemic3);
-//        afegirEnemic(enemic4);
-//        afegirEnemic(enemic5);
 
         try {
 //            JFileChooser chooser = new JFileChooser();
@@ -208,7 +206,6 @@ public class Tablero {
 //            File archivo = chooser.getSelectedFile();
             elFichero = new FileReader(f);
             System.out.println("\nfitxer: " + f.getCanonicalPath());
-//            elFichero = new FileReader("tele5x5_2.txt");
             lector = new BufferedReader(elFichero);
             unaLinea = lector.readLine();
             str = new StringTokenizer(unaLinea, ",");
@@ -275,6 +272,43 @@ public class Tablero {
         }
     }
 
+//    private ImageIcon scale(Image src, double scale) {
+//        int w = (int) (scale * src.getWidth(null)); //this
+//        int h = (int) (scale * src.getHeight(null)); //this
+//        int type = BufferedImage.TRANSLUCENT;
+//        BufferedImage dst = new BufferedImage(w, h, type);
+//        Graphics2D g2 = dst.createGraphics();
+//        g2.drawImage(src, 0, 0, w, h, null); //this
+//        g2.dispose();
+//        g2.setBackground(Color.CYAN);
+//        return new ImageIcon(dst);
+//    }
+
+
+//    public void dialog_casella(JFrame frame) {
+//        JDialog jd = new JDialog(frame, true);
+//
+//        jd.setPreferredSize(new Dimension(200, 200)); // per provar
+//        jd.setLayout(new GridLayout(2, 2));
+//
+//        jd.getContentPane().add(new JLabel(scale(new ImageIcon("images/pocima.png").getImage(), tamany)), 0);
+//        jd.getContentPane().add(new JLabel(scale(new ImageIcon("images/tirita.png").getImage(), tamany)), 1);
+//        jd.getContentPane().add(new JLabel(scale(new ImageIcon("images/bomba.png").getImage(), tamany)), 2);
+//        jd.getContentPane().add(new JLabel(scale(new ImageIcon("images/composta2.png").getImage(), tamany)), 3);
+//
+//        jd.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+//        jd.pack();
+//        jd.setVisible(true);
+//    }
+    
+    public void hasPerdut() {
+        String msg = "<html><b>HAS ARRIBAT A SA SORTIDA, FELICITATS VICIAT !!!</b></html>";
+        JLabel label = new JLabel(msg);
+        label.setFont(new Font("serif", Font.PLAIN, 14));
+        JOptionPane.showMessageDialog(null, label, "Fi de partida", JOptionPane.PLAIN_MESSAGE);
+        System.exit(0); // sortir del joc
+    }
+
     public Casella[][] getTaulell() {
         return taulell;
     }
@@ -283,26 +317,29 @@ public class Tablero {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
             System.out.println("[tractar_casella] Bomba");
-            getJh().setSalut(getJh().getSalut() - 30); // -50 salut
+            getJh().disminuirSalut(20);
+            getJh().disminuirHabilitat(5);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Tirita) {
             System.out.println("[tractar_casella] Tirita");
-            getJh().setSalut(getJh().getSalut() + 20); // +20 salut
+            getJh().augmentarSalut(15);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Forat) {
             System.out.println("[tractar_casella] Forat");
-            getJh().setSalut(0); //Termina el juego
+            getJh().disminuirSalut(25);
+            getJh().disminuirHabilitat(10);
         } else if (taulell[f][c] instanceof Pocima) {
             System.out.println("[tractar_casella] Pocima");
-            getJh().setHabilitat(getJh().getHabilitat() + 10); // +10 habilitat
+            getJh().augmentarHabilitat(10);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
             System.out.println("[tractar_casella] Sortida");
-            // joc acabat
-            // missatge "has guanyat"
-        } else if (taulell[f][c] instanceof Entrada) {
-            // no tractam
+            hasPerdut();
+//        } else if (taulell[f][c] instanceof Entrada) {
+//            // no tractam
         } else if (taulell[f][c] instanceof Casella) { // IMPORTANTE: este caso va el último para diferencias la casilla normal de una compuesta!!
+//            dialog_casella();
+
             // getArray() de sa casella
             // mostrar la finestra (JDialog)
             // con mouseEvent coger el elemento que ha pulsado
@@ -402,5 +439,33 @@ public class Tablero {
      */
     public void setJh(JugadorHuma jh) {
         this.jh = jh;
+    }
+
+    /**
+     * @return the mj
+     */
+    public MiniJugador getMj() {
+        return mj;
+    }
+
+    /**
+     * @param mj the mj to set
+     */
+    public void setMj(MiniJugador mj) {
+        this.mj = mj;
+    }
+
+    /**
+     * @return the sj
+     */
+    public SuperJugador getSj() {
+        return sj;
+    }
+
+    /**
+     * @param sj the sj to set
+     */
+    public void setSj(SuperJugador sj) {
+        this.sj = sj;
     }
 }
