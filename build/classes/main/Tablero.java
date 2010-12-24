@@ -330,7 +330,7 @@ public class Tablero {
             getJh().disminuirHabilitat(10);
         } else if (taulell[f][c] instanceof Pocima) {
             System.out.println("[tractar_casella] Pocima");
-            getJh().augmentarHabilitat(10);
+            getJh().augmentarHabilitat(15);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
             System.out.println("[tractar_casella] Sortida");

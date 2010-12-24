@@ -109,7 +109,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         prog_salut = new JProgressBar(0, 100);
         prog_hab = new JProgressBar(0, 100);
 
-        prog_salut.setValue(100);
+        prog_salut.setValue(0);
         prog_salut.setStringPainted(true);
         prog_hab.setValue(0);
         prog_hab.setStringPainted(true);
@@ -689,7 +689,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 //                    label_salut.setText("0");
 //                    label_salut.repaint();
                     prog_salut.setValue(0);
-
                     hasGuanyat();
                 }
                 if (tab.getJh().getSalut() >= 100) {
@@ -717,6 +716,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    // pintar recorregut dels enemics
     public void pintarRecorrido(ArrayList<Casella> r) throws InterruptedException {
         // per anar endavant
         for (int i = 2; i < r.size(); i++) {
