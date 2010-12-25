@@ -42,22 +42,28 @@ public class MiniJugador extends Decorador {
     
     @Override
     public void disminuirSalut(int val) {
-        setSalut(getSalut() - (val - getFactor_salut()));
+        setSalut(getSalut() - val - getFactor_salut());
     }
 
     @Override
     public void augmentarSalut(int val) {
-        setSalut(getSalut() + (val + getFactor_salut()));
+        if ((val < getFactor_salut()) || (getFactor_salut() < 0)) {
+            setFactor_salut(0);
+        }
+        setSalut(getSalut() + val - getFactor_salut());
     }
 
     @Override
     public void augmentarHabilitat(int val) {
-        setHabilitat(getHabilitat() + (val + getFactor_habilitat()));
+        if ((val < getFactor_habilitat()) || (getFactor_habilitat() < 0)) {
+            setFactor_habilitat(0);
+        }
+        setHabilitat(getHabilitat() + val - getFactor_habilitat());
     }
 
     @Override
     public void disminuirHabilitat(int val) {
-        setHabilitat(getHabilitat() - (val - getFactor_habilitat()));
+        setHabilitat(getHabilitat() - val - getFactor_habilitat());
     }
 
     @Override

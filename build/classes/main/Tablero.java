@@ -171,7 +171,7 @@ public class Tablero {
 
         jug = new MiniJugador();
         jug.setSalut(100);
-        jug.canviarComportament(9, 9);
+        jug.canviarComportament(3, 3);
 
         enemic1 = new Enemic(recorrido_enemic1);
         enemic2 = new Enemic(recorrido_enemic2);
@@ -333,7 +333,7 @@ public class Tablero {
             // no tractam
         } else if (taulell[f][c] instanceof Casella) { // IMPORTANTE: este caso va el último para diferencias la casilla normal de una compuesta!!
 //            dialog_casella();
-
+            System.out.println("[tractar_casella] Casella");
             // getArray() de sa casella
             // mostrar la finestra (JDialog)
             // con mouseEvent coger el elemento que ha pulsado

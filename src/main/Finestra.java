@@ -396,7 +396,9 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
         // actualizamos la info de los labels
         prog_salut.setValue(tab.getJug().getSalut());
+        prog_salut.repaint();
         prog_hab.setValue(tab.getJug().getHabilitat());
+        prog_hab.repaint();
 
         System.out.println("pos_jugador f:" + pos_jugador_f + " c:" + pos_jugador_c);
 
@@ -689,11 +691,11 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                     System.out.println("mini");
                     System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
                     System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
-                    if (tab.getJug().getHabilitat() >= 30) {
+                    if (tab.getJug().getHabilitat() >= 40) {
                         JugadorNormal jn = new JugadorNormal();
                         jn.setSalut(tab.getJug().getSalut());
-                        
-                        // millora del jugador
+
+                        // millora del jugador (de MiniJugador a JugadorNormal)
                         jn.augmentarHabilitat(20);
                         jn.canviarComportament(0, 0);
 
@@ -705,12 +707,12 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                     System.out.println("normal");
                     System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
                     System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
-                    if (tab.getJug().getHabilitat() <= 10) {
+                    if (tab.getJug().getHabilitat() <= 20) {
                         MiniJugador mj = new MiniJugador();
                         mj.setSalut(tab.getJug().getSalut());
                         mj.setHabilitat(tab.getJug().getHabilitat());
-                        
-                        // el jugador empitjora
+
+                        // el jugador empitjora (de JugadorNormal a MiniJugador)
                         mj.disminuirHabilitat(5);
                         mj.canviarComportament(4, 4);
 

@@ -4,6 +4,7 @@ paret,0,1
 paret,0,2
 casellaComposta,0,3,12
 paret,0,4
+bomba,2,0,10
 pocima,4,0,129
 paret,0,5
 paret,0,6
