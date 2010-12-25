@@ -99,7 +99,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         itemMenuSeparador1 = new JSeparator();
         itemMenuSortir = new JMenuItem("Sortir");
 
-        info_salut = new JLabel(" Salut: ");
+        info_salut = new JLabel("Salut: ");
         info_hab = new JLabel(" Habilitat: ");
         info_estat = new JLabel(" Estat: " );
         setLabelEstatJugador(new JLabel(""));
@@ -694,6 +694,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                     if (tab.getJug().getHabilitat() >= 40) {
                         JugadorNormal jn = new JugadorNormal();
                         jn.setSalut(tab.getJug().getSalut());
+                        jn.setHabilitat(tab.getJug().getHabilitat());
 
                         // millora del jugador (de MiniJugador a JugadorNormal)
                         jn.augmentarHabilitat(20);
@@ -714,7 +715,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
                         // el jugador empitjora (de JugadorNormal a MiniJugador)
                         mj.disminuirHabilitat(5);
-                        mj.canviarComportament(4, 4);
+                        mj.canviarComportament(4, 2);
 
                         System.out.println("abans getClasseJugador: " + tab.getJug().getClasseJugador());
                         tab.setJug(mj);
@@ -770,6 +771,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
             // Comprobamos si el jugador se topa con el enemigo
             if (comprobar_choque(pos_jugador_f,pos_jugador_c,r.get(i).getX(),r.get(i).getY())){
                 tab.getJug().disminuirSalut(25);
+                tab.getJug().disminuirHabilitat(5);
                 System.out.println("colision");
             }
             

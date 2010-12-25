@@ -4,7 +4,6 @@ paret,0,1
 paret,0,2
 casellaComposta,0,3,12
 paret,0,4
-bomba,2,0,10
 pocima,4,0,129
 paret,0,5
 paret,0,6
@@ -63,6 +62,7 @@ paret,5,10
 paret,5,12
 paret,5,13
 paret,5,15
+pocima,5,16,10
 paret,5,18
 casellaComposta,5,19,12
 paret,6,0
@@ -79,8 +79,10 @@ paret,6,18
 paret,7,0
 paret,7,2
 paret,7,6
+pocima,7,8,10
 tirita,7,9,10
 paret,7,10
+pocima,7,11,10
 paret,7,12
 paret,7,13
 paret,7,14
@@ -97,7 +99,6 @@ paret,8,10
 paret,8,12
 paret,8,19
 paret,9,0
-tunel,9,14,11,14,1
 paret,9,15
 paret,9,17
 pocima,9,18,12
@@ -128,6 +129,7 @@ tirita,11,8,12
 paret,11,9
 paret,11,15
 tirita,11,16,12
+paret,11,17
 paret,11,19
 paret,12,1
 paret,12,5
@@ -179,6 +181,7 @@ paret,16,13
 paret,16,15
 paret,16,17
 sortida,17,18
+tirita,17,0,12
 paret,17,1
 paret,17,3
 pocima,17,2,12
@@ -203,8 +206,9 @@ paret,18,15
 paret,18,17
 paret,18,18
 paret,18,19
-tirita,19,0,12
 bomba,19,1,12
 paret,19,3
 paret,19,7
+bomba,19,18,10
+paret,19,19
 ##fi

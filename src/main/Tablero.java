@@ -333,7 +333,7 @@ public class Tablero {
             // no tractam
         } else if (taulell[f][c] instanceof Casella) { // IMPORTANTE: este caso va el último para diferencias la casilla normal de una compuesta!!
 //            dialog_casella();
-            System.out.println("[tractar_casella] Casella");
+//            System.out.println("[tractar_casella] Casella"); // PROBLEMA: TOTES SES CASELLES CAMI SON "Casella"
             // getArray() de sa casella
             // mostrar la finestra (JDialog)
             // con mouseEvent coger el elemento que ha pulsado
