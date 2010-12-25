@@ -16,7 +16,6 @@ paret,0,14
 paret,0,15
 tirita,0,16,12
 pocima,0,17,12
-bomba,1,8,12
 paret,1,9
 paret,1,14
 paret,1,15
@@ -28,6 +27,7 @@ paret,2,2
 paret,2,4
 paret,2,6
 paret,2,7
+bomba,2,8,12
 paret,2,9
 paret,2,10
 paret,2,11

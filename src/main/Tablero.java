@@ -295,7 +295,7 @@ public class Tablero {
 //    }
     
     public void hasGuanyat() {
-        String msg = "<html><b>HAS ARRIBAT A SA SORTIDA, FELICITATS VICIAT !!!</b></html>";
+        String msg = "<html><b>HAS ARRIBAT A SA SORTIDA SENSE TRUCS, FELICITATS VICIAT !!!</b></html>";
         JLabel label = new JLabel(msg);
         label.setFont(new Font("serif", Font.PLAIN, 14));
         JOptionPane.showMessageDialog(null, label, "Fi de partida", JOptionPane.PLAIN_MESSAGE);
@@ -319,11 +319,11 @@ public class Tablero {
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Forat) {
             System.out.println("[tractar_casella] Forat");
-            getJug().disminuirSalut(generarRandom(20,25));
-            getJug().disminuirHabilitat(generarRandom(8,12));
+            getJug().disminuirSalut(generarRandom(15,21));
+            getJug().disminuirHabilitat(generarRandom(7,11));
         } else if (taulell[f][c] instanceof Pocima) {
             System.out.println("[tractar_casella] Pocima");
-            getJug().augmentarHabilitat(generarRandom(12,16));
+            getJug().augmentarHabilitat(generarRandom(10,13));
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
             System.out.println("[tractar_casella] Sortida");
