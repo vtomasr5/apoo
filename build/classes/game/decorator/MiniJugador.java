@@ -20,15 +20,22 @@ package game.decorator;
  */
 public class MiniJugador extends Decorador {
 
-    public MiniJugador() {}
+    public MiniJugador() {
+        super();
+    }
+
+    public MiniJugador(Jugador jug) {
+        super(jug);
+    }
 
     public MiniJugador(int factor_salut, int factor_habilitat) {
+        super();
         this.factor_salut = factor_salut;
         this.factor_habilitat = factor_habilitat;
     }
 
     public MiniJugador(Jugador jug, int factor_salut, int factor_habilitat) {
-        this.jugador = jug;
+        super(jug);
         this.factor_salut = factor_salut;
         this.factor_habilitat = factor_habilitat;
     }
@@ -58,11 +65,11 @@ public class MiniJugador extends Decorador {
         return this.getClass().getSimpleName();
     }
 
-    @Override
-    public void play() {
-        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
-        // Implementació de com juga s'Enemic
-    }
+//    @Override
+//    public void play() {
+//        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
+//        // Implementació de com juga s'Enemic
+//    }
 
     @Override
     public int getHabilitat() {

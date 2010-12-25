@@ -16,7 +16,6 @@ package main;
 import game.composite.*;
 import game.decorator.*;
 import java.awt.*;
-import java.awt.image.*;
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -39,13 +38,13 @@ public class Tablero {
     private int cbomba;
     private int cforat;
     private int ctirita;
-    //private int pos_jugador_f, pos_jugador_c;
+//    private int pos_jugador_f, pos_jugador_c;
     private ArrayList<Casella> objectes_random;
     private String rutamapa;
     private Enemic enemic1, enemic2, enemic3, enemic4, enemic5, enemic6, enemic7;
-    private JugadorHuma jh;
-    private MiniJugador mj;
-    private SuperJugador sj;
+//    private JugadorNormal jn;
+    private Jugador mj;
+//    private SuperJugador sj;
     private ArrayList<Enemic> enemics;
     private ArrayList<Casella> recorrido_enemic1, recorrido_enemic2, recorrido_enemic3, recorrido_enemic4, recorrido_enemic5, recorrido_enemic6, recorrido_enemic7;
 
@@ -58,10 +57,10 @@ public class Tablero {
         recorrido_enemic5 = new ArrayList<Casella>();
         recorrido_enemic6 = new ArrayList<Casella>();
         recorrido_enemic7 = new ArrayList<Casella>();        
-        initRecorridoEnemics();
+        initRecorregutEnemics();
     }
 
-    public void initRecorridoEnemics() {
+    private void initRecorregutEnemics() {
         // enemic del moviment en forma de N
         recorrido_enemic1.add(new Casella(6,5)); // no se veu el moviment
         recorrido_enemic1.add(new Casella(7,5));
@@ -173,8 +172,9 @@ public class Tablero {
         objectes_random.add(new Bomba());
         objectes_random.add(new Casella());
 
-        setJh(new JugadorHuma());
-        getJh().setSalut(100);
+        mj = new MiniJugador();
+        mj.setSalut(100);
+//        mj.canviarComportament(5, 5);
 
         enemic1 = new Enemic(recorrido_enemic1);
         enemic2 = new Enemic(recorrido_enemic2);
@@ -200,10 +200,6 @@ public class Tablero {
         StringTokenizer str;
 
         try {
-//            JFileChooser chooser = new JFileChooser();
-//            chooser.setApproveButtonText("Obrir");
-//            chooser.showOpenDialog(null);
-//            File archivo = chooser.getSelectedFile();
             elFichero = new FileReader(f);
             System.out.println("\nfitxer: " + f.getCanonicalPath());
             lector = new BufferedReader(elFichero);
@@ -216,7 +212,7 @@ public class Tablero {
             int fi = Integer.valueOf(str.nextToken()).intValue();
             int co = Integer.valueOf(str.nextToken()).intValue();
             setFilesxColumnes(fi, co); // insertamos las filas y las columnas
-            setTamany((700 + fi) / fi); // indicamos el tamaño de la ventana;
+            setTamany((705 + fi) / fi); // indicamos el tamaño de la ventana;
 
             if ((fi <= 0) || (co <= 0)) {
                 throw new Exception(); // si los indices de la taulell son inferiores a cero, lanzamos excepcion.
@@ -237,8 +233,8 @@ public class Tablero {
                     if (palabra.equals("entrada")) {
                         taulell[x][y] = new Entrada(x, y);
                         //Inicializamos la posicion del jugador en la entrada.
-                        getJh().setY(y);
-                        getJh().setY(x);
+                        getMj().setY(y);
+                        getMj().setY(x);
                     } else if (palabra.equals("sortida")) {
                         taulell[x][y] = new Sortida(x, y);
                     } else if (palabra.equals("pocima")) {
@@ -317,26 +313,24 @@ public class Tablero {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
             System.out.println("[tractar_casella] Bomba");
-            getJh().disminuirSalut(20);
-            getJh().disminuirHabilitat(5);
+            getMj().disminuirSalut(20);
+            getMj().disminuirHabilitat(5);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Tirita) {
             System.out.println("[tractar_casella] Tirita");
-            getJh().augmentarSalut(15);
+            getMj().augmentarSalut(15);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Forat) {
             System.out.println("[tractar_casella] Forat");
-            getJh().disminuirSalut(25);
-            getJh().disminuirHabilitat(10);
+            getMj().disminuirSalut(25);
+            getMj().disminuirHabilitat(10);
         } else if (taulell[f][c] instanceof Pocima) {
             System.out.println("[tractar_casella] Pocima");
-            getJh().augmentarHabilitat(15);
+            getMj().augmentarHabilitat(15);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
             System.out.println("[tractar_casella] Sortida");
             hasPerdut();
-//        } else if (taulell[f][c] instanceof Entrada) {
-//            // no tractam
         } else if (taulell[f][c] instanceof Casella) { // IMPORTANTE: este caso va el último para diferencias la casilla normal de una compuesta!!
 //            dialog_casella();
 
@@ -427,45 +421,46 @@ public class Tablero {
         this.rutamapa = rutamapa;
     }
 
-    /**
-     * @return the jh
-     */
-    public JugadorHuma getJh() {
-        return jh;
-    }
-
-    /**
-     * @param jh the jh to set
-     */
-    public void setJh(JugadorHuma jh) {
-        this.jh = jh;
-    }
+//    /**
+//     * @return the jn
+//     */
+//    public JugadorNormal getJn() {
+//        return jn;
+//    }
+//
+//    /**
+//     * @param jn the jn to set
+//     */
+//    public void setJn(JugadorNormal jn) {
+//        this.jn = jn;
+//    }
 
     /**
      * @return the mj
      */
-    public MiniJugador getMj() {
+    public Jugador getMj() {
         return mj;
     }
 
     /**
      * @param mj the mj to set
      */
-    public void setMj(MiniJugador mj) {
+    public void setMj(Jugador mj) {
         this.mj = mj;
     }
 
-    /**
-     * @return the sj
-     */
-    public SuperJugador getSj() {
-        return sj;
-    }
-
-    /**
-     * @param sj the sj to set
-     */
-    public void setSj(SuperJugador sj) {
-        this.sj = sj;
-    }
+//    /**
+//     * @return the sj
+//     */
+//    public SuperJugador getSj() {
+//        return sj;
+//    }
+//
+//    /**
+//     * @param sj the sj to set
+//     */
+//    public void setSj(SuperJugador sj) {
+//        this.sj = sj;
+//    }
+    
 }

@@ -29,10 +29,10 @@ public class Enemic extends Jugador {
         setRecorregut(recorregut);
     }
 
-    @Override
-    public void play() {
-        System.out.println("Enemic està a punt per jugar");
-    }
+//    @Override
+//    public void play() {
+//        System.out.println("Enemic està a punt per jugar");
+//    }
 
     @Override
     public int getHabilitat() {
@@ -104,13 +104,23 @@ public class Enemic extends Jugador {
     /**
      * @param recorregut the recorregut to set
      */
-    public void setRecorregut(ArrayList<Casella> recorregut) {
+    private void setRecorregut(ArrayList<Casella> recorregut) {
         this.recorregut = recorregut;
     }
 
     @Override
     public String getClasseJugador() {
         return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public void setJugador(Jugador jug) {
+        this.jugador = jug;
+    }
+
+    @Override
+    public Jugador getJugador() {
+        return this.jugador;
     }
     
 }

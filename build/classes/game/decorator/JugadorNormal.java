@@ -1,5 +1,5 @@
 /*
- * JugadorHuma.java
+ * JugadorNormal.java
  * 
  * Copyright (C) 2010 Vicenç Juan Tomàs Monserrat
  * 
@@ -15,10 +15,10 @@
 package game.decorator;
 
 /**
- *
+ * Classe que implementa la funcionalitat del Jugador Huma en estat normal
  * @author vjuan
  */
-public class JugadorHuma extends Jugador {
+public class JugadorNormal extends Jugador {
 
     @Override
     public void disminuirSalut(int val) {
@@ -40,11 +40,11 @@ public class JugadorHuma extends Jugador {
         setHabilitat(getHabilitat() - val);
     }
 
-    @Override
-    public void play() {
-        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
-        // Implementació de com juga s'Enemic
-    }
+//    @Override
+//    public void play() {
+//        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
+//        // Implementació de com juga s'Enemic
+//    }
 
     @Override
     public int getHabilitat() {
@@ -91,14 +91,14 @@ public class JugadorHuma extends Jugador {
         return this.getClass().getSimpleName();
     }
 
-//    @Override
-//    public void setJugador(Jugador jug) {
-//        this.jugador = jug;
-//    }
-//
-//    @Override
-//    public Jugador getJugador() {
-//        return this.jugador;
-//    }
+    @Override
+    public void setJugador(Jugador jug) {
+        this.jugador = jug;
+    }
+
+    @Override
+    public Jugador getJugador() {
+        return this.jugador;
+    }
 
 }
