@@ -42,34 +42,28 @@ public class MiniJugador extends Decorador {
     
     @Override
     public void disminuirSalut(int val) {
-        setSalut(getSalut() - (val + getFactor_salut()));
+        setSalut(getSalut() - (val - getFactor_salut()));
     }
 
     @Override
     public void augmentarSalut(int val) {
-        setSalut(getSalut() + (val - getFactor_salut()));
+        setSalut(getSalut() + (val + getFactor_salut()));
     }
 
     @Override
     public void augmentarHabilitat(int val) {
-        setHabilitat(getHabilitat() + (val - getFactor_habilitat()));
+        setHabilitat(getHabilitat() + (val + getFactor_habilitat()));
     }
 
     @Override
     public void disminuirHabilitat(int val) {
-        setHabilitat(getHabilitat() - (val + getFactor_habilitat()));
+        setHabilitat(getHabilitat() - (val - getFactor_habilitat()));
     }
 
     @Override
     public String getClasseJugador() {
         return this.getClass().getSimpleName();
     }
-
-//    @Override
-//    public void play() {
-//        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
-//        // Implementació de com juga s'Enemic
-//    }
 
     @Override
     public int getHabilitat() {
@@ -111,7 +105,7 @@ public class MiniJugador extends Decorador {
         this.x = x;
     }
 
-        /**
+    /**
      * @return the factor_salut
      */
     public int getFactor_salut() {

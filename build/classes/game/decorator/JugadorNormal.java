@@ -22,29 +22,23 @@ public class JugadorNormal extends Jugador {
 
     @Override
     public void disminuirSalut(int val) {
-        setSalut(getSalut() - val);
+        setSalut(getSalut() - (val + getFactor_salut()));
     }
 
     @Override
     public void augmentarSalut(int val) {
-        setSalut(getSalut() + val);
+        setSalut(getSalut() + (val - getFactor_salut()));
     }
 
     @Override
     public void augmentarHabilitat(int val) {
-        setHabilitat(getHabilitat() + val);
+        setHabilitat(getHabilitat() + (val - getFactor_habilitat()));
     }
 
     @Override
     public void disminuirHabilitat(int val) {
-        setHabilitat(getHabilitat() - val);
+        setHabilitat(getHabilitat() - (val + getFactor_habilitat()));
     }
-
-//    @Override
-//    public void play() {
-//        System.out.println("Enemic (Amb: "+ getHabilitat() + " punts d'habilitat) està a punt per jugar");
-//        // Implementació de com juga s'Enemic
-//    }
 
     @Override
     public int getHabilitat() {
@@ -101,4 +95,37 @@ public class JugadorNormal extends Jugador {
         return this.jugador;
     }
 
+    @Override
+    public void canviarComportament(int factor_salut, int factor_habilitat) {
+        this.factor_salut = factor_salut;
+        this.factor_habilitat = factor_habilitat;
+    }
+
+    /**
+     * @return the factor_salut
+     */
+    public int getFactor_salut() {
+        return factor_salut;
+    }
+
+    /**
+     * @param factor_salut the factor_salut to set
+     */
+    public void setFactor_salut(int factor_salut) {
+        this.factor_salut = factor_salut;
+    }
+
+    /**
+     * @return the factor_habilitat
+     */
+    public int getFactor_habilitat() {
+        return factor_habilitat;
+    }
+
+    /**
+     * @param factor_habilitat the factor_habilitat to set
+     */
+    public void setFactor_habilitat(int factor_habilitat) {
+        this.factor_habilitat = factor_habilitat;
+    }
 }

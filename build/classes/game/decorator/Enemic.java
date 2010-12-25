@@ -122,5 +122,10 @@ public class Enemic extends Jugador {
     public Jugador getJugador() {
         return this.jugador;
     }
+
+    @Override
+    public void canviarComportament(int factor_salut, int factor_habilitat) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
 }

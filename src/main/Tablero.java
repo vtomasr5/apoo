@@ -38,13 +38,10 @@ public class Tablero {
     private int cbomba;
     private int cforat;
     private int ctirita;
-//    private int pos_jugador_f, pos_jugador_c;
     private ArrayList<Casella> objectes_random;
     private String rutamapa;
     private Enemic enemic1, enemic2, enemic3, enemic4, enemic5, enemic6, enemic7;
-//    private JugadorNormal jn;
-    private Jugador mj;
-//    private SuperJugador sj;
+    private Jugador jug;
     private ArrayList<Enemic> enemics;
     private ArrayList<Casella> recorrido_enemic1, recorrido_enemic2, recorrido_enemic3, recorrido_enemic4, recorrido_enemic5, recorrido_enemic6, recorrido_enemic7;
 
@@ -172,9 +169,9 @@ public class Tablero {
         objectes_random.add(new Bomba());
         objectes_random.add(new Casella());
 
-        mj = new MiniJugador();
-        mj.setSalut(100);
-//        mj.canviarComportament(5, 5);
+        jug = new MiniJugador();
+        jug.setSalut(100);
+        jug.canviarComportament(9, 9);
 
         enemic1 = new Enemic(recorrido_enemic1);
         enemic2 = new Enemic(recorrido_enemic2);
@@ -233,8 +230,8 @@ public class Tablero {
                     if (palabra.equals("entrada")) {
                         taulell[x][y] = new Entrada(x, y);
                         //Inicializamos la posicion del jugador en la entrada.
-                        getMj().setY(y);
-                        getMj().setY(x);
+                        getJug().setY(y);
+                        getJug().setY(x);
                     } else if (palabra.equals("sortida")) {
                         taulell[x][y] = new Sortida(x, y);
                     } else if (palabra.equals("pocima")) {
@@ -313,24 +310,27 @@ public class Tablero {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
             System.out.println("[tractar_casella] Bomba");
-            getMj().disminuirSalut(20);
-            getMj().disminuirHabilitat(5);
+            getJug().disminuirSalut(15);
+            getJug().disminuirHabilitat(5);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Tirita) {
             System.out.println("[tractar_casella] Tirita");
-            getMj().augmentarSalut(15);
+            getJug().augmentarSalut(15);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Forat) {
             System.out.println("[tractar_casella] Forat");
-            getMj().disminuirSalut(25);
-            getMj().disminuirHabilitat(10);
+            getJug().disminuirSalut(25);
+            getJug().disminuirHabilitat(10);
         } else if (taulell[f][c] instanceof Pocima) {
             System.out.println("[tractar_casella] Pocima");
-            getMj().augmentarHabilitat(15);
+            getJug().augmentarHabilitat(15);
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
             System.out.println("[tractar_casella] Sortida");
             hasPerdut();
+        } else if (taulell[f][c] instanceof Entrada) {
+            System.out.println("[tractar_casella] Entrada");
+            // no tractam
         } else if (taulell[f][c] instanceof Casella) { // IMPORTANTE: este caso va el último para diferencias la casilla normal de una compuesta!!
 //            dialog_casella();
 
@@ -421,46 +421,19 @@ public class Tablero {
         this.rutamapa = rutamapa;
     }
 
-//    /**
-//     * @return the jn
-//     */
-//    public JugadorNormal getJn() {
-//        return jn;
-//    }
-//
-//    /**
-//     * @param jn the jn to set
-//     */
-//    public void setJn(JugadorNormal jn) {
-//        this.jn = jn;
-//    }
 
     /**
      * @return the mj
      */
-    public Jugador getMj() {
-        return mj;
+    public Jugador getJug() {
+        return jug;
     }
 
     /**
      * @param mj the mj to set
      */
-    public void setMj(Jugador mj) {
-        this.mj = mj;
+    public void setJug(Jugador mj) {
+        this.jug = mj;
     }
-
-//    /**
-//     * @return the sj
-//     */
-//    public SuperJugador getSj() {
-//        return sj;
-//    }
-//
-//    /**
-//     * @param sj the sj to set
-//     */
-//    public void setSj(SuperJugador sj) {
-//        this.sj = sj;
-//    }
     
 }

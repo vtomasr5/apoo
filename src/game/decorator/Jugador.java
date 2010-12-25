@@ -24,8 +24,9 @@ public abstract class Jugador {
     protected int salut;
     protected int habilitat; // experiencia del jugador
     protected int x, y;
+    protected int factor_salut = 0; // increment o decrement de la salut del jugador
+    protected int factor_habilitat = 0; // increment o decrement de la habilitat del jugador
 
-//    public abstract void play(); // tal vegada no faci falta
     public abstract void disminuirSalut(int val);
     public abstract void augmentarSalut(int val);
     public abstract void augmentarHabilitat(int val);
@@ -41,5 +42,5 @@ public abstract class Jugador {
     public abstract String getClasseJugador();
     public abstract void setJugador(Jugador jug);
     public abstract Jugador getJugador();
-
+    public abstract void canviarComportament(int factor_salut, int factor_habilitat);
 }

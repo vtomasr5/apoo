@@ -80,8 +80,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         taulell = tab.getTaulell(); //cogemos la variable taulell
 
         //inicializamos las variables de posicion del jugador, y del tablero
-        pos_jugador_f = tab.getMj().getX();
-        pos_jugador_c = tab.getMj().getY();
+        pos_jugador_f = tab.getJug().getX();
+        pos_jugador_c = tab.getJug().getY();
         //System.out.println(pos_jugador_x+" "+pos_jugador_y);
         files = tab.getFiles();
         columnes = tab.getColumnes();
@@ -102,8 +102,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         info_salut = new JLabel(" Salut: ");
         info_hab = new JLabel(" Habilitat: ");
         info_estat = new JLabel(" Estat: " );
-//        setLabelSalut(new JLabel("100"));
-//        setLabelHab(new JLabel("0 "));
         setLabelEstatJugador(new JLabel(""));
 
         prog_salut = new JProgressBar(0, 100);
@@ -118,7 +116,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     }
 
     public void dibujarElementos(Casella[][] taulell, int filas, int columnas) {
-        //panel = new JPanel(new GridLayout(filas, columnas));
         panel.removeAll();
         panel.setLayout(new GridLayout(filas, columnas));
         panel.setBackground(Color.BLACK);// color del camino del laberinto
@@ -220,15 +217,12 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
         this.setResizable(false);
 
-//        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         panelinfo.setPreferredSize(new Dimension(this.getHeight(), 28)); //Panel horizontal de arriba para informacion
 
         panelinfo.add(info_salut);
         panelinfo.add(prog_salut);
-//        panelinfo.add(getLabelSalut());
         panelinfo.add(info_hab);
         panelinfo.add(prog_hab);
-//        panelinfo.add(getLabelHab());
         panelinfo.add(info_estat);
         panelinfo.add(label_estat);
         
@@ -401,11 +395,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         tab.tractar_casella(pos_jugador_f, pos_jugador_c);
 
         // actualizamos la info de los labels
-//        label_salut.setText(Integer.toString(tab.getJh().getSalut()));
-//        label_hab.setText(Integer.toString(tab.getJh().getHabilitat()));
-        prog_salut.setValue(tab.getMj().getSalut());
-        prog_hab.setValue(tab.getMj().getHabilitat());
-//        label_estat.setText("Normal");
+        prog_salut.setValue(tab.getJug().getSalut());
+        prog_hab.setValue(tab.getJug().getHabilitat());
 
         System.out.println("pos_jugador f:" + pos_jugador_f + " c:" + pos_jugador_c);
 
@@ -424,7 +415,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     }
 
     public void pintarCasilla(int x, int y, KeyEvent e) throws InterruptedException {
-//        Thread.sleep(1);
         if (!(taulell[pos_temp_f][pos_temp_c] instanceof Forat) && !(taulell[pos_temp_f][pos_temp_c] instanceof Sortida) && !(taulell[pos_temp_f][pos_temp_c] instanceof Entrada)) {
             ImageIcon img = new ImageIcon("images/fondo.png");
             imgMatriz[pos_temp_f][pos_temp_c].setIcon(scale(img.getImage(), tamany));
@@ -691,39 +681,67 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         @Override
         public void run() {
             while (true) {
-                if (tab.getMj().getClasseJugador().equals("MiniJugador")) {
+                prog_salut.setValue(tab.getJug().getSalut());
+                prog_hab.setValue(tab.getJug().getHabilitat());
+                label_estat.setText(tab.getJug().getClasseJugador());
+                
+                if (tab.getJug().getClasseJugador().equals("MiniJugador")) {
                     System.out.println("mini");
-                } else if (tab.getMj().getClasseJugador().equals("JugadorNormal")) {
-                    System.out.println("normal");
-                }
-                prog_salut.setValue(tab.getMj().getSalut());
-                prog_hab.setValue(tab.getMj().getHabilitat());
-                label_estat.setText(tab.getMj().getClasseJugador());
+                    System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
+                    System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
+                    if (tab.getJug().getHabilitat() >= 30) {
+                        JugadorNormal jn = new JugadorNormal();
+                        jn.setSalut(tab.getJug().getSalut());
+                        
+                        // millora del jugador
+                        jn.augmentarHabilitat(20);
+                        jn.canviarComportament(0, 0);
 
-                if (tab.getMj().getHabilitat() >= 20) {
-                    JugadorNormal jn = new JugadorNormal();
-                    System.out.println("abans getClasseJugador: " + tab.getMj().getClasseJugador());
-                    tab.getMj().setJugador(jn);
-                    System.out.println("despres getClasseJugador: " + tab.getMj().getClasseJugador());
-                    
-                    tab.setMj(jn); // falla: class cast exception
-                    // millora del jugador
-                    jn.augmentarHabilitat(20);
-                    jn.augmentarSalut(5);
+                        System.out.println("abans getClasseJugador: " + tab.getJug().getClasseJugador());
+                        tab.setJug(jn);
+                        System.out.println("despres getClasseJugador: " + tab.getJug().getClasseJugador());
+                    }
+                } else if (tab.getJug().getClasseJugador().equals("JugadorNormal")) {
+                    System.out.println("normal");
+                    System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
+                    System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
+                    if (tab.getJug().getHabilitat() <= 10) {
+                        MiniJugador mj = new MiniJugador();
+                        mj.setSalut(tab.getJug().getSalut());
+                        mj.setHabilitat(tab.getJug().getHabilitat());
+                        
+                        // el jugador empitjora
+                        mj.disminuirHabilitat(5);
+                        mj.canviarComportament(4, 4);
+
+                        System.out.println("abans getClasseJugador: " + tab.getJug().getClasseJugador());
+                        tab.setJug(mj);
+                        System.out.println("despres getClasseJugador: " + tab.getJug().getClasseJugador());
+                    }                    
+                }
+
+                if (tab.getJug().getHabilitat() >= 100) {
+                    tab.getJug().setHabilitat(100);
+                    prog_hab.setValue(100);
+                }
+
+                if (tab.getJug().getHabilitat() < 1) {
+                    tab.getJug().setHabilitat(0);
+                    prog_hab.setValue(0);
                 }
                 
-                if (tab.getMj().getSalut() >= 100) {
-                    tab.getMj().setSalut(100);
+                if (tab.getJug().getSalut() >= 100) {
+                    tab.getJug().setSalut(100);
                     prog_salut.setValue(100);
                 }
 
-                if (tab.getMj().getSalut() < 1) {
+                if (tab.getJug().getSalut() < 1) {
                     prog_salut.setValue(0);
                     hasGuanyat();
                 }
                 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(200);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Finestra.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -749,7 +767,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         for (int i = 2; i < r.size(); i++) {
             // Comprobamos si el jugador se topa con el enemigo
             if (comprobar_choque(pos_jugador_f,pos_jugador_c,r.get(i).getX(),r.get(i).getY())){
-                tab.getMj().disminuirSalut(30);
+                tab.getJug().disminuirSalut(25);
                 System.out.println("colision");
             }
             
@@ -767,7 +785,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         for (int i = r.size() - 2; i > 0; i--) {
 //            System.out.println("size " + r.size() + " i: " + i);
             if (comprobar_choque(pos_jugador_f,pos_jugador_c,r.get(i).getX(),r.get(i).getY())){
-                tab.getMj().disminuirSalut(25);
+                tab.getJug().disminuirSalut(25);
                 System.out.println("colision");
             }
             ImageIcon img = new ImageIcon("images/enemic.png");
@@ -781,6 +799,5 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
             Thread.sleep(500);
         }
     }
-
 
 }
