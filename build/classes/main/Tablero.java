@@ -171,7 +171,7 @@ public class Tablero {
 
         jug = new MiniJugador();
         jug.setSalut(100);
-        jug.canviarComportament(3, 3);
+        jug.canviarComportament(generarRandom(2,3), generarRandom(2,3));
 
         enemic1 = new Enemic(recorrido_enemic1);
         enemic2 = new Enemic(recorrido_enemic2);
@@ -294,7 +294,7 @@ public class Tablero {
 //        jd.setVisible(true);
 //    }
     
-    public void hasPerdut() {
+    public void hasGuanyat() {
         String msg = "<html><b>HAS ARRIBAT A SA SORTIDA, FELICITATS VICIAT !!!</b></html>";
         JLabel label = new JLabel(msg);
         label.setFont(new Font("serif", Font.PLAIN, 14));
@@ -310,24 +310,24 @@ public class Tablero {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
             System.out.println("[tractar_casella] Bomba");
-            getJug().disminuirSalut(15);
-            getJug().disminuirHabilitat(5);
+            getJug().disminuirSalut(generarRandom(10,15));
+            getJug().disminuirHabilitat(generarRandom(3,6));
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Tirita) {
             System.out.println("[tractar_casella] Tirita");
-            getJug().augmentarSalut(15);
+            getJug().augmentarSalut(generarRandom(10,15));
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Forat) {
             System.out.println("[tractar_casella] Forat");
-            getJug().disminuirSalut(25);
-            getJug().disminuirHabilitat(10);
+            getJug().disminuirSalut(generarRandom(20,25));
+            getJug().disminuirHabilitat(generarRandom(8,12));
         } else if (taulell[f][c] instanceof Pocima) {
             System.out.println("[tractar_casella] Pocima");
-            getJug().augmentarHabilitat(15);
+            getJug().augmentarHabilitat(generarRandom(12,16));
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
             System.out.println("[tractar_casella] Sortida");
-            hasPerdut();
+            hasGuanyat();
         } else if (taulell[f][c] instanceof Entrada) {
             System.out.println("[tractar_casella] Entrada");
             // no tractam

@@ -50,7 +50,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     private JMenuItem itemMenuObrir;
     private JSeparator itemMenuSeparador1;
     private JMenuItem itemMenuSortir;
-    private JMenuItem itemMenuReset;
+//    private JMenuItem itemMenuReset;
+    private JMenuItem itemMenuInfo;
     private JLabel[][] imgMatriz;
     private static JLabel info_salut, label_salut, info_hab, label_hab, info_estat, label_estat;
     private JProgressBar prog_salut, prog_hab;
@@ -67,7 +68,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
      */
     public static void main(String[] args) {
         Finestra finestra = new Finestra();
-        finestra.setTitle("Ampliació a sa programació orientada a objectes");
+        finestra.setTitle("Ampliació a sa programació orientada a objectes (Composite & Decorator)");
         finestra.initComponents();
         finestra.colocarComponents();
         finestra.afegirListerners();
@@ -95,9 +96,10 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
         itemMenuArxiu = new JMenu("Joc");
         itemMenuObrir = new JMenuItem("Carregar mapa...");
-        itemMenuReset = new JMenuItem("Recarregar mapa actual");
+//        itemMenuReset = new JMenuItem("Recarregar mapa actual");
         itemMenuSeparador1 = new JSeparator();
         itemMenuSortir = new JMenuItem("Sortir");
+        itemMenuInfo = new JMenuItem("Informació");
 
         info_salut = new JLabel("Salut: ");
         info_hab = new JLabel(" Habilitat: ");
@@ -208,8 +210,9 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
         menu.add(itemMenuArxiu);
         itemMenuArxiu.add(itemMenuObrir);
-        itemMenuArxiu.add(itemMenuReset);
+//        itemMenuArxiu.add(itemMenuReset);
         itemMenuArxiu.add(itemMenuSeparador1);
+        itemMenuArxiu.add(itemMenuInfo);
         itemMenuArxiu.add(itemMenuSortir);
 
         this.setJMenuBar(menu);
@@ -239,7 +242,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     public void afegirListerners() {
         itemMenuObrir.addActionListener(this);
         itemMenuSortir.addActionListener(this);
-        itemMenuReset.addActionListener(this);
+//        itemMenuReset.addActionListener(this);
+        itemMenuInfo.addActionListener(this);
     }
 
     @Override
@@ -253,26 +257,29 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                             "Informació",
                             JOptionPane.INFORMATION_MESSAGE);
                     initTablero(fitxer); //Leemos el mapa
-                    dibujarElementos(taulell, files, columnes); //dibujamos el mapa   
-                } else {
-                    JOptionPane.showMessageDialog(this,
-                            "No s'ha pogut carregar el fitxer!",
-                            "Alerta",
-                            JOptionPane.WARNING_MESSAGE);
+                    dibujarElementos(taulell, files, columnes); //dibujamos el mapa
                 }
             } catch (Exception ex) {
                 System.out.println(ex.toString());
             }
-        } else if (e.getSource() == itemMenuReset) {
-            if (fitxer != null) {
-                initTablero(fitxer);
-                dibujarElementos(taulell, files, columnes);
-            } else {
-                JOptionPane.showMessageDialog(this,
-                        "No hi ha cap fitxer carregat!",
-                        "Alerta",
-                        JOptionPane.WARNING_MESSAGE);
-            }
+//        } else if (e.getSource() == itemMenuReset) {
+//            if (fitxer != null) {
+//                initTablero(fitxer);
+//                dibujarElementos(taulell, files, columnes);
+//            } else {
+//                JOptionPane.showMessageDialog(this,
+//                        "No hi ha cap fitxer carregat!",
+//                        "Alerta",
+//                        JOptionPane.WARNING_MESSAGE);
+//            }
+        } else if (e.getSource() == itemMenuInfo) {
+            JOptionPane.showMessageDialog(this,
+                    "Autors:\n Edu Gasser i Vicenç Juan Tomàs Montserrat"
+                    + "\nLlicència:\n GPLv3"
+                    + "\nVersió:\n 0.9.1"
+                    + "\nRepositori:\n http://github.com/vtomasr5/apoo",
+                    "Informació",
+                    JOptionPane.INFORMATION_MESSAGE);
         } else if (e.getSource() == itemMenuSortir) {
             System.exit(0);
         }
@@ -666,7 +673,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         }
     }
 
-    public void hasGuanyat() {
+    public void hasPerdut() {
         String msg = "<html><b>G A M E   O V E R !!! xDDDDDD</b></html>";
         JLabel label = new JLabel(msg);
         label.setFont(new Font("serif", Font.PLAIN, 14));
@@ -688,38 +695,38 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                 label_estat.setText(tab.getJug().getClasseJugador());
                 
                 if (tab.getJug().getClasseJugador().equals("MiniJugador")) {
-                    System.out.println("mini");
-                    System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
-                    System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
-                    if (tab.getJug().getHabilitat() >= 40) {
+//                    System.out.println("mini");
+//                    System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
+//                    System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
+                    if (tab.getJug().getHabilitat() >= Tablero.generarRandom(35,40)) {
                         JugadorNormal jn = new JugadorNormal();
                         jn.setSalut(tab.getJug().getSalut());
                         jn.setHabilitat(tab.getJug().getHabilitat());
 
                         // millora del jugador (de MiniJugador a JugadorNormal)
-                        jn.augmentarHabilitat(20);
+                        jn.augmentarHabilitat(Tablero.generarRandom(10,15));
                         jn.canviarComportament(0, 0);
 
-                        System.out.println("abans getClasseJugador: " + tab.getJug().getClasseJugador());
+//                        System.out.println("abans getClasseJugador: " + tab.getJug().getClasseJugador());
                         tab.setJug(jn);
-                        System.out.println("despres getClasseJugador: " + tab.getJug().getClasseJugador());
+//                        System.out.println("despres getClasseJugador: " + tab.getJug().getClasseJugador());
                     }
                 } else if (tab.getJug().getClasseJugador().equals("JugadorNormal")) {
-                    System.out.println("normal");
-                    System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
-                    System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
-                    if (tab.getJug().getHabilitat() <= 20) {
+//                    System.out.println("normal");
+//                    System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
+//                    System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
+                    if (tab.getJug().getHabilitat() <= Tablero.generarRandom(18,22)) {
                         MiniJugador mj = new MiniJugador();
                         mj.setSalut(tab.getJug().getSalut());
                         mj.setHabilitat(tab.getJug().getHabilitat());
 
                         // el jugador empitjora (de JugadorNormal a MiniJugador)
                         mj.disminuirHabilitat(5);
-                        mj.canviarComportament(4, 2);
+                        mj.canviarComportament(Tablero.generarRandom(3,6), Tablero.generarRandom(2,3));
 
-                        System.out.println("abans getClasseJugador: " + tab.getJug().getClasseJugador());
+//                        System.out.println("abans getClasseJugador: " + tab.getJug().getClasseJugador());
                         tab.setJug(mj);
-                        System.out.println("despres getClasseJugador: " + tab.getJug().getClasseJugador());
+//                        System.out.println("despres getClasseJugador: " + tab.getJug().getClasseJugador());
                     }                    
                 }
 
@@ -740,7 +747,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
                 if (tab.getJug().getSalut() < 1) {
                     prog_salut.setValue(0);
-                    hasGuanyat();
+                    hasPerdut();
                 }
                 
                 try {
@@ -770,8 +777,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         for (int i = 2; i < r.size(); i++) {
             // Comprobamos si el jugador se topa con el enemigo
             if (comprobar_choque(pos_jugador_f,pos_jugador_c,r.get(i).getX(),r.get(i).getY())){
-                tab.getJug().disminuirSalut(25);
-                tab.getJug().disminuirHabilitat(5);
+                tab.getJug().disminuirSalut(Tablero.generarRandom(22,26));
+                tab.getJug().disminuirHabilitat(Tablero.generarRandom(3,7));
                 System.out.println("colision");
             }
             
