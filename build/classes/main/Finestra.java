@@ -49,6 +49,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     private JMenu itemMenuArxiu;
     private JMenuItem itemMenuObrir;
     private JSeparator itemMenuSeparador1;
+    private JSeparator itemMenuSeparador2;
     private JMenuItem itemMenuSortir;
     private JMenuItem itemMenuInfo;
     private JLabel[][] imgMatriz;
@@ -114,6 +115,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         itemMenuArxiu = new JMenu("Joc");
         itemMenuObrir = new JMenuItem("Carregar mapa...");
         itemMenuSeparador1 = new JSeparator();
+        itemMenuSeparador2 = new JSeparator();
         itemMenuSortir = new JMenuItem("Sortir");
         itemMenuInfo = new JMenuItem("Informació");
 
@@ -250,6 +252,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         itemMenuArxiu.add(itemMenuObrir);
         itemMenuArxiu.add(itemMenuSeparador1);
         itemMenuArxiu.add(itemMenuInfo);
+        itemMenuArxiu.add(itemMenuSeparador2);
         itemMenuArxiu.add(itemMenuSortir);
 
         this.setJMenuBar(menu);
