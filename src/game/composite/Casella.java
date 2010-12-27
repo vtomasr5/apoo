@@ -28,8 +28,18 @@ public class Casella extends Taulell {
     private int valor;
     private ArrayList<Casella> objectes;
 
+    /**
+     * Constructor
+     */
     public Casella() {}
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param valor
+     * @param obj
+     */
     public Casella(int x, int y, int valor, Object obj) { // casella composta
         this.x = x;
         this.y = y;
@@ -37,12 +47,23 @@ public class Casella extends Taulell {
         this.objectes = (ArrayList<Casella>) obj;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param valor
+     */
     public Casella(int x, int y, int valor) { // casella simple
         this.x = x;
         this.y = y;
         this.valor = valor;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     public Casella(int x, int y) {
         this.x = x;
         this.y = y;
@@ -110,31 +131,40 @@ public class Casella extends Taulell {
         this.objectes = objectes;
     }
 
+    /**
+     *
+     * @param obj
+     */
     @Override
     public void afegir(Casella obj) {
         getObjectes().add(obj);
     }
 
+    /**
+     *
+     * @param i
+     */
     @Override
     public void eliminar(int i) {
         getObjectes().remove(i);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String getNom() {
         return this.nom;
     }
 
+    /**
+     *
+     * @param nom
+     */
     @Override
     public void setNom(String nom) {
         this.nom = nom;
     }
 
-//    public boolean igual(Casella c) {
-//        if (super.x == c.getX() && super.y == c.getY()) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
 }

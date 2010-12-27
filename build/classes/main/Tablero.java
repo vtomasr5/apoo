@@ -49,6 +49,10 @@ public class Tablero {
     private ArrayList<Enemic> enemics;
     private ArrayList<Casella> recorrido_enemic1, recorrido_enemic2, recorrido_enemic3, recorrido_enemic4, recorrido_enemic5, recorrido_enemic6, recorrido_enemic7;
 
+    /**
+     *
+     * @param finestra
+     */
     public Tablero(Finestra finestra) {
         enemics = new ArrayList<Enemic>();
         recorrido_enemic1 = new ArrayList<Casella>();
@@ -64,7 +68,6 @@ public class Tablero {
     }
 
     private void initRecorregutEnemics() {
-        // enemic del moviment en forma de N
         recorrido_enemic1.add(new Casella(6, 5)); 
         recorrido_enemic1.add(new Casella(7, 5));
         recorrido_enemic1.add(new Casella(8, 5));
@@ -88,7 +91,6 @@ public class Tablero {
         recorrido_enemic3.add(new Casella(6, 13));
         recorrido_enemic3.add(new Casella(6, 14));
 
-        // enemic d'adalt a l'esquerra
         recorrido_enemic4.add(new Casella(3, 7)); 
         recorrido_enemic4.add(new Casella(4, 5));
         recorrido_enemic4.add(new Casella(3, 5));
@@ -96,7 +98,6 @@ public class Tablero {
         recorrido_enemic4.add(new Casella(1, 5));
         recorrido_enemic4.add(new Casella(1, 4)); 
 
-        // enemic de sa sortida
         recorrido_enemic5.add(new Casella(12, 14));
         recorrido_enemic5.add(new Casella(13, 19));
         recorrido_enemic5.add(new Casella(14, 19));
@@ -117,18 +118,34 @@ public class Tablero {
         recorrido_enemic7.add(new Casella(15, 11));
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Enemic> getEnemics() {
         return enemics;
     }
 
+    /**
+     *
+     * @param enemics
+     */
     public void setEnemics(ArrayList<Enemic> enemics) {
         this.enemics = enemics;
     }
 
+    /**
+     *
+     * @param bot
+     */
     public void afegirEnemic(Enemic bot) {
         enemics.add(bot);
     }
 
+    /**
+     *
+     * @param m
+     */
     public void inicializartaulell(Casella[][] m) {
         for (int i = 0; i < m.length; i++) {
             for (int j = 0; j < m[0].length; j++) {
@@ -137,19 +154,21 @@ public class Tablero {
         }
     }
 
-    public void comprobar_taulell(Casella[][] taulell) {
-        for (int i = 0; i < taulell.length; i++) {
-            for (int j = 0; j < taulell.length; j++) {
-                System.out.println("comprovacio taulell: " + taulell[i][j]);
-            }
-        }
-    }
-
+    /**
+     *
+     * @param files
+     * @param columnes
+     */
     public void setFilesxColumnes(int files, int columnes) {
         this.setFiles(files);
         this.setColumnes(columnes);
     }
 
+    /**
+     *
+     * @param objectes_random
+     * @return
+     */
     public ArrayList<Casella> randomObjectes(ArrayList<Casella> objectes_random) {
         int r = generarRandom(1, 4); // el nombre d'objectes en la casella composta
         int j;
@@ -161,6 +180,9 @@ public class Tablero {
         return array;
     }
 
+    /**
+     *
+     */
     public void initObjectes() {
         cbomba = 0;
         cforat = 0;
@@ -195,6 +217,10 @@ public class Tablero {
         afegirEnemic(enemic7);
     }
 
+    /**
+     *
+     * @param f
+     */
     public void leerArchivo(File f) {
         FileReader elFichero;
         BufferedReader lector = null;
@@ -203,7 +229,6 @@ public class Tablero {
 
         try {
             elFichero = new FileReader(f);
-//            System.out.println("\nfitxer: " + f.getCanonicalPath());
             lector = new BufferedReader(elFichero);
             unaLinea = lector.readLine();
             str = new StringTokenizer(unaLinea, ",");
@@ -270,6 +295,12 @@ public class Tablero {
         }
     }
 
+    /**
+     *
+     * @param src
+     * @param scale
+     * @return
+     */
     public ImageIcon scale(Image src, double scale) {
         int w = (int) (scale * src.getWidth(null));
         int h = (int) (scale * src.getHeight(null));
@@ -282,15 +313,26 @@ public class Tablero {
         return new ImageIcon(dst);
     }
 
+    /**
+     *
+     */
     public void cas_bomba() {
         getJug().disminuirSalut(generarRandom(10, 15));
         getJug().disminuirHabilitat(generarRandom(3, 6));
     }
 
+    /**
+     *
+     */
     public void cas_tirita() {
         getJug().augmentarSalut(generarRandom(10, 15));
     }
 
+    /**
+     *
+     * @param frame
+     * @param objectes
+     */
     public void dialog_casella(JFrame frame, ArrayList<Casella> objectes) {
         final JDialog jd = new JDialog(frame, true);
 
@@ -333,22 +375,18 @@ public class Tablero {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-//                    throw new UnsupportedOperationException("Not supported yet.");
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-//                    throw new UnsupportedOperationException("Not supported yet.");
                 }
 
                 @Override
                 public void mouseEntered(MouseEvent e) {
-//                    throw new UnsupportedOperationException("Not supported yet.");
                 }
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-//                    throw new UnsupportedOperationException("Not supported yet.");
                 }
              
             });
@@ -361,6 +399,9 @@ public class Tablero {
         jd.setVisible(true);
     }
 
+    /**
+     *
+     */
     public void hasGuanyat() {
         String msg = "<html><b>HAS ARRIBAT A SA SORTIDA SENSE TRUCS, FELICITATS VICIAT !!!</b></html>";
         JLabel label = new JLabel(msg);
@@ -369,50 +410,61 @@ public class Tablero {
         System.exit(0); // sortir del joc
     }
 
+    /**
+     *
+     * @return
+     */
     public Casella[][] getTaulell() {
         return taulell;
     }
 
+    /**
+     *
+     */
     public void cas_forat(){
          getJug().disminuirSalut(generarRandom(15, 21));
          getJug().disminuirHabilitat(generarRandom(7, 11));
     }
 
+    /**
+     *
+     */
     public void cas_pocima(){
          getJug().augmentarHabilitat(generarRandom(10, 13));
     }
     
+    /**
+     *
+     * @param f
+     * @param c
+     */
     public void tractar_casella(int f, int c) {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
-//            System.out.println("[tractar_casella] Bomba");
             cas_bomba();
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Tirita) {
-//            System.out.println("[tractar_casella] Tirita");
             cas_tirita();
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Forat) {
-//            System.out.println("[tractar_casella] Forat");
             cas_forat();
         } else if (taulell[f][c] instanceof Pocima) {
-//            System.out.println("[tractar_casella] Pocima");
             cas_pocima();
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
-//            System.out.println("[tractar_casella] Sortida");
             hasGuanyat();
         } else if (taulell[f][c] instanceof Entrada) {
-//            System.out.println("[tractar_casella] Entrada");
             // no tractam
         } else if (taulell[f][c] instanceof casellaComposta) {
-//            System.out.println("[tractar_casella] CasellaCompuesta");
             dialog_casella(finestra, taulell[f][c].getObjectes());
         }
     }
 
     /**
      * Genera numeros aleatoris dins un interval
+     * @param m 
+     * @param n
+     * @return
      */
     public static int generarRandom(int m, int n) {
         int num = (int) Math.floor(Math.random() * (n - m + 1) + m);

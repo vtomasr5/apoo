@@ -20,20 +20,38 @@ package game.decorator;
  */
 public class MiniJugador extends Decorador {
 
+    /**
+     * Constructor
+     */
     public MiniJugador() {
         super();
     }
 
+    /**
+     *
+     * @param jug
+     */
     public MiniJugador(Jugador jug) {
         super(jug);
     }
 
+    /**
+     *
+     * @param factor_salut
+     * @param factor_habilitat
+     */
     public MiniJugador(int factor_salut, int factor_habilitat) {
         super();
         this.factor_salut = factor_salut;
         this.factor_habilitat = factor_habilitat;
     }
 
+    /**
+     *
+     * @param jug
+     * @param factor_salut
+     * @param factor_habilitat
+     */
     public MiniJugador(Jugador jug, int factor_salut, int factor_habilitat) {
         super(jug);
         this.factor_salut = factor_salut;

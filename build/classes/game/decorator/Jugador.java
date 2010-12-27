@@ -27,20 +27,85 @@ public abstract class Jugador {
     protected int factor_salut = 0; // increment o decrement de la salut del jugador
     protected int factor_habilitat = 0; // increment o decrement de la habilitat del jugador
 
+    /**
+     *
+     * @param val
+     */
     public abstract void disminuirSalut(int val);
+    /**
+     *
+     * @param val
+     */
     public abstract void augmentarSalut(int val);
+    /**
+     *
+     * @param val
+     */
     public abstract void augmentarHabilitat(int val);
+    /**
+     *
+     * @param val
+     */
     public abstract void disminuirHabilitat(int val);
+    /**
+     *
+     * @return
+     */
     public abstract int getSalut();
+    /**
+     *
+     * @param sal
+     */
     public abstract void setSalut(int sal);
+    /**
+     *
+     * @return
+     */
     public abstract int getHabilitat();
+    /**
+     *
+     * @param hab
+     */
     public abstract void setHabilitat(int hab);
+    /**
+     *
+     * @return
+     */
     public abstract int getX();
+    /**
+     *
+     * @param x
+     */
     public abstract void setX(int x);
+    /**
+     *
+     * @return
+     */
     public abstract int getY();
+    /**
+     *
+     * @param y
+     */
     public abstract void setY(int y);
+    /**
+     *
+     * @return
+     */
     public abstract String getClasseJugador();
+    /**
+     *
+     * @param jug
+     */
     public abstract void setJugador(Jugador jug);
+    /**
+     *
+     * @return
+     */
     public abstract Jugador getJugador();
+    /**
+     *
+     * @param factor_salut
+     * @param factor_habilitat
+     */
     public abstract void canviarComportament(int factor_salut, int factor_habilitat);
 }

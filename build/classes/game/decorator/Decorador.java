@@ -20,8 +20,15 @@ package game.decorator;
  */
 public abstract class Decorador extends Jugador {
 
+    /**
+     * Constructor
+     */
     public Decorador() {}
 
+    /**
+     *
+     * @param jug
+     */
     public Decorador(Jugador jug) {
         this.jugador = jug;
     }

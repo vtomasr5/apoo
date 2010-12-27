@@ -19,10 +19,14 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Administrador
+ * @author vjuan
  */
 public class Ico extends JLabel {
 
+    /**
+     * 
+     * @param nombre
+     */
     public Ico(String nombre) {
         super(new ImageIcon("images/" + nombre));
     }

@@ -50,7 +50,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     private JMenuItem itemMenuObrir;
     private JSeparator itemMenuSeparador1;
     private JMenuItem itemMenuSortir;
-//    private JMenuItem itemMenuReset;
     private JMenuItem itemMenuInfo;
     private JLabel[][] imgMatriz;
     private static JLabel info_salut, label_salut, info_hab, label_hab, info_estat, label_estat;
@@ -70,6 +69,9 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     private moureEnemics6 me6;
     private comprovar_valors cv;
 
+    /**
+     *
+     */
     public Finestra() {}
 
     /**
@@ -83,6 +85,10 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         finestra.afegirListerners();
     }
 
+    /**
+     *
+     * @param fitxer
+     */
     public void initTablero(File fitxer) {
         tab = new Tablero(this);
         tab.initObjectes();
@@ -92,11 +98,13 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         //inicializamos las variables de posicion del jugador, y del tablero
         pos_jugador_f = tab.getJug().getX();
         pos_jugador_c = tab.getJug().getY();
-        //System.out.println(pos_jugador_x+" "+pos_jugador_y);
         files = tab.getFiles();
         columnes = tab.getColumnes();
     }
 
+    /**
+     *
+     */
     public void initComponents() {
         panel = new JPanel();
         panelinfo = new JPanel();
@@ -105,7 +113,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
         itemMenuArxiu = new JMenu("Joc");
         itemMenuObrir = new JMenuItem("Carregar mapa...");
-//        itemMenuReset = new JMenuItem("Recarregar mapa actual");
         itemMenuSeparador1 = new JSeparator();
         itemMenuSortir = new JMenuItem("Sortir");
         itemMenuInfo = new JMenuItem("Informació");
@@ -131,13 +138,18 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         addKeyListener(this); //control eventos de teclado
     }
 
+    /**
+     *
+     * @param taulell
+     * @param filas
+     * @param columnas
+     */
     public void dibujarElementos(Casella[][] taulell, int filas, int columnas) {
         panel.removeAll();
         panel.setLayout(new GridLayout(filas, columnas));
         panel.setBackground(Color.BLACK);// color del camino del laberinto
 
         tamany = tab.getTamany()/100;
-//        System.out.println("tamany: "+tamany);
         imgMatriz = new JLabel[filas][columnas];
         for (int f = 0; f < filas; f++) {
             for (int c = 0; c < columnas; c++) {
@@ -207,6 +219,12 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         cv.start();
     }
 
+    /**
+     *
+     * @param src
+     * @param scale
+     * @return
+     */
     public ImageIcon scale(Image src, double scale) {
         int w = (int) (scale * src.getWidth(this));
         int h = (int) (scale * src.getHeight(this));
@@ -219,6 +237,9 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         return new ImageIcon(dst);
     }
 
+    /**
+     *
+     */
     public void colocarComponents() {
         this.setLayout(new BorderLayout());
         this.setLocation(200, 100);
@@ -227,7 +248,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 
         menu.add(itemMenuArxiu);
         itemMenuArxiu.add(itemMenuObrir);
-//        itemMenuArxiu.add(itemMenuReset);
         itemMenuArxiu.add(itemMenuSeparador1);
         itemMenuArxiu.add(itemMenuInfo);
         itemMenuArxiu.add(itemMenuSortir);
@@ -261,13 +281,19 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         setVisible(true);
     }
 
+    /**
+     *
+     */
     public void afegirListerners() {
         itemMenuObrir.addActionListener(this);
         itemMenuSortir.addActionListener(this);
-//        itemMenuReset.addActionListener(this);
         itemMenuInfo.addActionListener(this);
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == itemMenuObrir) {
@@ -285,17 +311,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
             } catch (Exception ex) {
                 System.out.println(ex.toString());
             }
-//        } else if (e.getSource() == itemMenuReset) {
-//            if (fitxer != null) {
-//                initTablero(fitxer);
-//                dibujarElementos(taulell, files, columnes);
-//                arranarThreads();
-//            } else {
-//                JOptionPane.showMessageDialog(this,
-//                        "No hi ha cap fitxer carregat!",
-//                        "Alerta",
-//                        JOptionPane.WARNING_MESSAGE);
-//            }
         } else if (e.getSource() == itemMenuInfo) {
             JOptionPane.showMessageDialog(this,
                     "Autors:\n Edu Gasser i Vicenç Juan Tomàs Montserrat"
@@ -377,6 +392,10 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         this.taulell = taulell;
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         //copiamos los valores anteriores al apretar tecla
@@ -387,25 +406,21 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                 if (pos_jugador_c > 0) {
                     pos_jugador_c -= 1;
                 }
-//                System.out.println("LEFT" + e.getKeyChar());
                 break;
             case KeyEvent.VK_RIGHT:
                 if (pos_jugador_c < columnes - 1) {
                     pos_jugador_c += 1;
                 }
-//                System.out.println("RIGHT" + e.getKeyChar());
                 break;
             case KeyEvent.VK_UP:
                 if (pos_jugador_f > 0) {
                     pos_jugador_f -= 1;
                 }
-//                System.out.println("UP" + e.getKeyChar());
                 break;
             case KeyEvent.VK_DOWN:
                 if (pos_jugador_f < files - 1) {
                     pos_jugador_f += 1;
                 }
-//                System.out.println("DOWN" + e.getKeyChar());
                 break;
             default:
                 break;
@@ -418,8 +433,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         prog_salut.repaint();
         prog_hab.setValue(tab.getJug().getHabilitat());
         prog_hab.repaint();
-
-//        System.out.println("pos_jugador f:" + pos_jugador_f + " c:" + pos_jugador_c);
 
         // si es pared, volvemos a la posicion anterior
         if (taulell[pos_jugador_f][pos_jugador_c] instanceof Paret) {
@@ -435,6 +448,13 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     * @param e
+     * @throws InterruptedException
+     */
     public void pintarCasilla(int x, int y, KeyEvent e) throws InterruptedException {
         if (!(taulell[pos_temp_f][pos_temp_c] instanceof Forat) && !(taulell[pos_temp_f][pos_temp_c] instanceof Sortida) && !(taulell[pos_temp_f][pos_temp_c] instanceof Entrada)) {
             ImageIcon img = new ImageIcon("images/fondo.png");
@@ -472,11 +492,19 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         this.pack();
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void keyTyped(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         //throw new UnsupportedOperationException("Not supported yet.");
@@ -776,6 +804,9 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     *
+     */
     public void hasPerdut() {
         // aturam els threads
         me0.aturarThread();
@@ -817,9 +848,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                 posy.setText(Integer.toString(pos_jugador_f));
                 
                 if (tab.getJug().getClasseJugador().equals("MiniJugador")) {
-//                    System.out.println("mini");
-//                    System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
-//                    System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
                     if (tab.getJug().getHabilitat() > Tablero.generarRandom(32,38)) {
                         JugadorNormal jn = new JugadorNormal();
                         jn.setSalut(tab.getJug().getSalut());
@@ -828,15 +856,9 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                         // millora del jugador (de MiniJugador a JugadorNormal)
                         jn.augmentarHabilitat(Tablero.generarRandom(3,6));
                         jn.canviarComportament(0, 0);
-
-//                        System.out.println("abans getClasseJugador: " + tab.getJug().getClasseJugador());
                         tab.setJug(jn);
-//                        System.out.println("despres getClasseJugador: " + tab.getJug().getClasseJugador());
                     }
                 } else if (tab.getJug().getClasseJugador().equals("JugadorNormal")) {
-//                    System.out.println("normal");
-//                    System.out.println("salut " +Integer.valueOf(tab.getJug().getSalut()));
-//                    System.out.println("habilitat " +Integer.valueOf(tab.getJug().getHabilitat()));
                     if (tab.getJug().getHabilitat() < Tablero.generarRandom(18,22)) {
                         MiniJugador mj = new MiniJugador();
                         mj.setSalut(tab.getJug().getSalut());
@@ -845,10 +867,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                         // el jugador empitjora (de JugadorNormal a MiniJugador)
                         mj.disminuirHabilitat(Tablero.generarRandom(3,6));
                         mj.canviarComportament(Tablero.generarRandom(3,6), Tablero.generarRandom(2,3));
-
-//                        System.out.println("abans getClasseJugador: " + tab.getJug().getClasseJugador());
                         tab.setJug(mj);
-//                        System.out.println("despres getClasseJugador: " + tab.getJug().getClasseJugador());
                     }                    
                 }
 
@@ -881,10 +900,24 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         }
     }
 
+    /**
+     *
+     * @param enemics
+     * @param i
+     * @return
+     */
     public Enemic getEnemic(ArrayList<Enemic> enemics, int i) {
         return enemics.get(i);
     }
 
+    /**
+     *
+     * @param pos_jugador_f
+     * @param pos_jugador_c
+     * @param i
+     * @param j
+     * @return
+     */
     public boolean comprobar_choque(int pos_jugador_f, int pos_jugador_c, int i, int j) {
         if (pos_jugador_f == i && pos_jugador_c == j) {
             return true;
@@ -894,6 +927,11 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     }
 
     // pintar recorregut dels enemics
+    /**
+     *
+     * @param r
+     * @throws InterruptedException
+     */
     public void pintarRecorrido(ArrayList<Casella> r) throws InterruptedException {
         // per anar endavant
         for (int i = 2; i < r.size(); i++) {
@@ -902,7 +940,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
 //                tab.getJug().disminuirSalut(Tablero.generarRandom(22,26));
 //                tab.getJug().disminuirHabilitat(Tablero.generarRandom(3,7));
                 tab.getJug().setSalut(0);
-                System.out.println("colision");
             }
             
             ImageIcon img = new ImageIcon("images/enemic.png");
@@ -917,12 +954,10 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         }
         // per tornar enrrera
         for (int i = r.size() - 2; i > 0; i--) {
-//            System.out.println("size " + r.size() + " i: " + i);
             if (comprobar_choque(pos_jugador_f,pos_jugador_c,r.get(i).getX(),r.get(i).getY())){
 //                tab.getJug().disminuirSalut(Tablero.generarRandom(22,26));
 //                tab.getJug().disminuirHabilitat(Tablero.generarRandom(3,7));
                 tab.getJug().setSalut(0);
-                System.out.println("colision");
             }
             ImageIcon img = new ImageIcon("images/enemic.png");
             imgMatriz[r.get(i).getX()][r.get(i).getY()].setIcon(scale(img.getImage(), tamany));
