@@ -18,12 +18,12 @@ package game.composite;
  *
  * @author vjuan
  */
-public class Pocima extends Casella { //experiencia, habilitat
+public class Pocima extends Casella {
 
     public Pocima() {}
 
-    public Pocima(int x, int y, int valor){
-        super(x,y,valor);
+    public Pocima(int x, int y) {
+        super(x,y);
     }
 
 }

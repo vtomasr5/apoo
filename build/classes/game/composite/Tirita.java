@@ -22,7 +22,7 @@ public class Tirita extends Casella { // augmentar salut
 
     public Tirita() {}
 
-    public Tirita(int x, int y, int valor) {
-        super(x,y,valor);
+    public Tirita(int x, int y) {
+        super(x,y);
     }
 }

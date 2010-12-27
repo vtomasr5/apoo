@@ -22,12 +22,8 @@ abstract public class Taulell {
 
     abstract public void afegir(Casella obj);
     abstract public void eliminar(int i);
-    abstract public String getNom();
-    abstract public void setNom(String nom);
     abstract public int getX();
     abstract public void setX(int x);
     abstract public int getY();
     abstract public void setY(int y);
-    abstract public int getValor();
-    abstract public void setValor(int valor);
 }

@@ -37,10 +37,6 @@ public class Tablero {
     private int files;
     private int columnes;
     private double tamany;
-    private int cpocima;
-    private int cbomba;
-    private int cforat;
-    private int ctirita;
     private ArrayList<Casella> objectes_random;
     private String rutamapa;
     private Enemic enemic1, enemic2, enemic3, enemic4, enemic5, enemic6, enemic7;
@@ -64,7 +60,6 @@ public class Tablero {
         recorrido_enemic7 = new ArrayList<Casella>();
         initRecorregutEnemics();
         this.finestra = finestra;
-
     }
 
     /**
@@ -187,11 +182,6 @@ public class Tablero {
      *
      */
     public void initObjectes() {
-        cbomba = 0;
-        cforat = 0;
-        ctirita = 0;
-        cpocima = 0;
-
         objectes_random = new ArrayList<Casella>();
 
         objectes_random.add(new Pocima());
@@ -250,7 +240,7 @@ public class Tablero {
             taulell = new Casella[fi][co];
             inicializartaulell(taulell); // inicializamos el taulell poniendo que todo sea Camino
         } catch (Exception e) {
-            System.out.println("ERROR AL INSERTAR DATOS " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error del fitxer!", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
         try {
@@ -268,21 +258,13 @@ public class Tablero {
                     } else if (palabra.equals("sortida")) {
                         taulell[x][y] = new Sortida(x, y);
                     } else if (palabra.equals("pocima")) {
-                        setValor(Integer.valueOf(str.nextToken()).intValue());
-                        taulell[x][y] = new Pocima(x, y, getValor());
-                        cpocima++;
+                        taulell[x][y] = new Pocima(x, y);
                     } else if (palabra.equals("bomba")) {
-                        setValor(Integer.valueOf(str.nextToken()).intValue());
-                        taulell[x][y] = new Bomba(x, y, getValor());
-                        cbomba++;
+                        taulell[x][y] = new Bomba(x, y);
                     } else if (palabra.equals("tirita")) {
-                        setValor(Integer.valueOf(str.nextToken()).intValue());
-                        taulell[x][y] = new Tirita(x, y, getValor());
-                        ctirita++;
+                        taulell[x][y] = new Tirita(x, y);
                     } else if (palabra.equals("forat")) {
-                        setValor(Integer.valueOf(str.nextToken()).intValue());
-                        taulell[x][y] = new Forat(x, y, getValor());
-                        cforat++;
+                        taulell[x][y] = new Forat(x, y);
                     } else if (palabra.equals("paret")) {
                         taulell[x][y] = new Paret(x, y);
                     } else if (palabra.equals("casellaComposta")) {
@@ -294,7 +276,7 @@ public class Tablero {
             }
 
         } catch (Exception e) {
-            System.err.println("Error en la carga de datos " + e.toString());
+            JOptionPane.showMessageDialog(null, "Error de lectura del fitxer!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -302,7 +284,7 @@ public class Tablero {
      *
      */
     public void cas_forat(){
-         getJug().disminuirSalut(generarRandom(15, 21));
+         getJug().disminuirSalut(generarRandom(15, 22));
          getJug().disminuirHabilitat(generarRandom(7, 11));
     }
 
@@ -317,7 +299,7 @@ public class Tablero {
      *
      */
     public void cas_bomba() {
-        getJug().disminuirSalut(generarRandom(10, 15));
+        getJug().disminuirSalut(generarRandom(14, 18));
         getJug().disminuirHabilitat(generarRandom(3, 6));
     }
 

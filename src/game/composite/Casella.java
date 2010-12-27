@@ -22,10 +22,8 @@ import java.util.ArrayList;
  */
 public class Casella extends Taulell {
 
-    private String nom;
     private int x;
     private int y;
-    private int valor;
     private ArrayList<Casella> objectes;
 
     /**
@@ -37,27 +35,14 @@ public class Casella extends Taulell {
      *
      * @param x
      * @param y
-     * @param valor
      * @param obj
      */
-    public Casella(int x, int y, int valor, Object obj) { // casella composta
+    public Casella(int x, int y, Object obj) { // casella composta
         this.x = x;
         this.y = y;
-        this.valor = valor;
         this.objectes = (ArrayList<Casella>) obj;
     }
 
-    /**
-     *
-     * @param x
-     * @param y
-     * @param valor
-     */
-    public Casella(int x, int y, int valor) { // casella simple
-        this.x = x;
-        this.y = y;
-        this.valor = valor;
-    }
 
     /**
      *
@@ -102,22 +87,6 @@ public class Casella extends Taulell {
     }
 
     /**
-     * @return the valor
-     */
-    @Override
-    public int getValor() {
-        return valor;
-    }
-
-    /**
-     * @param valor the valor to set
-     */
-    @Override
-    public void setValor(int valor) {
-        this.valor = valor;
-    }
-
-    /**
      * @return the objectes
      */
     public ArrayList<Casella> getObjectes() {
@@ -147,24 +116,6 @@ public class Casella extends Taulell {
     @Override
     public void eliminar(int i) {
         getObjectes().remove(i);
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
-    public String getNom() {
-        return this.nom;
-    }
-
-    /**
-     *
-     * @param nom
-     */
-    @Override
-    public void setNom(String nom) {
-        this.nom = nom;
     }
 
 }

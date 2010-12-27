@@ -22,7 +22,7 @@ public class Forat extends Casella { // mort instantánea
 
     public Forat() {}
 
-    public Forat(int x, int y, int valor) {
-        super(x, y, valor);
+    public Forat(int x, int y) {
+        super(x, y);
     }
 }

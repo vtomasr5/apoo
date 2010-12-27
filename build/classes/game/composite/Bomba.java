@@ -22,7 +22,7 @@ public class Bomba extends Casella { // mort
 
     public Bomba() {}
 
-    public Bomba(int x, int y, int valor) {
-        super(x,y,valor);
+    public Bomba(int x, int y) {
+        super(x,y);
     }
 }
