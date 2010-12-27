@@ -16,6 +16,9 @@ package main;
 import game.composite.*;
 import game.decorator.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,10 +45,11 @@ public class Tablero {
     private String rutamapa;
     private Enemic enemic1, enemic2, enemic3, enemic4, enemic5, enemic6, enemic7;
     private Jugador jug;
+    private Finestra finestra;
     private ArrayList<Enemic> enemics;
     private ArrayList<Casella> recorrido_enemic1, recorrido_enemic2, recorrido_enemic3, recorrido_enemic4, recorrido_enemic5, recorrido_enemic6, recorrido_enemic7;
 
-    public Tablero() {
+    public Tablero(Finestra finestra) {
         enemics = new ArrayList<Enemic>();
         recorrido_enemic1 = new ArrayList<Casella>();
         recorrido_enemic2 = new ArrayList<Casella>();
@@ -53,62 +57,64 @@ public class Tablero {
         recorrido_enemic4 = new ArrayList<Casella>();
         recorrido_enemic5 = new ArrayList<Casella>();
         recorrido_enemic6 = new ArrayList<Casella>();
-        recorrido_enemic7 = new ArrayList<Casella>();        
+        recorrido_enemic7 = new ArrayList<Casella>();
         initRecorregutEnemics();
+        this.finestra = finestra;
+
     }
 
     private void initRecorregutEnemics() {
         // enemic del moviment en forma de N
-        recorrido_enemic1.add(new Casella(6,5)); // no se veu el moviment
-        recorrido_enemic1.add(new Casella(7,5));
-        recorrido_enemic1.add(new Casella(8,5));
-        recorrido_enemic1.add(new Casella(9,5));
-        recorrido_enemic1.add(new Casella(9,4));
-        recorrido_enemic1.add(new Casella(9,3));
-        recorrido_enemic1.add(new Casella(10,3));
-        recorrido_enemic1.add(new Casella(11,3));
-        recorrido_enemic1.add(new Casella(12,3));
+        recorrido_enemic1.add(new Casella(6, 5)); 
+        recorrido_enemic1.add(new Casella(7, 5));
+        recorrido_enemic1.add(new Casella(8, 5));
+        recorrido_enemic1.add(new Casella(9, 5));
+        recorrido_enemic1.add(new Casella(9, 4));
+        recorrido_enemic1.add(new Casella(9, 3));
+        recorrido_enemic1.add(new Casella(10, 3));
+        recorrido_enemic1.add(new Casella(11, 3));
+        recorrido_enemic1.add(new Casella(12, 3));
 
-        recorrido_enemic2.add(new Casella(8,9)); // no se veu el moviment
-        recorrido_enemic2.add(new Casella(9,9));
-        recorrido_enemic2.add(new Casella(9,10));
-        recorrido_enemic2.add(new Casella(9,11));
-        recorrido_enemic2.add(new Casella(8,11));
+        recorrido_enemic2.add(new Casella(8, 9)); 
+        recorrido_enemic2.add(new Casella(9, 9));
+        recorrido_enemic2.add(new Casella(9, 10));
+        recorrido_enemic2.add(new Casella(9, 11));
+        recorrido_enemic2.add(new Casella(8, 11));
 
-        recorrido_enemic3.add(new Casella(4,11)); // no se veu el moviment
-        recorrido_enemic3.add(new Casella(5,11));
-        recorrido_enemic3.add(new Casella(6,11));
-        recorrido_enemic3.add(new Casella(6,12));
-        recorrido_enemic3.add(new Casella(6,13));
-        recorrido_enemic3.add(new Casella(6,14));
+        recorrido_enemic3.add(new Casella(4, 11)); 
+        recorrido_enemic3.add(new Casella(5, 11));
+        recorrido_enemic3.add(new Casella(6, 11));
+        recorrido_enemic3.add(new Casella(6, 12));
+        recorrido_enemic3.add(new Casella(6, 13));
+        recorrido_enemic3.add(new Casella(6, 14));
 
         // enemic d'adalt a l'esquerra
-        recorrido_enemic4.add(new Casella(3,7)); // no se veu el moviment
-        recorrido_enemic4.add(new Casella(4,5));
-        recorrido_enemic4.add(new Casella(3,5));
-        recorrido_enemic4.add(new Casella(2,5));
-        recorrido_enemic4.add(new Casella(1,5));
-        recorrido_enemic4.add(new Casella(1,4)); // afegit
+        recorrido_enemic4.add(new Casella(3, 7)); 
+        recorrido_enemic4.add(new Casella(4, 5));
+        recorrido_enemic4.add(new Casella(3, 5));
+        recorrido_enemic4.add(new Casella(2, 5));
+        recorrido_enemic4.add(new Casella(1, 5));
+        recorrido_enemic4.add(new Casella(1, 4)); 
 
         // enemic de sa sortida
-        recorrido_enemic5.add(new Casella(12,14)); // no se veu el moviment
-        recorrido_enemic5.add(new Casella(13,19));
-        recorrido_enemic5.add(new Casella(14,19));
-        recorrido_enemic5.add(new Casella(14,18));
+        recorrido_enemic5.add(new Casella(12, 14));
+        recorrido_enemic5.add(new Casella(13, 19));
+        recorrido_enemic5.add(new Casella(14, 19));
+        recorrido_enemic5.add(new Casella(14, 18));
 
-        recorrido_enemic6.add(new Casella(19,4)); //
-        recorrido_enemic6.add(new Casella(19,5));
-        recorrido_enemic6.add(new Casella(19,6));
-        recorrido_enemic6.add(new Casella(18,6));
-        recorrido_enemic6.add(new Casella(17,6));
-        recorrido_enemic6.add(new Casella(16,6));
-        recorrido_enemic6.add(new Casella(16,7));
+        recorrido_enemic6.add(new Casella(19, 4));
+        recorrido_enemic6.add(new Casella(19, 5));
+        recorrido_enemic6.add(new Casella(19, 6));
+        recorrido_enemic6.add(new Casella(18, 6));
+        recorrido_enemic6.add(new Casella(17, 6));
+        recorrido_enemic6.add(new Casella(16, 6));
+        recorrido_enemic6.add(new Casella(16, 7));
 
-        recorrido_enemic7.add(new Casella(15,7)); //
-        recorrido_enemic7.add(new Casella(15,8));
-        recorrido_enemic7.add(new Casella(15,9));
-        recorrido_enemic7.add(new Casella(15,10));
-        recorrido_enemic7.add(new Casella(15,11));
+        recorrido_enemic7.add(new Casella(15, 7)); 
+        recorrido_enemic7.add(new Casella(15, 8));
+        recorrido_enemic7.add(new Casella(15, 9));
+        recorrido_enemic7.add(new Casella(15, 10));
+        recorrido_enemic7.add(new Casella(15, 11));
     }
 
     public ArrayList<Enemic> getEnemics() {
@@ -145,33 +151,32 @@ public class Tablero {
     }
 
     public ArrayList<Casella> randomObjectes(ArrayList<Casella> objectes_random) {
-        int r = (int) Math.floor(Math.random() * 3);
+        int r = generarRandom(1, 4); // el nombre d'objectes en la casella composta
         int j;
         ArrayList<Casella> array = new ArrayList<Casella>();
-
-        for (int i = 0; i < r; i++) {
-            j = (int) Math.floor(Math.random() * 3);
+        for (int i = 0; i < r; i++) { // elegir objectes a l'atzar i els afegim dins un array
+            j = (int) Math.floor(Math.random() * 4);
             array.add(objectes_random.get(j));
         }
         return array;
     }
 
-     public void initObjectes() {
+    public void initObjectes() {
         cbomba = 0;
         cforat = 0;
         ctirita = 0;
         cpocima = 0;
-        
+
         objectes_random = new ArrayList<Casella>();
 
         objectes_random.add(new Pocima());
         objectes_random.add(new Tirita());
+        objectes_random.add(new casellaComposta());
         objectes_random.add(new Bomba());
-        objectes_random.add(new Casella());
 
         jug = new MiniJugador();
         jug.setSalut(100);
-        jug.canviarComportament(generarRandom(2,3), generarRandom(2,3));
+        jug.canviarComportament(generarRandom(2, 3), generarRandom(2, 3));
 
         enemic1 = new Enemic(recorrido_enemic1);
         enemic2 = new Enemic(recorrido_enemic2);
@@ -188,7 +193,7 @@ public class Tablero {
         afegirEnemic(enemic5);
         afegirEnemic(enemic6);
         afegirEnemic(enemic7);
-     }
+    }
 
     public void leerArchivo(File f) {
         FileReader elFichero;
@@ -198,7 +203,7 @@ public class Tablero {
 
         try {
             elFichero = new FileReader(f);
-            System.out.println("\nfitxer: " + f.getCanonicalPath());
+//            System.out.println("\nfitxer: " + f.getCanonicalPath());
             lector = new BufferedReader(elFichero);
             unaLinea = lector.readLine();
             str = new StringTokenizer(unaLinea, ",");
@@ -253,7 +258,7 @@ public class Tablero {
                     } else if (palabra.equals("paret")) {
                         taulell[x][y] = new Paret(x, y);
                     } else if (palabra.equals("casellaComposta")) {
-                        Casella composta = new Casella(x, y);
+                        casellaComposta composta = new casellaComposta(x, y);
                         composta.setObjectes(randomObjectes(objectes_random));
                         taulell[x][y] = composta;
                     }
@@ -265,35 +270,97 @@ public class Tablero {
         }
     }
 
-//    private ImageIcon scale(Image src, double scale) {
-//        int w = (int) (scale * src.getWidth(null)); //this
-//        int h = (int) (scale * src.getHeight(null)); //this
-//        int type = BufferedImage.TRANSLUCENT;
-//        BufferedImage dst = new BufferedImage(w, h, type);
-//        Graphics2D g2 = dst.createGraphics();
-//        g2.drawImage(src, 0, 0, w, h, null); //this
-//        g2.dispose();
-//        g2.setBackground(Color.CYAN);
-//        return new ImageIcon(dst);
-//    }
+    public ImageIcon scale(Image src, double scale) {
+        int w = (int) (scale * src.getWidth(null));
+        int h = (int) (scale * src.getHeight(null));
+        int type = BufferedImage.TRANSLUCENT;
+        BufferedImage dst = new BufferedImage(w, h, type);
+        Graphics2D g2 = dst.createGraphics();
+        g2.drawImage(src, 0, 0, w, h, null);
+        g2.dispose();
+        g2.setBackground(Color.CYAN);
+        return new ImageIcon(dst);
+    }
 
+    public void cas_bomba() {
+        getJug().disminuirSalut(generarRandom(10, 15));
+        getJug().disminuirHabilitat(generarRandom(3, 6));
+    }
 
-//    public void dialog_casella(JFrame frame) {
-//        JDialog jd = new JDialog(frame, true);
-//
-//        jd.setPreferredSize(new Dimension(200, 200)); // per provar
-//        jd.setLayout(new GridLayout(2, 2));
-//
-//        jd.getContentPane().add(new JLabel(scale(new ImageIcon("images/pocima.png").getImage(), tamany)), 0);
-//        jd.getContentPane().add(new JLabel(scale(new ImageIcon("images/tirita.png").getImage(), tamany)), 1);
-//        jd.getContentPane().add(new JLabel(scale(new ImageIcon("images/bomba.png").getImage(), tamany)), 2);
-//        jd.getContentPane().add(new JLabel(scale(new ImageIcon("images/composta2.png").getImage(), tamany)), 3);
-//
-//        jd.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-//        jd.pack();
-//        jd.setVisible(true);
-//    }
-    
+    public void cas_tirita() {
+        getJug().augmentarSalut(generarRandom(10, 15));
+    }
+
+    public void dialog_casella(JFrame frame, ArrayList<Casella> objectes) {
+        final JDialog jd = new JDialog(frame, true);
+
+        jd.setPreferredSize(new Dimension(200, 200));
+        jd.setLayout(new GridLayout(2, 2));
+        jd.setTitle("Casella composta");
+        jd.setResizable(false);
+
+        for (int i = 0; i < objectes.size(); i++) {
+            String nombre_img = null;
+            if (objectes.get(i) instanceof Pocima) {
+                nombre_img = "pocima.png";
+            } else if (objectes.get(i) instanceof Bomba) {
+                nombre_img = "bomba.png";
+            } else if (objectes.get(i) instanceof Tirita) {
+                nombre_img = "tirita.png";
+            } else if (objectes.get(i) instanceof casellaComposta) {
+                nombre_img = "composta2.png";
+            }
+            JLabel temp = new JLabel(scale(new ImageIcon("images/" + nombre_img).getImage(), 0.65));
+            temp.setName(nombre_img);
+            temp.setBorder(BorderFactory.createRaisedBevelBorder());
+            temp.addMouseListener(new MouseListener() {
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    JLabel objeto = (JLabel) e.getComponent();
+
+                    if (objeto.getName().equals("bomba.png")) {
+                        cas_bomba();
+                    } else if (objeto.getName().equals("pocima.png")) {
+                        cas_pocima();
+                    } else if (objeto.getName().equals("composta2.png")) {
+                        dialog_casella(finestra,randomObjectes(objectes_random)); // cridada recursiva
+                    } else if (objeto.getName().equals("tirita.png")) {
+                        cas_tirita();
+                    }
+                    jd.dispose(); // tancam es jdialog
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+//                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+//                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+//                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+//                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+             
+            });
+            jd.getContentPane().add(temp, i);
+        
+        }
+        SwingUtilities.updateComponentTreeUI(jd);
+        jd.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        jd.pack();
+        jd.setVisible(true);
+    }
+
     public void hasGuanyat() {
         String msg = "<html><b>HAS ARRIBAT A SA SORTIDA SENSE TRUCS, FELICITATS VICIAT !!!</b></html>";
         JLabel label = new JLabel(msg);
@@ -306,40 +373,41 @@ public class Tablero {
         return taulell;
     }
 
+    public void cas_forat(){
+         getJug().disminuirSalut(generarRandom(15, 21));
+         getJug().disminuirHabilitat(generarRandom(7, 11));
+    }
+
+    public void cas_pocima(){
+         getJug().augmentarHabilitat(generarRandom(10, 13));
+    }
+    
     public void tractar_casella(int f, int c) {
         //pasos++;
         if (taulell[f][c] instanceof Bomba) {//recorrido con tesoros
-            System.out.println("[tractar_casella] Bomba");
-            getJug().disminuirSalut(generarRandom(10,15));
-            getJug().disminuirHabilitat(generarRandom(3,6));
+//            System.out.println("[tractar_casella] Bomba");
+            cas_bomba();
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Tirita) {
-            System.out.println("[tractar_casella] Tirita");
-            getJug().augmentarSalut(generarRandom(10,15));
+//            System.out.println("[tractar_casella] Tirita");
+            cas_tirita();
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Forat) {
-            System.out.println("[tractar_casella] Forat");
-            getJug().disminuirSalut(generarRandom(15,21));
-            getJug().disminuirHabilitat(generarRandom(7,11));
+//            System.out.println("[tractar_casella] Forat");
+            cas_forat();
         } else if (taulell[f][c] instanceof Pocima) {
-            System.out.println("[tractar_casella] Pocima");
-            getJug().augmentarHabilitat(generarRandom(10,13));
+//            System.out.println("[tractar_casella] Pocima");
+            cas_pocima();
             taulell[f][c] = new Cami();
         } else if (taulell[f][c] instanceof Sortida) {
-            System.out.println("[tractar_casella] Sortida");
+//            System.out.println("[tractar_casella] Sortida");
             hasGuanyat();
         } else if (taulell[f][c] instanceof Entrada) {
-            System.out.println("[tractar_casella] Entrada");
+//            System.out.println("[tractar_casella] Entrada");
             // no tractam
-        } else if (taulell[f][c] instanceof Casella) { // IMPORTANTE: este caso va el último para diferencias la casilla normal de una compuesta!!
-//            dialog_casella();
-//            System.out.println("[tractar_casella] Casella"); // PROBLEMA: TOTES SES CASELLES CAMI SON "Casella"
-            // getArray() de sa casella
-            // mostrar la finestra (JDialog)
-            // con mouseEvent coger el elemento que ha pulsado
-            // tratar el objeto (tratar_casella)
-            // quitar el objeto del array
-            // cerrar la ventana
+        } else if (taulell[f][c] instanceof casellaComposta) {
+//            System.out.println("[tractar_casella] CasellaCompuesta");
+            dialog_casella(finestra, taulell[f][c].getObjectes());
         }
     }
 
@@ -421,7 +489,6 @@ public class Tablero {
         this.rutamapa = rutamapa;
     }
 
-
     /**
      * @return the mj
      */
@@ -435,5 +502,4 @@ public class Tablero {
     public void setJug(Jugador mj) {
         this.jug = mj;
     }
-    
 }

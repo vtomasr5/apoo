@@ -84,7 +84,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     }
 
     public void initTablero(File fitxer) {
-        tab = new Tablero();
+        tab = new Tablero(this);
         tab.initObjectes();
         tab.leerArchivo(fitxer); //leemos el archivo y guardamos el mapa en la variable taulell
         taulell = tab.getTaulell(); //cogemos la variable taulell
@@ -207,7 +207,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         cv.start();
     }
 
-    private ImageIcon scale(Image src, double scale) {
+    public ImageIcon scale(Image src, double scale) {
         int w = (int) (scale * src.getWidth(this));
         int h = (int) (scale * src.getHeight(this));
         int type = BufferedImage.TRANSLUCENT;
@@ -307,18 +307,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         } else if (e.getSource() == itemMenuSortir) {
             System.exit(0);
         }
-    }
-
-    public ArrayList<Casella> randomObjectes(ArrayList<Casella> objectes_random) {
-        int r = (int) Math.floor(Math.random() * 3);
-        int j;
-        ArrayList<Casella> array = new ArrayList<Casella>();
-
-        for (int i = 0; i < r; i++) {
-            j = (int) Math.floor(Math.random() * 3);
-            array.add(objectes_random.get(j));
-        }
-        return array;
     }
 
     /**
