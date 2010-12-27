@@ -62,9 +62,8 @@ paret,5,10
 paret,5,12
 paret,5,13
 paret,5,15
-pocima,5,16,10
+casellaComposta,5,16,12
 paret,5,18
-casellaComposta,5,19,12
 paret,6,0
 paret,6,2
 paret,6,4
@@ -76,6 +75,7 @@ paret,6,10
 paret,6,15
 paret,6,17
 paret,6,18
+forat,6,19,10
 paret,7,0
 paret,7,2
 paret,7,6
@@ -203,6 +203,7 @@ paret,18,12
 paret,18,13
 paret,18,14
 paret,18,15
+casellaComposta,18,16
 paret,18,17
 paret,18,18
 paret,18,19

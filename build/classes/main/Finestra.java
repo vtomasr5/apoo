@@ -315,7 +315,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
             JOptionPane.showMessageDialog(this,
                     "Autors:\n Edu Gasser i Vicenç Juan Tomàs Montserrat"
                     + "\nLlicència:\n GPLv3"
-                    + "\nVersió:\n 0.9.1"
+                    + "\nVersió:\n 1.0"
                     + "\nRepositori:\n http://github.com/vtomasr5/apoo",
                     "Informació",
                     JOptionPane.INFORMATION_MESSAGE);
@@ -809,6 +809,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
      */
     public void hasPerdut() {
         // aturam els threads
+        cv.aturarThread();
         me0.aturarThread();
         me1.aturarThread();
         me2.aturarThread();
@@ -816,7 +817,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         me4.aturarThread();
         me5.aturarThread();
         me6.aturarThread();
-        cv.aturarThread();
 
         String msg = "<html><b>G A M E   O V E R !!! xDDDDDD</b></html>";
         JLabel label = new JLabel(msg);
@@ -848,7 +848,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                 posy.setText(Integer.toString(pos_jugador_f));
                 
                 if (tab.getJug().getClasseJugador().equals("MiniJugador")) {
-                    if (tab.getJug().getHabilitat() > Tablero.generarRandom(32,38)) {
+                    if (tab.getJug().getHabilitat() > Tablero.generarRandom(34,38)) {
                         JugadorNormal jn = new JugadorNormal();
                         jn.setSalut(tab.getJug().getSalut());
                         jn.setHabilitat(tab.getJug().getHabilitat());
@@ -937,8 +937,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         for (int i = 2; i < r.size(); i++) {
             // Comprobamos si el jugador se topa con el enemigo
             if (comprobar_choque(pos_jugador_f,pos_jugador_c,r.get(i).getX(),r.get(i).getY())){
-//                tab.getJug().disminuirSalut(Tablero.generarRandom(22,26));
-//                tab.getJug().disminuirHabilitat(Tablero.generarRandom(3,7));
                 tab.getJug().setSalut(0);
             }
             
@@ -955,8 +953,6 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         // per tornar enrrera
         for (int i = r.size() - 2; i > 0; i--) {
             if (comprobar_choque(pos_jugador_f,pos_jugador_c,r.get(i).getX(),r.get(i).getY())){
-//                tab.getJug().disminuirSalut(Tablero.generarRandom(22,26));
-//                tab.getJug().disminuirHabilitat(Tablero.generarRandom(3,7));
                 tab.getJug().setSalut(0);
             }
             ImageIcon img = new ImageIcon("images/enemic.png");

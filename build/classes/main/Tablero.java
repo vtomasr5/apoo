@@ -67,6 +67,9 @@ public class Tablero {
 
     }
 
+    /**
+     * 
+     */
     private void initRecorregutEnemics() {
         recorrido_enemic1.add(new Casella(6, 5)); 
         recorrido_enemic1.add(new Casella(7, 5));
@@ -297,20 +300,17 @@ public class Tablero {
 
     /**
      *
-     * @param src
-     * @param scale
-     * @return
      */
-    public ImageIcon scale(Image src, double scale) {
-        int w = (int) (scale * src.getWidth(null));
-        int h = (int) (scale * src.getHeight(null));
-        int type = BufferedImage.TRANSLUCENT;
-        BufferedImage dst = new BufferedImage(w, h, type);
-        Graphics2D g2 = dst.createGraphics();
-        g2.drawImage(src, 0, 0, w, h, null);
-        g2.dispose();
-        g2.setBackground(Color.CYAN);
-        return new ImageIcon(dst);
+    public void cas_forat(){
+         getJug().disminuirSalut(generarRandom(15, 21));
+         getJug().disminuirHabilitat(generarRandom(7, 11));
+    }
+
+    /**
+     *
+     */
+    public void cas_pocima(){
+         getJug().augmentarHabilitat(generarRandom(10, 13));
     }
 
     /**
@@ -330,6 +330,24 @@ public class Tablero {
 
     /**
      *
+     * @param src
+     * @param scale
+     * @return
+     */
+    public ImageIcon scale(Image src, double scale) {
+        int w = (int) (scale * src.getWidth(null));
+        int h = (int) (scale * src.getHeight(null));
+        int type = BufferedImage.TRANSLUCENT;
+        BufferedImage dst = new BufferedImage(w, h, type);
+        Graphics2D g2 = dst.createGraphics();
+        g2.drawImage(src, 0, 0, w, h, null);
+        g2.dispose();
+        g2.setBackground(Color.CYAN);
+        return new ImageIcon(dst);
+    }
+
+    /**
+     *
      * @param frame
      * @param objectes
      */
@@ -340,6 +358,8 @@ public class Tablero {
         jd.setLayout(new GridLayout(2, 2));
         jd.setTitle("Casella composta");
         jd.setResizable(false);
+        jd.setUndecorated(true); // elimina el requadre de la finestra
+        jd.setLocationRelativeTo(frame); // centra la finestra dins la finestra principal (frame)
 
         for (int i = 0; i < objectes.size(); i++) {
             String nombre_img = null;
@@ -352,6 +372,7 @@ public class Tablero {
             } else if (objectes.get(i) instanceof casellaComposta) {
                 nombre_img = "composta2.png";
             }
+            
             JLabel temp = new JLabel(scale(new ImageIcon("images/" + nombre_img).getImage(), 0.65));
             temp.setName(nombre_img);
             temp.setBorder(BorderFactory.createRaisedBevelBorder());
@@ -416,21 +437,6 @@ public class Tablero {
      */
     public Casella[][] getTaulell() {
         return taulell;
-    }
-
-    /**
-     *
-     */
-    public void cas_forat(){
-         getJug().disminuirSalut(generarRandom(15, 21));
-         getJug().disminuirHabilitat(generarRandom(7, 11));
-    }
-
-    /**
-     *
-     */
-    public void cas_pocima(){
-         getJug().augmentarHabilitat(generarRandom(10, 13));
     }
     
     /**
