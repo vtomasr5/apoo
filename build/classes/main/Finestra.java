@@ -2,6 +2,7 @@
  * Finestra.java
  * 
  * Copyright (C) 2010 Vicenç Juan Tomàs Monserrat
+ * Copyright (C) 2010 Edu Gasser
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -36,7 +37,7 @@ import javax.swing.ImageIcon;
 
 /**
  * Classe que implementa sa finestra amb el taulell de joc
- * @author vjuan
+ * @author Edu i Vicenç Juan
  */
 public class Finestra extends JFrame implements ActionListener, KeyListener {
 
@@ -141,7 +142,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     }
 
     /**
-     *
+     * Mètode que comprova el tipus de casella que pertany al taulell i la distingueix
+     * de les demés inserint l'imatge que pertoqui dins un JLabel a cada posició del taulell.
      * @param taulell
      * @param filas
      * @param columnas
@@ -222,7 +224,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     }
 
     /**
-     *
+     * Escala una imatge a una proporció determinada que sigui de la mateixa mida
+     * que de la casella.
      * @param src
      * @param scale
      * @return
@@ -396,7 +399,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     }
 
     /**
-     *
+     * Mètode que controla el moviment del jugador dins el taulell.
      * @param e
      */
     @Override
@@ -452,7 +455,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
     }
 
     /**
-     *
+     * Mètode que controla quan el jugador ha passat sobre un objecte i repinta aquesta
+     * posició amb un objecte del tipus camí.
      * @param x
      * @param y
      * @param e
@@ -828,6 +832,10 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         System.exit(0);
     }
 
+    /**
+     * Classe privada que va comprovant els valors del jugador i actualitza els camps
+     * corresponents per a que l'usuari tengui els valors actualitzats.
+     */
     private class comprovar_valors extends Thread {
 
         private boolean cont = true;
@@ -851,7 +859,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                 posy.setText(Integer.toString(pos_jugador_f));
                 
                 if (tab.getJug().getClasseJugador().equals("MiniJugador")) {
-                    if (tab.getJug().getHabilitat() > Tablero.generarRandom(34,38)) {
+                    if (tab.getJug().getHabilitat() > Tablero.generarRandom(36,41)) {
                         JugadorNormal jn = new JugadorNormal();
                         jn.setSalut(tab.getJug().getSalut());
                         jn.setHabilitat(tab.getJug().getHabilitat());
@@ -862,7 +870,7 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
                         tab.setJug(jn);
                     }
                 } else if (tab.getJug().getClasseJugador().equals("JugadorNormal")) {
-                    if (tab.getJug().getHabilitat() < Tablero.generarRandom(18,22)) {
+                    if (tab.getJug().getHabilitat() < Tablero.generarRandom(34,39)) {
                         MiniJugador mj = new MiniJugador();
                         mj.setSalut(tab.getJug().getSalut());
                         mj.setHabilitat(tab.getJug().getHabilitat());
@@ -929,9 +937,8 @@ public class Finestra extends JFrame implements ActionListener, KeyListener {
         }
     }
 
-    // pintar recorregut dels enemics
     /**
-     *
+     * Mètode que pinta en el taulell el recorregut dels enemics.
      * @param r
      * @throws InterruptedException
      */

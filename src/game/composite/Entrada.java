@@ -1,7 +1,7 @@
 /*
  * Entrada.java
  * 
- * Copyright (C) 2010 Vicenç Juan Tomàs Monserrat
+ * Copyright (C) 2010 Edu Gasser
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,7 +14,10 @@
 
 package game.composite;
 
-
+/**
+ * Classe que implementa una Entrada
+ * @author Edu Gasser
+ */
 public class Entrada extends Casella {
 
     public Entrada() {}

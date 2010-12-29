@@ -1,7 +1,7 @@
 /*
  * Taulell.java
  * 
- * Copyright (C) 2010 Vicenç Juan Tomàs Monserrat
+ * Copyright (C) 2010 Edu Gasser
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,8 +15,8 @@
 package game.composite;
 
 /**
- *
- * @author vjuan
+ * Classe que conté les funcions abstractes que s'empren en classes derivades d'aquesta.
+ * @author Edu Gasser
  */
 abstract public class Taulell {
 

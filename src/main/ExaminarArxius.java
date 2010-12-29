@@ -2,6 +2,7 @@
  * ExaminarArxius.java
  * 
  * Copyright (C) 2010 Vicenç Juan Tomàs Monserrat
+ * Copyright (C) 2010 Edu Gasser
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -22,7 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 /**
  * Classe que serveix per a obrir i guardar els fitxers de rutes al sistema
  * de fitxers del SO
- * @author vjuan
+ * @author Edu i Vicenç Juan
  */
 public class ExaminarArxius {
 

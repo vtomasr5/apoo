@@ -2,6 +2,7 @@
  * Tablero.java
  * 
  * Copyright (C) 2010 Vicenç Juan Tomàs Monserrat
+ * Copyright (C) 2010 Edu Gasser
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -28,7 +29,7 @@ import java.util.StringTokenizer;
 
 /**
  * Classe que implementa la lectura del fitxer i crea els objectes del taulell
- * @author vjuan
+ * @author Edu i Vicenç Juan
  */
 public class Tablero {
 
@@ -63,7 +64,7 @@ public class Tablero {
     }
 
     /**
-     * 
+     * Inicialitza el recorreguts del enemics
      */
     private void initRecorregutEnemics() {
         recorrido_enemic1.add(new Casella(6, 5)); 
@@ -163,7 +164,7 @@ public class Tablero {
     }
 
     /**
-     *
+     * Mètode que crea un random d'objectes i els guarda dins un array.
      * @param objectes_random
      * @return
      */
@@ -211,7 +212,7 @@ public class Tablero {
     }
 
     /**
-     *
+     * Mètode que llegeix un fitxer amb un determinat format. Es un lector per als mapes.
      * @param f
      */
     public void leerArchivo(File f) {
@@ -311,7 +312,7 @@ public class Tablero {
     }
 
     /**
-     *
+     * Escala les imatges a un tamany determinat
      * @param src
      * @param scale
      * @return
@@ -329,7 +330,8 @@ public class Tablero {
     }
 
     /**
-     *
+     * Mètode que mostra per pantalla un dialeg que conté els objectes que es poden trobar
+     * dins una casella composta.
      * @param frame
      * @param objectes
      */
@@ -406,7 +408,7 @@ public class Tablero {
      *
      */
     public void hasGuanyat() {
-        String msg = "<html><b>HAS ARRIBAT A SA SORTIDA SENSE TRUCS, FELICITATS VICIAT !!!</b></html>";
+        String msg = "<html><b>FELICITATS, HAS ARRIBAT A SA SORTIDA!!!</b></html>";
         JLabel label = new JLabel(msg);
         label.setFont(new Font("serif", Font.PLAIN, 14));
         JOptionPane.showMessageDialog(null, label, "Fi de partida", JOptionPane.PLAIN_MESSAGE);
@@ -422,7 +424,8 @@ public class Tablero {
     }
     
     /**
-     *
+     * Mètode que conté la implementació de que es el que passa quan el jugador passa per
+     * sobre d'una casella que conté qualque objecte.
      * @param f
      * @param c
      */

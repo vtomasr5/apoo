@@ -1,7 +1,7 @@
 /*
  * Bomba.java
  * 
- * Copyright (C) 2010 Vicenç Juan Tomàs Monserrat
+ * Copyright (C) 2010 Edu Gasser
  * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,8 +15,8 @@
 package game.composite;
 
 /**
- *
- * @author vjuan
+ * Classe que implementa una Bomba
+ * @author Edu Gasser
  */
 public class Bomba extends Casella { // mort
 
